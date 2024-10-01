@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/player1"
+        android:title="player1"/>
+    <item
+        android:id="@+id/player2"
+        android:title="player2"/>
+    <item
+        android:id="@+id/player3"
+        android:title="player3"/>
+    <item
+        android:id="@+id/player4"
+        android:title="player4"/>
+    <item
+        android:id="@+id/player5"
+        android:title="player5"/>
+    <item
+        android:id="@+id/player6"
+        android:title="player6"/>
+    <item
+        android:title=""/>
+    <item
+        android:title=""/>
+    <item
+        android:id="@+id/exit"
+        android:title="exit"/>
+
+</menu>
