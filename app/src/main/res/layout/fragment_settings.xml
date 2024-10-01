@@ -14,13 +14,22 @@
 
         <ImageView
             android:id="@+id/imageViewProfilePicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="75dp"
-            android:onClick="profilePicture"
             android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewExit"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="1dp"
+            android:src="@mipmap/ic_launcher_exit"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -86,7 +95,6 @@
             android:textColor="@color/white"
             android:backgroundTint="@color/light_purple"
             android:layout_marginTop="75dp"
-            android:onClick="saveSettings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroupGender" />

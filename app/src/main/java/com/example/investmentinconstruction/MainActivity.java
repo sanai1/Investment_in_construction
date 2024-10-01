@@ -3,20 +3,19 @@ package com.example.investmentinconstruction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.investmentinconstruction.Authorization.WelcomeActivity;
 import com.example.investmentinconstruction.Fragments.FriendsFragment;
 import com.example.investmentinconstruction.Fragments.HomeFragment;
 import com.example.investmentinconstruction.Fragments.SettingsFragment;
 import com.example.investmentinconstruction.databinding.MainLayoutBottomnavigationmenuBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-
-    static {
-        System.loadLibrary("investmentinconstruction");
-    }
 
     private MainLayoutBottomnavigationmenuBinding binding;
 
@@ -48,5 +47,19 @@ public class MainActivity extends AppCompatActivity {
         return true;
     };
 
-    public native String stringFromJNI();
+    public void goToEnterRoom() {
+        Intent intent = new Intent(MainActivity.this, EnterRoomActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToCreateRoom() {
+        Intent intent = new Intent(MainActivity.this, CreateRoomActivity.class);
+        startActivity(intent);
+    }
+
+    public void exit() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+        startActivity(intent);
+    }
 }

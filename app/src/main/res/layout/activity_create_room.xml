@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -10,41 +11,42 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginTop="180dp"
         android:text="Room code"
         android:textColor="@color/black"
         android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewRomeCode"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="95dp"
+        android:layout_height="31dp"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="25dp"
-        android:layout_marginStart="50dp"
+        android:gravity="end"
         android:layout_marginTop="25dp"
+        android:layout_marginStart="110dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageButton
         android:id="@+id/imageButtonCopyRoomCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="25dp"
         android:src="?attr/actionModeCopyDrawable"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
         app:layout_constraintStart_toEndOf="@+id/textViewRomeCode"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/textViewRomeCode" />
 
     <TextView
         android:id="@+id/textViewCountPeople"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:text="Number of people"
+        android:gravity="end"
         android:textColor="@color/black"
         android:textSize="25dp"
         android:layout_marginStart="50dp"
@@ -68,13 +70,47 @@
         android:id="@+id/buttonCreateRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Room"
-        android:textSize="25dp"
-        android:textColor="@color/white"
         android:backgroundTint="@color/light_purple"
-        android:layout_marginTop="100dp"
         android:onClick="createRoom"
+        android:text="Create Room"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDistrictCreateRoom" />
+
+    <ImageView
+        android:id="@+id/imageViewBackCreateRoom"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="1dp"
+        android:onClick="goToHome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_back" />
+
+    <Spinner
+        android:id="@+id/spinnerDistrict"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewDistrict"
+        app:layout_constraintTop_toTopOf="@+id/textViewDistrictCreateRoom" />
+
+    <TextView
+        android:id="@+id/textViewDistrictCreateRoom"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:text="Select a district"
+        android:textColor="@color/black"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCountPeople" />
 

@@ -24,6 +24,8 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".Authorization.SignInActivity"/>
         <activity android:name=".Authorization.CreateAccountActivity"/>
+        <activity android:name=".EnterRoomActivity"/>
+        <activity android:name=".CreateRoomActivity"/>
     </application>
 
 </manifest>
