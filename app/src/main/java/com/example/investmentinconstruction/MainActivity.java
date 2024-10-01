@@ -30,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-
-//        TextView tv = binding.sampleText;
-//        tv.setText(stringFromJNI());
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
@@ -51,9 +48,5 @@ public class MainActivity extends AppCompatActivity {
         return true;
     };
 
-    /**
-     * A native method that is implemented by the 'investmentinconstruction' native library,
-     * which is packaged with this application.
-     */
     public native String stringFromJNI();
 }
