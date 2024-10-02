@@ -1,19 +1,27 @@
 package com.example.investmentinconstruction.LogicClasses;
 
+import java.util.List;
+
 public class User {
 
     private String uid;
     private String district;
     private Integer profitFull;
-    private Construction construction;
     private Advertisement advertisement;
+    private List<House> houseList;
+    private List<Shop> shopList;
 
-    public User(String uid, String district, Integer profitFull, Construction construction, Advertisement advertisement) {
+    public User() {
+
+    }
+
+    public User(String uid, String district, Integer profitFull, Advertisement advertisement, List<House> houseList, List<Shop> shopList) {
         this.uid = uid;
         this.district = district;
         this.profitFull = profitFull;
-        this.construction = construction;
         this.advertisement = advertisement;
+        this.houseList = houseList;
+        this.shopList = shopList;
     }
 
     public String getUid() {
@@ -40,19 +48,27 @@ public class User {
         this.profitFull = profitFull;
     }
 
-    public Construction getConstruction() {
-        return construction;
-    }
-
-    public void setConstruction(Construction construction) {
-        this.construction = construction;
-    }
-
     public Advertisement getAdvertisement() {
         return advertisement;
     }
 
     public void setAdvertisement(Advertisement advertisement) {
         this.advertisement = advertisement;
+    }
+
+    public List<House> getHouseList() {
+        return houseList;
+    }
+
+    public void setHouseList(List<House> houseList) {
+        this.houseList = houseList;
+    }
+
+    public List<Shop> getShopList() {
+        return shopList;
+    }
+
+    public void setShopList(List<Shop> shopList) {
+        this.shopList = shopList;
     }
 }

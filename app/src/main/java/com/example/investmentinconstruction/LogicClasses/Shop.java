@@ -3,11 +3,21 @@ package com.example.investmentinconstruction.LogicClasses;
 public class Shop {
 
     private String sid;
-    private DescriptionShop descriptionShop;
+    private String typeShop; // тип магазина (от него зависят характеристики, которые будем хардкодить)
+    private Integer duration; // продолжительность стройки (хардкодим)
+    private Integer startPeriod; // считается относительно currentPeriod
+    private Integer priceMonth; // цена стройки 1 месяца (хардкодим)
+    private Integer soldProfit; // общая прибыль с магазина (считается как сумма прибыли за все месяцы)
 
-    public Shop(String sid, DescriptionShop descriptionShop) {
+    public Shop() {}
+
+    public Shop(String sid, String typeShop, Integer duration, Integer startPeriod, Integer priceMonth, Integer soldProfit) {
         this.sid = sid;
-        this.descriptionShop = descriptionShop;
+        this.typeShop = typeShop;
+        this.duration = duration;
+        this.startPeriod = startPeriod;
+        this.priceMonth = priceMonth;
+        this.soldProfit = soldProfit;
     }
 
     public String getSid() {
@@ -18,11 +28,43 @@ public class Shop {
         this.sid = sid;
     }
 
-    public DescriptionShop getDescriptionShop() {
-        return descriptionShop;
+    public String getTypeShop() {
+        return typeShop;
     }
 
-    public void setDescriptionShop(DescriptionShop descriptionShop) {
-        this.descriptionShop = descriptionShop;
+    public void setTypeShop(String typeShop) {
+        this.typeShop = typeShop;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Integer getPriceMonth() {
+        return priceMonth;
+    }
+
+    public void setPriceMonth(Integer priceMonth) {
+        this.priceMonth = priceMonth;
+    }
+
+    public Integer getStartPeriod() {
+        return startPeriod;
+    }
+
+    public void setStartPeriod(Integer startPeriod) {
+        this.startPeriod = startPeriod;
+    }
+
+    public Integer getSoldProfit() {
+        return soldProfit;
+    }
+
+    public void setSoldProfit(Integer soldProfit) {
+        this.soldProfit = soldProfit;
     }
 }

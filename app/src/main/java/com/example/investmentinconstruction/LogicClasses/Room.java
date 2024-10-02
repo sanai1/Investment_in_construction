@@ -1,18 +1,22 @@
 package com.example.investmentinconstruction.LogicClasses;
 
+import java.util.List;
+
 public class Room {
     private Integer roomCode;
     private Integer cntPeople;
     private Integer nowPeople;
     private Integer currentPeriod;
-    private User[] users;
+    private List<User> userList;
 
-    public Room(Integer roomCode, Integer cntPeople, Integer nowPeople, Integer currentPeriod, User[] users) {
+    public Room() {}
+
+    public Room(Integer roomCode, Integer cntPeople, Integer nowPeople, Integer currentPeriod, List<User> userList) {
         this.roomCode = roomCode;
         this.cntPeople = cntPeople;
         this.nowPeople = nowPeople;
         this.currentPeriod = currentPeriod;
-        this.users = users;
+        this.userList = userList;
     }
 
     public Integer getRoomCode() {
@@ -47,11 +51,11 @@ public class Room {
         this.currentPeriod = currentPeriod;
     }
 
-    public User[] getUsers() {
-        return users;
+    public List<User> getUserList() {
+        return userList;
     }
 
-    public void setUsers(User[] users) {
-        this.users = users;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 }

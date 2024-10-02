@@ -10,9 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.investmentinconstruction.ConnectRealtimeDatabase;
 import com.example.investmentinconstruction.LoadingActivity;
 import com.example.investmentinconstruction.LogicClasses.Advertisement;
-import com.example.investmentinconstruction.LogicClasses.Construction;
-import com.example.investmentinconstruction.LogicClasses.DescriptionHouse;
-import com.example.investmentinconstruction.LogicClasses.DescriptionShop;
 import com.example.investmentinconstruction.LogicClasses.House;
 import com.example.investmentinconstruction.LogicClasses.Room;
 import com.example.investmentinconstruction.LogicClasses.Shop;
@@ -20,6 +17,10 @@ import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.MainBottomNavigation;
 import com.example.investmentinconstruction.databinding.ActivityCreateRoomBinding;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CreateRoomActivity extends AppCompatActivity {
 
@@ -49,12 +50,9 @@ public class CreateRoomActivity extends AppCompatActivity {
         String nameDistrict = binding_createRoom.spinnerDistrict.getSelectedItem().toString();
         // TODO: сделать создание комнаты в Firebase (структура json)
 
-        House[] houses = {new House("123", new DescriptionHouse(10, 2, "Panel", 7, 2, 15000, 2, 2, 2))};
-        Shop[] shops = {new Shop("321", new DescriptionShop("Bakery", 4, 3, 12000, 20000))};
-        Construction construction = new Construction(shops, houses);
-        Advertisement advertisement = new Advertisement(0, 0);
-        User[] users = {new User(firebaseAuth.getCurrentUser().getUid(), nameDistrict, 0, construction, advertisement)};
-        Room room = new Room(roomCode, numberPeople, 1, 1, users);
+        List<User> userList = new ArrayList<>();
+        userList.add(new User(firebaseAuth.getCurrentUser().getUid(), nameDistrict, 0, null, null, null));
+        Room room = new Room(2500, numberPeople, 1, 1, userList);
 
         ConnectRealtimeDatabase.getInstance(this).createRoom(room);
 

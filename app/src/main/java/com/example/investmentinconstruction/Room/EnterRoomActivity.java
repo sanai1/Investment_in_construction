@@ -7,11 +7,13 @@ import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.investmentinconstruction.ConnectRealtimeDatabase;
 import com.example.investmentinconstruction.LoadingActivity;
 import com.example.investmentinconstruction.MainActivity;
 import com.example.investmentinconstruction.MainBottomNavigation;
 import com.example.investmentinconstruction.R;
 import com.example.investmentinconstruction.databinding.ActivityEnterRoomBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class EnterRoomActivity extends AppCompatActivity {
 
@@ -33,6 +35,7 @@ public class EnterRoomActivity extends AppCompatActivity {
         String roomCode = binding_enterRoom.editTextNumberCheckCode.getText().toString();
         // TODO: сделать вход в комнату firebase (проверяя code)
 
+        boolean signInRoom =  ConnectRealtimeDatabase.getInstance(this).signInRoom(roomCode, FirebaseAuth.getInstance().getCurrentUser().getUid(), nameDistrict);
         Intent intent = new Intent(EnterRoomActivity.this, LoadingActivity.class);
         intent.putExtra("activity", "MainActivity");
         startActivity(intent);
