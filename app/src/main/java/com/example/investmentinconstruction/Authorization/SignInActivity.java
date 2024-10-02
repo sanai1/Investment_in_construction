@@ -8,7 +8,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.investmentinconstruction.MainActivity;
+import com.example.investmentinconstruction.LoadingActivity;
+import com.example.investmentinconstruction.MainBottomNavigation;
+import com.example.investmentinconstruction.R;
 import com.example.investmentinconstruction.databinding.ActivitySignInBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -46,7 +48,7 @@ public class SignInActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(SignInActivity.this, MainBottomNavigation.class);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(SignInActivity.this, "login hasn`t been completed", Toast.LENGTH_SHORT).show();

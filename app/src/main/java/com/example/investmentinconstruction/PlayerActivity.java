@@ -2,7 +2,6 @@ package com.example.investmentinconstruction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -10,26 +9,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 
-import com.example.investmentinconstruction.databinding.ActivityMainBinding;
+import com.example.investmentinconstruction.databinding.ActivityPlayerBinding;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class PlayerActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding_main;
+    private ActivityPlayerBinding binding_player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding_main = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding_main.getRoot());
+        binding_player = ActivityPlayerBinding.inflate(getLayoutInflater());
+        setContentView(binding_player.getRoot());
 
-        binding_main.navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        binding_player.navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() != R.id.player1) {
-                    binding_main.drawerLayout.close();
-                    Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
+                if (item.getItemId() == R.id.player1) {
+                    Intent intent = new Intent(PlayerActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
                 return true;
@@ -38,6 +36,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void menuPlayer(View view) {
-        binding_main.drawerLayout.openDrawer(GravityCompat.START);
+        binding_player.drawerLayout.openDrawer(GravityCompat.START);
     }
 }

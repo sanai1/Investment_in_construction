@@ -1,4 +1,4 @@
-package com.example.investmentinconstruction;
+package com.example.investmentinconstruction.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.investmentinconstruction.LoadingActivity;
+import com.example.investmentinconstruction.MainActivity;
+import com.example.investmentinconstruction.MainBottomNavigation;
+import com.example.investmentinconstruction.R;
 import com.example.investmentinconstruction.databinding.ActivityCreateRoomBinding;
 
 public class CreateRoomActivity extends AppCompatActivity {
@@ -33,6 +37,10 @@ public class CreateRoomActivity extends AppCompatActivity {
         Integer numberPeople = Integer.valueOf(binding_createRoom.spinnerNumberPeople.getSelectedItem().toString());
         String nameDistrict = binding_createRoom.spinnerDistrict.getSelectedItem().toString();
         // TODO: сделать создание комнаты в Firebase (структура json)
+
+        Intent intent = new Intent(CreateRoomActivity.this, LoadingActivity.class);
+        intent.putExtra("activity", "MainActivity");
+        startActivity(intent);
     }
 
     private void initSpinner() {
@@ -46,7 +54,7 @@ public class CreateRoomActivity extends AppCompatActivity {
     }
 
     public void goToHome(View view) {
-        Intent intent = new Intent(CreateRoomActivity.this, MainActivity.class);
+        Intent intent = new Intent(CreateRoomActivity.this, MainBottomNavigation.class);
         startActivity(intent);
     }
 

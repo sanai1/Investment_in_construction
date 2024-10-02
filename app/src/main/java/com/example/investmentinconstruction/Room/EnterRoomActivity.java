@@ -1,4 +1,4 @@
-package com.example.investmentinconstruction;
+package com.example.investmentinconstruction.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.investmentinconstruction.LoadingActivity;
+import com.example.investmentinconstruction.MainActivity;
+import com.example.investmentinconstruction.MainBottomNavigation;
+import com.example.investmentinconstruction.R;
 import com.example.investmentinconstruction.databinding.ActivityEnterRoomBinding;
 
 public class EnterRoomActivity extends AppCompatActivity {
@@ -28,6 +32,10 @@ public class EnterRoomActivity extends AppCompatActivity {
         String nameDistrict = binding_enterRoom.spinner.getSelectedItem().toString();
         String roomCode = binding_enterRoom.editTextNumberCheckCode.getText().toString();
         // TODO: сделать вход в комнату firebase (проверяя code)
+
+        Intent intent = new Intent(EnterRoomActivity.this, LoadingActivity.class);
+        intent.putExtra("activity", "MainActivity");
+        startActivity(intent);
     }
 
     private void initSpinner() {
@@ -37,7 +45,7 @@ public class EnterRoomActivity extends AppCompatActivity {
     }
 
     public void goToHome(View view) {
-        Intent intent = new Intent(EnterRoomActivity.this, MainActivity.class);
+        Intent intent = new Intent(EnterRoomActivity.this, MainBottomNavigation.class);
         startActivity(intent);
     }
 }

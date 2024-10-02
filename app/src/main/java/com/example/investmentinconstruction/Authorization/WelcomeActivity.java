@@ -6,7 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.investmentinconstruction.MainActivity;
+import com.example.investmentinconstruction.LoadingActivity;
+import com.example.investmentinconstruction.MainBottomNavigation;
 import com.example.investmentinconstruction.databinding.ActivityWelcomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -29,7 +30,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onStart();
 
         if (firebaseAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+            Intent intent = new Intent(WelcomeActivity.this, MainBottomNavigation.class);
             startActivity(intent);
         }
     }

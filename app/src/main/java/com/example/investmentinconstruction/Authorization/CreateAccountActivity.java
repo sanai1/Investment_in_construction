@@ -8,7 +8,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.investmentinconstruction.MainActivity;
+import com.example.investmentinconstruction.MainBottomNavigation;
+import com.example.investmentinconstruction.R;
 import com.example.investmentinconstruction.databinding.ActivityCreateAccountBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -52,7 +53,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(CreateAccountActivity.this, MainBottomNavigation.class);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(CreateAccountActivity.this, "registration failed", Toast.LENGTH_SHORT).show();

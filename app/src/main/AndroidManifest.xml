@@ -21,11 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainBottomNavigation"/>
         <activity android:name=".Authorization.SignInActivity"/>
         <activity android:name=".Authorization.CreateAccountActivity"/>
-        <activity android:name=".EnterRoomActivity"/>
-        <activity android:name=".CreateRoomActivity"/>
+        <activity android:name=".Room.EnterRoomActivity"/>
+        <activity android:name=".Room.CreateRoomActivity"/>
+        <activity android:name=".LoadingActivity"/>
+        <activity android:name=".PlayerActivity"/>
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>

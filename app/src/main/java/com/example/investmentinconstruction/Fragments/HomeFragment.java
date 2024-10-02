@@ -1,10 +1,7 @@
 package com.example.investmentinconstruction.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.investmentinconstruction.EnterRoomActivity;
-import com.example.investmentinconstruction.MainActivity;
+import com.example.investmentinconstruction.MainBottomNavigation;
 import com.example.investmentinconstruction.R;
-import com.example.investmentinconstruction.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
@@ -32,12 +27,12 @@ public class HomeFragment extends Fragment {
 
         Button buttonEnterRoom = (Button) view.findViewById(R.id.buttonEnterRoomHome);
         buttonEnterRoom.setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToEnterRoom();
+            ((MainBottomNavigation) getActivity()).goToEnterRoom();
         });
 
         Button buttonCreateRoom = (Button) view.findViewById(R.id.buttonCreateRoomHome);
         buttonCreateRoom.setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToCreateRoom();
+            ((MainBottomNavigation) getActivity()).goToCreateRoom();
         });
 
         return view;
