@@ -7,15 +7,15 @@ class Building;
 
 class Player {
 public:
-	Player(long double cash, std::string name, Microdistrict* district) :
+	Player(double cash, std::string name, Microdistrict* district) :
 		_cash(cash),
 		_name(name),
 		_my_district(district)
 	{}
-	void info();
-	friend bool buy_building(Player*, Building*, int);
+	void update_construction();
+	friend bool buy_building(Player*, Building*);
 private:
-	long double _cash;// измеряется в тыс. у.е
+	double _cash;// измеряется в тыс. у.е
 	std::string _name;
 	std::vector<Building*> _my_buildings;
 	Microdistrict* _my_district;

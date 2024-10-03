@@ -1,37 +1,72 @@
 class Player;
 class Microdistrict;
+const int INC_PERCENT = 10;
 
 class Building {
 public:
-	Building(long double cost, int period) :
-		_start_build(-1),
+	Building(long double cost, int period, std::string type) :
 		_construction_cost(cost),
 		_construction_period(period),
 		_owner(nullptr),
-		is_builded(false)
+		_is_builded(false),
+		_district(nullptr),
+		_type(type)
 	{}
-	friend bool buy_building(Player*, Building*, int);
+	bool is_builded() {
+		return _is_builded;
+	}
+	void update() {
+		if (_is_builded) {
+			return;
+		}
+		_construction_period--;
+	}
+	virtual bool is_shop() const = 0;
+	friend bool buy_building(Player*, Building*);
+	std::string get_type() {
+		return _type;
+	}
+	double get_cost() {
+		return _construction_cost;
+	}
 private:
-	long double _construction_cost; // »змер€етс€ в тыс. у.е
-	int _construction_period; //»змер€етс€ в мес€цах
+	std::string _type;
+	bool _is_builded;
+	double _construction_cost; // »змер€етс€ в тыс. у.е в мес€ц.
+	int _construction_period; //—колько мес€цев до конца стройки
 	Player* _owner;
-	int _start_build; // ћес€ц начала стройки
-	bool is_builded;
 	Microdistrict* _district;
 };
 
 class House : public Building {
 public:
-	//...
+	House(long double cost, int period, std::string type, int cnt_apart) :
+		Building(cost, period, type),
+		_cnt_apartments(cnt_apart),
+		_sold_profit(0),
+		_sold_apartments(0),
+		_sale_apartments(0)
+	{}
+	bool is_shop() const final {
+		return 0;
+	}
+	
 private:
-	std::string type;
-	int _demand; // спрос на жильЄ
+	int _cnt_apartments;// количество квартир
+	double _apartment_price; // цена одной квартиры
+	int _sold_apartments; // количество проданных квартир
+	int _sale_apartments; // количество квартир на продаже
+	double _sold_profit; // обща€ прибыль с дома
 };
 
 class Shop : public Building {
 public:
-	//...
+	Shop(double cost, int period, std::string type) :
+		Building(cost, period, type), _sold_profit(0) {
+	}
+	bool is_shop() const final {
+		return 1;
+	}
 private:
-	std::string type;
-	int _average_sales_level; // средний уровень продаж
+	double _sold_profit;
 };
