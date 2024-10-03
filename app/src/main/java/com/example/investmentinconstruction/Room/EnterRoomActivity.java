@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.investmentinconstruction.ConnectRealtimeDatabase;
 import com.example.investmentinconstruction.LoadingActivity;
+import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.MainActivity;
 import com.example.investmentinconstruction.MainBottomNavigation;
 import com.example.investmentinconstruction.R;
@@ -33,11 +34,20 @@ public class EnterRoomActivity extends AppCompatActivity {
     public void enterRoom(View view) {
         String nameDistrict = binding_enterRoom.spinner.getSelectedItem().toString();
         String roomCode = binding_enterRoom.editTextNumberCheckCode.getText().toString();
-        // TODO: сделать вход в комнату firebase (проверяя code)
+        // TODO: поправить переход на новую activity после окончания загрузки
 
-        boolean signInRoom =  ConnectRealtimeDatabase.getInstance(this).signInRoom(roomCode, FirebaseAuth.getInstance().getCurrentUser().getUid(), nameDistrict);
+        String uid = FirebaseAuth.getInstance().getUid();
+        User user = new User(uid, nameDistrict, 0, null, null, null);
+        boolean signInRoom =  ConnectRealtimeDatabase.getInstance(this)
+                .signInRoom(roomCode, FirebaseAuth.getInstance().getCurrentUser().getUid(), nameDistrict, user);
         Intent intent = new Intent(EnterRoomActivity.this, LoadingActivity.class);
-        intent.putExtra("activity", "MainActivity");
+        if (signInRoom) {
+            intent.putExtra("activity", "MainActivity");
+        } else {
+            intent.putExtra("activity", "EnterRoomActivity");
+        }
+        intent.putExtra("roomCode", roomCode);
+        intent.putExtra(User.class.getSimpleName(), user);
         startActivity(intent);
     }
 

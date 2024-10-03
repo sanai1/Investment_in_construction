@@ -48,16 +48,17 @@ public class CreateRoomActivity extends AppCompatActivity {
     public void createRoom(View view) {
         Integer numberPeople = Integer.valueOf(binding_createRoom.spinnerNumberPeople.getSelectedItem().toString());
         String nameDistrict = binding_createRoom.spinnerDistrict.getSelectedItem().toString();
-        // TODO: сделать создание комнаты в Firebase (структура json)
 
         List<User> userList = new ArrayList<>();
         userList.add(new User(firebaseAuth.getCurrentUser().getUid(), nameDistrict, 0, null, null, null));
-        Room room = new Room(2500, numberPeople, 1, 1, userList);
+        Room room = new Room(roomCode, numberPeople, 1, 1, userList);
 
         ConnectRealtimeDatabase.getInstance(this).createRoom(room);
 
         Intent intent = new Intent(CreateRoomActivity.this, LoadingActivity.class);
         intent.putExtra("activity", "MainActivity");
+        intent.putExtra("roomCode", roomCode);
+        intent.putExtra(User.class.getSimpleName(), userList.get(0));
         startActivity(intent);
     }
 
