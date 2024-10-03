@@ -52,7 +52,7 @@ public class CreateRoomActivity extends AppCompatActivity {
 
         List<User> userList = new ArrayList<>();
         userList.add(new User(firebaseAuth.getCurrentUser().getUid(), nameDistrict, 0, null, null, null));
-        Room room = new Room(2500, numberPeople, 1, 1, userList);
+        Room room = new Room(roomCode, numberPeople, 1, 1, userList);
 
         ConnectRealtimeDatabase.getInstance(this).createRoom(room);
 
