@@ -32,8 +32,8 @@ public:
 private:
 	std::string _type;
 	bool _is_builded;
-	double _construction_cost; // Измеряется в тыс. у.е в месяц.
-	int _construction_period; //Сколько месяцев до конца стройки
+	double _construction_cost; // РР·РјРµСЂСЏРµС‚СЃСЏ РІ С‚С‹СЃ. Сѓ.Рµ РІ РјРµСЃСЏС†.
+	int _construction_period; //РЎРєРѕР»СЊРєРѕ РјРµСЃСЏС†РµРІ РґРѕ РєРѕРЅС†Р° СЃС‚СЂРѕР№РєРё
 	Player* _owner;
 	Microdistrict* _district;
 };
@@ -52,11 +52,11 @@ public:
 	}
 	
 private:
-	int _cnt_apartments;// количество квартир
-	double _apartment_price; // цена одной квартиры
-	int _sold_apartments; // количество проданных квартир
-	int _sale_apartments; // количество квартир на продаже
-	double _sold_profit; // общая прибыль с дома
+	int _cnt_apartments;// РєРѕР»РёС‡РµСЃС‚РІРѕ РєРІР°СЂС‚РёСЂ
+	double _apartment_price; // С†РµРЅР° РѕРґРЅРѕР№ РєРІР°СЂС‚РёСЂС‹
+	int _sold_apartments; // РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕРґР°РЅРЅС‹С… РєРІР°СЂС‚РёСЂ
+	int _sale_apartments; // РєРѕР»РёС‡РµСЃС‚РІРѕ РєРІР°СЂС‚РёСЂ РЅР° РїСЂРѕРґР°Р¶Рµ
+	double _sold_profit; // РѕР±С‰Р°СЏ РїСЂРёР±С‹Р»СЊ СЃ РґРѕРјР°
 };
 
 class Shop : public Building {

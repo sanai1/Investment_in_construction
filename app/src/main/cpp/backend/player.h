@@ -15,7 +15,7 @@ public:
 	void update_construction();
 	friend bool buy_building(Player*, Building*);
 private:
-	double _cash;// измеряется в тыс. у.е
+	double _cash;// РёР·РјРµСЂСЏРµС‚СЃСЏ РІ С‚С‹СЃ. Сѓ.Рµ
 	std::string _name;
 	std::vector<Building*> _my_buildings;
 	Microdistrict* _my_district;

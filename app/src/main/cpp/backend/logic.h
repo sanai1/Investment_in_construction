@@ -9,9 +9,9 @@ bool buy_building(Player* player, Building* building) {
 		player->_my_buildings.push_back(building);
 		building->_owner = player;
 		building->_district = player->_my_district;
-		return true; // Операция прошла успешно - началась стройка
+		return true; // РћРїРµСЂР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ - РЅР°С‡Р°Р»Р°СЃСЊ СЃС‚СЂРѕР№РєР°
 	}
-	return false; // Игроку не хватает денег на покупку
+	return false; // РРіСЂРѕРєСѓ РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі РЅР° РїРѕРєСѓРїРєСѓ
 }
 
 void Microdistrict::new_building(Building* building) {
