@@ -5,23 +5,159 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include layout="@layout/main_color_background"/>
 
-    <Button
-        android:id="@+id/buttonAddConstruction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="450dp"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewAddConstructionDialog"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Add construction"
+                android:textColor="@color/black"
+                android:textSize="40dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkBoxShop"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:text="Shop"
+                    android:textColor="@color/black"
+                    android:textSize="25dp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupShop"
+                    android:layout_width="125dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonSupermarket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Supermarket"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+
+                    <RadioButton
+                        android:id="@+id/radioButtonBakery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bakery"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+
+                    <RadioButton
+                        android:id="@+id/radioButtonHardwareStore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hardware store"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkBoxHouse"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:text="House"
+                    android:textColor="@color/black"
+                    android:textSize="25dp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupHouse"
+                    android:layout_width="125dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonBrick"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Brick"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+
+                    <RadioButton
+                        android:id="@+id/radioButtonPanel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Panel"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+
+                    <RadioButton
+                        android:id="@+id/radioButtonMonolithic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Monolithic"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonAddConstruction"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/light_purple"
+                android:text="Add"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

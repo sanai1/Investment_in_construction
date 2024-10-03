@@ -2,7 +2,6 @@ package com.example.investmentinconstruction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -14,7 +13,6 @@ import com.example.investmentinconstruction.DialogFragment.NewConstruction;
 import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NewConstruction.DialogListenerAdd{
 
@@ -66,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NewConstruction.D
     }
 
     @Override
-    public void onDialogClickListener() {
-        System.out.println("ggggggggggggggggggggggg");
+    public void onDialogClickListener(boolean house, String typeHouse, boolean shop, String typeShop) {
+
     }
 }

@@ -95,10 +95,11 @@
         android:id="@+id/spinnerDistrict"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewDistrict"
+        app:layout_constraintStart_toEndOf="@+id/textViewDistrictCreateRoom"
         app:layout_constraintTop_toTopOf="@+id/textViewDistrictCreateRoom" />
 
     <TextView
