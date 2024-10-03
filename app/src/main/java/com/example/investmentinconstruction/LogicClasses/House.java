@@ -15,18 +15,32 @@ public class House {
 
     public House() {}
 
-    public House(String hid, String typeHouse, Integer duration, Integer startPeriod, Integer priceMonth,
-                 Integer salePrice, Integer countApartments, Integer soldApartments, Integer saleApartments, Integer soldProfit) {
+    public House(String hid, String typeHouse, Integer startPeriod,
+                 Integer salePrice, Integer soldApartments, Integer saleApartments, Integer soldProfit) {
         this.hid = hid;
         this.typeHouse = typeHouse;
-        this.duration = duration;
         this.startPeriod = startPeriod;
-        this.priceMonth = priceMonth;
         this.salePrice = salePrice;
-        this.countApartments = countApartments;
         this.soldApartments = soldApartments;
         this.saleApartments = saleApartments;
         this.soldProfit = soldProfit;
+        initHouse();
+    }
+
+    private void initHouse() {
+        if (typeHouse.equals("Panel")) {
+            this.duration = 7;
+            this.priceMonth = 10000;
+            this.countApartments = 50;
+        } else if (typeHouse.equals("Brick")) {
+            this.duration = 6;
+            this.priceMonth = 7500;
+            this.countApartments = 40;
+        } else if (typeHouse.equals("Monolithic")) {
+            this.duration = 5;
+            this.priceMonth = 5000;
+            this.countApartments = 60;
+        }
     }
 
     public String getHid() {

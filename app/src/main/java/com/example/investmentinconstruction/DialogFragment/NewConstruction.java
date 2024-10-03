@@ -47,9 +47,11 @@ public class NewConstruction extends DialogFragment implements View.OnClickListe
 
         boolean house = false, shop = false;
         String typeHouse = "", typeShop = "";
+        int houseClick = 0, shopClick = 0;
+        if (checkBoxHouse.isChecked() && radioGroupHouse.getCheckedRadioButtonId() != -1) houseClick++;
+        if (checkBoxShop.isChecked() && radioGroupShop.getCheckedRadioButtonId() != -1) shopClick++;
 
-        if ((checkBoxHouse.isChecked() && radioGroupHouse.getCheckedRadioButtonId() != -1) ||
-                (checkBoxShop.isChecked() && radioGroupShop.getCheckedRadioButtonId() != -1)) {
+        if (houseClick > 0) {
             house = true;
             RadioButton radioButtonBrick = getDialog().findViewById(R.id.radioButtonBrick);
             RadioButton radioButtonPanel = getDialog().findViewById(R.id.radioButtonPanel);
@@ -58,7 +60,8 @@ public class NewConstruction extends DialogFragment implements View.OnClickListe
             if (radioButtonBrick.isChecked()) typeHouse = "Brick";
             else if (radioButtonPanel.isChecked()) typeHouse = "Panel";
             else if (radioButtonMonolithic.isChecked()) typeHouse = "Monolithic";
-
+        }
+        if (shopClick > 0) {
             shop = true;
             RadioButton radioButtonSupermarket = getDialog().findViewById(R.id.radioButtonSupermarket);
             RadioButton radioButtonBakery = getDialog().findViewById(R.id.radioButtonBakery);
@@ -67,7 +70,8 @@ public class NewConstruction extends DialogFragment implements View.OnClickListe
             if (radioButtonSupermarket.isChecked()) typeShop = "Supermarket";
             else if (radioButtonBakery.isChecked()) typeShop = "Bakery";
             else if (radioButtonHardwareStore.isChecked()) typeShop = "HardwareStore";
-
+        }
+        if (houseClick > 0 || shopClick > 0) {
             dialogListenerAdd.onDialogClickListener(house, typeHouse, shop, typeShop);
             dismiss();
         }

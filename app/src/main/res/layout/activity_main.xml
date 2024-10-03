@@ -81,12 +81,14 @@
             app:layout_constraintTop_toBottomOf="@+id/imageViewMoney" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listConstruction"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonStep"
+            android:layout_marginBottom="15dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +102,7 @@
             android:backgroundTint="@color/light_purple"
             android:text="Step"
             android:textColor="@color/white"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="35dp"
             android:onClick="step"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

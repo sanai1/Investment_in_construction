@@ -11,13 +11,25 @@ public class Shop {
 
     public Shop() {}
 
-    public Shop(String sid, String typeShop, Integer duration, Integer startPeriod, Integer priceMonth, Integer soldProfit) {
+    public Shop(String sid, String typeShop, Integer startPeriod, Integer soldProfit) {
         this.sid = sid;
         this.typeShop = typeShop;
-        this.duration = duration;
         this.startPeriod = startPeriod;
-        this.priceMonth = priceMonth;
         this.soldProfit = soldProfit;
+        initShop();
+    }
+
+    private void initShop() {
+        if (typeShop.equals("Supermarket")) {
+            this.duration = 5;
+            this.priceMonth = 45000;
+        } else if (typeShop.equals("Bakery")) {
+            this.duration = 5;
+            this.priceMonth = 4;
+        } else if (typeShop.equals("HardwareStore")) {
+            this.duration = 3;
+            this.priceMonth = 10000;
+        }
     }
 
     public String getSid() {
