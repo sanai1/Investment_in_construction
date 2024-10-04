@@ -6,12 +6,17 @@ public class ConstructionState {
     private String type;
     private String progressBuild;
     private int picture;
+    private String fullApartment;
+    private String soldApartment;
+    private int index;
 
     public ConstructionState(String hid, String type, String progress, int picture) {
         this.cid = hid;
         this.type = type;
         this.progressBuild = progress;
         this.picture = picture;
+        this.fullApartment = "";
+        this.soldApartment = "";
     }
 
     public String getCid() {
@@ -44,5 +49,29 @@ public class ConstructionState {
 
     public void setPicture(int picture) {
         this.picture = picture;
+    }
+
+    public String getFullApartment() {
+        return fullApartment;
+    }
+
+    public void setFullApartment(String fullApartment) {
+        this.fullApartment = fullApartment;
+    }
+
+    public String getSoldApartment() {
+        return soldApartment;
+    }
+
+    public void setSoldApartment(String soldApartment) {
+        this.soldApartment = soldApartment;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

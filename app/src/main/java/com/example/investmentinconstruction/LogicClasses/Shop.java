@@ -27,7 +27,7 @@ public class Shop {
             this.duration = 5;
             this.priceMonth = 4;
         } else if (typeShop.equals("HardwareStore")) {
-            this.duration = 3;
+            this.duration = 2;
             this.priceMonth = 10000;
         }
     }

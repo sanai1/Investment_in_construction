@@ -69,4 +69,20 @@ public class ConnectRealtimeDatabase {
         System.out.println(result + " final");
         return result;
     }
+
+    public void testString(Room room) {
+        root.child(room.getRoomCode().toString()).setValue(room);
+        root.child(room.getRoomCode().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String json = snapshot.getValue().toString();
+                System.out.println(json);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }

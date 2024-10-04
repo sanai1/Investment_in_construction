@@ -67,6 +67,18 @@ public class ConstructionAdapter extends RecyclerView.Adapter<ConstructionAdapte
                     onStateHouseClickListener.onStateHouseClick(constructionStateList.get(position).getCid(), constructionStateList.get(position), position);
                 }
             });
+            textViewType.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onStateHouseClickListener.onStateHouseClick(constructionStateList.get(position).getCid(), constructionStateList.get(position), position);
+                }
+            });
+            picture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onStateHouseClickListener.onStateHouseClick(constructionStateList.get(position).getCid(), constructionStateList.get(position), position);
+                }
+            });
         }
 
         public void update(ConstructionState constructionState) {

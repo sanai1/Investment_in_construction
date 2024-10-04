@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.investmentinconstruction.AdapterState.ConstructionAdapter;
 import com.example.investmentinconstruction.AdapterState.ConstructionState;
+import com.example.investmentinconstruction.DialogFragment.AddInfoConstruction;
 import com.example.investmentinconstruction.DialogFragment.NewConstruction;
+import com.example.investmentinconstruction.LogicClasses.Advertisement;
 import com.example.investmentinconstruction.LogicClasses.House;
+import com.example.investmentinconstruction.LogicClasses.Room;
 import com.example.investmentinconstruction.LogicClasses.Shop;
 import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.databinding.ActivityMainBinding;
@@ -23,13 +26,15 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity implements NewConstruction.DialogListenerAdd     {
+public class MainActivity extends AppCompatActivity implements NewConstruction.DialogListenerAdd, AddInfoConstruction.DialogListenerAddInfo {
 
     private ActivityMainBinding binding_main;
     private String roomCode;
     private User user;
     protected NewConstruction newConstruction;
+    protected AddInfoConstruction addInfoConstruction;
     private RecyclerView.LayoutManager layoutManager;
     private ConstructionAdapter constructionAdapter;
     private List<ConstructionState> constructionStateList;
@@ -50,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements NewConstruction.D
 
         newConstruction = new NewConstruction();
         newConstruction.setMyDialogListener(this);
+
+        addInfoConstruction = new AddInfoConstruction();
+        addInfoConstruction.setDialogListenerAddInfo(this);
 
         binding_main.navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -75,19 +83,29 @@ public class MainActivity extends AppCompatActivity implements NewConstruction.D
     private void updateView() {
         ConstructionAdapter.OnStateHouseClickListener onStateHouseClickListener = new ConstructionAdapter.OnStateHouseClickListener() {
             @Override
-            public void onStateHouseClick(String tag, ConstructionState homeState, int position) {
-                // TODO: открытие диалогового окна по нажатию на элемент RecycleView
+            public void onStateHouseClick(String tag, ConstructionState constructionState, int position) {
+                if (constructionState.getType().equals("Brick") || constructionState.getType().equals("Panel") || constructionState.getType().equals("Monolithic")) {
+                    addInfoConstruction.setTypeCID(constructionState.getCid());
+                    addInfoConstruction.setProgressBuild(constructionState.getProgressBuild());
+                    addInfoConstruction.setFullApartment(constructionState.getFullApartment());
+                    addInfoConstruction.setSoldApartment(constructionState.getSoldApartment());
+                    addInfoConstruction.setIndex(constructionState.getIndex());
+                    addInfoConstruction.show(getSupportFragmentManager(), constructionState.getCid());
+                }
             }
         };
         constructionStateList = new ArrayList<>();
         int picture = 0;
         // TODO: сделать правильно progress - проверить разницу между текущим месяцев и месяцев начала стройки, при разнице больше 1 вычислить % иначе 0%
         if (user.getHouseList() != null) {
-            for (House house : user.getHouseList()) {
-                if (house.getTypeHouse().equals("Brick")) picture = R.drawable.house_brick;
-                else if (house.getTypeHouse().equals("Panel")) picture = R.drawable.house_panel;
-                else if (house.getTypeHouse().equals("Monolithic")) picture = R.drawable.house_monolithic;
-                constructionStateList.add(new ConstructionState(house.getHid(), house.getTypeHouse(), "0%", picture));
+            for (int index = 0; index < user.getHouseList().size(); index++) {
+                if (user.getHouseList().get(index).getTypeHouse().equals("Brick")) picture = R.drawable.house_brick;
+                else if (user.getHouseList().get(index).getTypeHouse().equals("Panel")) picture = R.drawable.house_panel;
+                else if (user.getHouseList().get(index).getTypeHouse().equals("Monolithic")) picture = R.drawable.house_monolithic;
+                constructionStateList.add(new ConstructionState(user.getHouseList().get(index).getHid(), user.getHouseList().get(index).getTypeHouse(), "0%", picture));
+                constructionStateList.get(constructionStateList.size() - 1).setFullApartment(user.getHouseList().get(index).getCountApartments().toString());
+                constructionStateList.get(constructionStateList.size() - 1).setSoldApartment(user.getHouseList().get(index).getSoldApartments().toString());
+                constructionStateList.get(constructionStateList.size() - 1).setIndex(index);
             }
         }
         if (user.getShopList() != null) {
@@ -114,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NewConstruction.D
     }
 
     public void step(View view) {
-
+        test();
     }
 
     @Override
@@ -137,5 +155,42 @@ public class MainActivity extends AppCompatActivity implements NewConstruction.D
         } else {
             Log.w("fail in MainActivity", "onDialogClickListener (DialogFragment)");
         }
+    }
+
+    private void test() {
+        List<User> userList = new ArrayList<>();
+
+        List<House> houseList_1 = new ArrayList<>();
+        List<Shop> shopList_1 = new ArrayList<>();
+
+        List<House> houseList_2 = new ArrayList<>();
+        List<Shop> shopList_2 = new ArrayList<>();
+
+        houseList_1.add(new House("436", "Panel", 2, 40000, 0, 10, 0));
+        houseList_1.add(new House("135", "Monolithic", 1, 0, 0, 0, 0));
+
+        houseList_2.add(new House("146", "Brick", 3, 50000, 5, 5, 200000));
+        houseList_2.add(new House("945", "Panel", 2, 35000, 0, 7, 0));
+
+        shopList_1.add(new Shop("425", "Bakery", 1, 0));
+        shopList_1.add(new Shop("154", "Supermarket", 3, 0));
+
+        shopList_2.add(new Shop("726", "HardwareStore", 1, 45000));
+        shopList_2.add(new Shop("426", "Supermarket", 2, 0));
+
+        userList.add(new User(UUID.randomUUID().toString(), "Arbat", 0, new Advertisement(1000, 750), houseList_1, shopList_1));
+        userList.add(new User(UUID.randomUUID().toString(), "Sokolniki", 0, new Advertisement(800, 1100), houseList_2, shopList_2));
+
+        Room room = new Room(15641, 2, 2, 1, userList);
+
+        ConnectRealtimeDatabase.getInstance(this).testString(room);
+    }
+
+    @Override
+    public void onDialogClickListener(Integer countSale, Integer price, int index) {
+        user.getHouseList().get(index).setSaleApartments(countSale);
+        user.getHouseList().get(index).setSalePrice(price);
+        System.out.println(user.getHouseList().get(index).getSaleApartments());
+        System.out.println(user.getHouseList().get(index).getSalePrice());
     }
 }
