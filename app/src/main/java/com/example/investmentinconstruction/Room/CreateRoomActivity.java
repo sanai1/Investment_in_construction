@@ -14,13 +14,16 @@ import com.example.investmentinconstruction.LogicClasses.House;
 import com.example.investmentinconstruction.LogicClasses.Room;
 import com.example.investmentinconstruction.LogicClasses.Shop;
 import com.example.investmentinconstruction.LogicClasses.User;
+import com.example.investmentinconstruction.MainActivity;
 import com.example.investmentinconstruction.MainBottomNavigation;
 import com.example.investmentinconstruction.databinding.ActivityCreateRoomBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CreateRoomActivity extends AppCompatActivity {
 
@@ -49,16 +52,19 @@ public class CreateRoomActivity extends AppCompatActivity {
         Integer numberPeople = Integer.valueOf(binding_createRoom.spinnerNumberPeople.getSelectedItem().toString());
         String nameDistrict = binding_createRoom.spinnerDistrict.getSelectedItem().toString();
 
-        List<User> userList = new ArrayList<>();
-        userList.add(new User(firebaseAuth.getCurrentUser().getUid(), nameDistrict, 0, null, null, null));
-        Room room = new Room(roomCode, numberPeople, 1, 1, userList);
+        Map<String, User> userMap = new HashMap<String, User>();
+        String uid = firebaseAuth.getCurrentUser().getUid().toString();
+        User user = new User(firebaseAuth.getCurrentUser().getUid().toString(), nameDistrict, 0, null, new HashMap<>(), new HashMap<>());
+        userMap.put(uid, user);
+
+        Room room = new Room(roomCode, numberPeople, 1, 1, userMap);
 
         ConnectRealtimeDatabase.getInstance(this).createRoom(room);
 
         Intent intent = new Intent(CreateRoomActivity.this, LoadingActivity.class);
         intent.putExtra("activity", "MainActivity");
         intent.putExtra("roomCode", roomCode);
-        intent.putExtra(User.class.getSimpleName(), userList.get(0));
+        intent.putExtra(User.class.getSimpleName(), room.getUserMap().get(uid));
         startActivity(intent);
     }
 

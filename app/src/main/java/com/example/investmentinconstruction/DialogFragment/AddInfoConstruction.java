@@ -18,7 +18,7 @@ public class AddInfoConstruction extends DialogFragment implements View.OnClickL
     private String progressBuild;
     private String fullApartment;
     private String soldApartment;
-    private int index;
+    private String key;
 
     public AddInfoConstruction() {}
 
@@ -54,12 +54,12 @@ public class AddInfoConstruction extends DialogFragment implements View.OnClickL
         this.soldApartment = soldApartment;
     }
 
-    public int getIndex() {
-        return index;
+    public String getKey() {
+        return key;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class AddInfoConstruction extends DialogFragment implements View.OnClickL
         EditText editTextCountSale = getDialog().findViewById(R.id.editTextNumberCountSale);
         EditText editTextPrice = getDialog().findViewById(R.id.editTextNumberPrice);
         if (!editTextCountSale.getText().toString().isEmpty() && !editTextPrice.getText().toString().isEmpty()) {
-            dialogListenerAddInfo.onDialogClickListener(Integer.valueOf(editTextCountSale.getText().toString()), Integer.valueOf(editTextPrice.getText().toString()), index);
+            dialogListenerAddInfo.onDialogClickListener(Integer.valueOf(editTextCountSale.getText().toString()), Integer.valueOf(editTextPrice.getText().toString()), key);
             editTextCountSale.setText("");
             editTextPrice.setText("");
             dismiss();
@@ -97,7 +97,7 @@ public class AddInfoConstruction extends DialogFragment implements View.OnClickL
     }
 
     public interface DialogListenerAddInfo {
-        void onDialogClickListener(Integer countSale, Integer price, int index);
+        void onDialogClickListener(Integer countSale, Integer price, String key);
     }
 
     public void setDialogListenerAddInfo(DialogListenerAddInfo listener) {

@@ -9,12 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.investmentinconstruction.ConnectRealtimeDatabase;
 import com.example.investmentinconstruction.LoadingActivity;
+import com.example.investmentinconstruction.LogicClasses.Advertisement;
 import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.MainActivity;
 import com.example.investmentinconstruction.MainBottomNavigation;
 import com.example.investmentinconstruction.R;
 import com.example.investmentinconstruction.databinding.ActivityEnterRoomBinding;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.HashMap;
 
 public class EnterRoomActivity extends AppCompatActivity {
 
@@ -37,7 +40,7 @@ public class EnterRoomActivity extends AppCompatActivity {
         // TODO: поправить переход на новую activity после окончания загрузки
 
         String uid = FirebaseAuth.getInstance().getUid();
-        User user = new User(uid, nameDistrict, 0, null, null, null);
+        User user = new User(uid, nameDistrict, 0, null, new HashMap<>(), new HashMap<>());
         boolean signInRoom =  ConnectRealtimeDatabase.getInstance(this)
                 .signInRoom(roomCode, FirebaseAuth.getInstance().getCurrentUser().getUid(), nameDistrict, user);
         Intent intent = new Intent(EnterRoomActivity.this, LoadingActivity.class);

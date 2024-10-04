@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ConnectRealtimeDatabase {
@@ -43,10 +44,10 @@ public class ConnectRealtimeDatabase {
         root.child(room.getRoomCode().toString()).setValue(room);
     }
 
-    private void addUser(String roomCode, String uid, String nameDistrict, String nowPeople, User user) {
+    private void addUser(String roomCode, String nowPeople, User user) {
         // TODO: сделать проверку на кол-во людей в комнате (если уже все присоеденились запретить вход новых людей)
         root.child(roomCode).child("nowPeople").setValue(Integer.valueOf(nowPeople) + 1);
-        root.child(roomCode).child("userList").child(nowPeople).setValue(user);
+        root.child(roomCode).child("userMap").child(user.getUid()).setValue(user);
     }
 
     public boolean signInRoom(String roomCode, String uid, String nameDistrict, User user) {
@@ -54,7 +55,7 @@ public class ConnectRealtimeDatabase {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(roomCode).getValue() != null) {
-                    addUser(roomCode, uid, nameDistrict, snapshot.child(roomCode).child("nowPeople").getValue().toString(), user);
+                    addUser(roomCode, snapshot.child(roomCode).child("nowPeople").getValue().toString(), user);
                 } else {
                     result = false;
                 }
@@ -66,11 +67,14 @@ public class ConnectRealtimeDatabase {
                 System.out.println("Ошибка при проверке наличия комнаты");
             }
         });
-        System.out.println(result + " final");
         return result;
     }
 
-    public void testString(Room room) {
+    public void updateUser(String roomCode, String uid, User user) {
+        root.child(roomCode).child("userMap").child(uid).setValue(user);
+    }
+
+    public void testString(Room room) { // запускается при нажатии на stepButton в MainActivity для получения тестовых данных
         root.child(room.getRoomCode().toString()).setValue(room);
         root.child(room.getRoomCode().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

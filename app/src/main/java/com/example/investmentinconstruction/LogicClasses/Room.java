@@ -1,22 +1,23 @@
 package com.example.investmentinconstruction.LogicClasses;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Room {
     private Integer roomCode;
     private Integer cntPeople;
     private Integer nowPeople;
     private Integer currentPeriod;
-    private List<User> userList;
+    private Map<String, User> userMap;
 
     public Room() {}
 
-    public Room(Integer roomCode, Integer cntPeople, Integer nowPeople, Integer currentPeriod, List<User> userList) {
+    public Room(Integer roomCode, Integer cntPeople, Integer nowPeople, Integer currentPeriod, Map<String, User> userHashMap) {
         this.roomCode = roomCode;
         this.cntPeople = cntPeople;
         this.nowPeople = nowPeople;
         this.currentPeriod = currentPeriod;
-        this.userList = userList;
+        this.userMap = userHashMap;
     }
 
     public Integer getRoomCode() {
@@ -51,11 +52,11 @@ public class Room {
         this.currentPeriod = currentPeriod;
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public Map<String, User> getUserMap() {
+        return userMap;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUserMap(Map<String, User> userMap) {
+        this.userMap = userMap;
     }
 }

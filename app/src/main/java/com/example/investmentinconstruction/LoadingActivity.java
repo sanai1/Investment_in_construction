@@ -44,9 +44,7 @@ public class LoadingActivity extends AppCompatActivity {
 
         animation_loading.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
+            public void onAnimationStart(Animation animation) {}
 
             @Override
             public void onAnimationEnd(Animation animation) {

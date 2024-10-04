@@ -1,7 +1,8 @@
 package com.example.investmentinconstruction.LogicClasses;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User implements Serializable {
 
@@ -9,20 +10,17 @@ public class User implements Serializable {
     private String district;
     private Integer profitFull;
     private Advertisement advertisement;
-    private List<House> houseList;
-    private List<Shop> shopList;
+    private Map<String, House> houseMap;
+    private Map<String, Shop> shopMap;
+    private Integer numberInRoom;
 
-    public User() {
-
-    }
-
-    public User(String uid, String district, Integer profitFull, Advertisement advertisement, List<House> houseList, List<Shop> shopList) {
+    public User(String uid, String district, Integer profitFull, Advertisement advertisement, Map<String, House> houseHashMap, Map<String, Shop> shopHashMap) {
         this.uid = uid;
         this.district = district;
         this.profitFull = profitFull;
         this.advertisement = advertisement;
-        this.houseList = houseList;
-        this.shopList = shopList;
+        this.houseMap = houseHashMap;
+        this.shopMap = shopHashMap;
     }
 
     public String getUid() {
@@ -57,19 +55,27 @@ public class User implements Serializable {
         this.advertisement = advertisement;
     }
 
-    public List<House> getHouseList() {
-        return houseList;
+    public Map<String, House> getHouseMap() {
+        return houseMap;
     }
 
-    public void setHouseList(List<House> houseList) {
-        this.houseList = houseList;
+    public void setHouseMap(Map<String, House> houseMap) {
+        this.houseMap = houseMap;
     }
 
-    public List<Shop> getShopList() {
-        return shopList;
+    public Map<String, Shop> getShopMap() {
+        return shopMap;
     }
 
-    public void setShopList(List<Shop> shopList) {
-        this.shopList = shopList;
+    public void setShopMap(Map<String, Shop> shopMap) {
+        this.shopMap = shopMap;
+    }
+
+    public Integer getNumberInRoom() {
+        return numberInRoom;
+    }
+
+    public void setNumberInRoom(Integer numberInRoom) {
+        this.numberInRoom = numberInRoom;
     }
 }

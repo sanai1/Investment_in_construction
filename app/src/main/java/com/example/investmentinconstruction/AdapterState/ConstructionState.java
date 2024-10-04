@@ -8,7 +8,7 @@ public class ConstructionState {
     private int picture;
     private String fullApartment;
     private String soldApartment;
-    private int index;
+    private String key;
 
     public ConstructionState(String hid, String type, String progress, int picture) {
         this.cid = hid;
@@ -67,11 +67,11 @@ public class ConstructionState {
         this.soldApartment = soldApartment;
     }
 
-    public int getIndex() {
-        return index;
+    public String getKey() {
+        return key;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setKey(String key) {
+        this.key = key;
     }
 }
