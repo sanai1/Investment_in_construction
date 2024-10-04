@@ -17,8 +17,10 @@ import com.example.investmentinconstruction.AdapterState.ConstructionState;
 import com.example.investmentinconstruction.DialogFragment.AddInfoConstruction;
 import com.example.investmentinconstruction.DialogFragment.AdvertisementConstruction;
 import com.example.investmentinconstruction.DialogFragment.NewConstruction;
+import com.example.investmentinconstruction.DialogFragment.QuestionAgain;
 import com.example.investmentinconstruction.LogicClasses.Advertisement;
 import com.example.investmentinconstruction.LogicClasses.House;
+import com.example.investmentinconstruction.LogicClasses.Room;
 import com.example.investmentinconstruction.LogicClasses.Shop;
 import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.databinding.ActivityMainBinding;
@@ -27,10 +29,16 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
-        implements NewConstruction.DialogListenerAdd, AddInfoConstruction.DialogListenerAddInfo, AdvertisementConstruction.DialogListenerAdvertisement {
+        implements
+        NewConstruction.DialogListenerAdd,
+        AddInfoConstruction.DialogListenerAddInfo,
+        AdvertisementConstruction.DialogListenerAdvertisement,
+        QuestionAgain.OnDialogClickListenerQuestionAgain {
 
     private ActivityMainBinding binding_main;
     private String roomCode;
@@ -38,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     protected NewConstruction newConstruction;
     protected AddInfoConstruction addInfoConstruction;
     protected AdvertisementConstruction advertisementConstruction;
+    protected QuestionAgain questionAgain;
     private RecyclerView.LayoutManager layoutManager;
     private ConstructionAdapter constructionAdapter;
     private List<ConstructionState> constructionStateList;
@@ -64,6 +73,9 @@ public class MainActivity extends AppCompatActivity
 
         advertisementConstruction = new AdvertisementConstruction();
         advertisementConstruction.setOnClickListener(this);
+
+        questionAgain = new QuestionAgain();
+        questionAgain.setMyDialogClickListener(this);
 
         binding_main.navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -146,8 +158,8 @@ public class MainActivity extends AppCompatActivity
 
     public void step(View view) {
         // TODO: сделать DialogFragment для уточнения намерений сделать шаг
-//        test(); необходимо запустить для получения String - пример входных данных от java к c++
-        ConnectRealtimeDatabase.getInstance(this).updateUser(roomCode, user.getUid(), user);
+//        test(); // необходимо запустить для получения String - пример входных данных от java к c++
+        questionAgain.show(getSupportFragmentManager(), "questionAgain");
     }
 
     @Override
@@ -175,32 +187,35 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void test() {
-        List<User> userList = new ArrayList<>();
+        Map<String, User> userMap = new HashMap<>();
 
-        List<House> houseList_1 = new ArrayList<>();
-        List<Shop> shopList_1 = new ArrayList<>();
+        Map<String, House> houseMap_1 = new HashMap<>();
+        Map<String, Shop> shopMap_1 = new HashMap<>();
 
-        List<House> houseList_2 = new ArrayList<>();
-        List<Shop> shopList_2 = new ArrayList<>();
+        Map<String, House> houseMap_2 = new HashMap<>();
+        Map<String, Shop> shopMap_2 = new HashMap<>();
 
-        houseList_1.add(new House("436", "Panel", 2, 40000, 0, 10, 0));
-        houseList_1.add(new House("135", "Monolithic", 1, 0, 0, 0, 0));
+        houseMap_1.put("436", new House("436", "Panel", 2, 40000, 0, 10, 0));
+        houseMap_1.put("135", new House("135", "Monolithic", 1, 0, 0, 0, 0));
 
-        houseList_2.add(new House("146", "Brick", 3, 50000, 5, 5, 200000));
-        houseList_2.add(new House("945", "Panel", 2, 35000, 0, 7, 0));
+        houseMap_2.put("146", new House("146", "Brick", 3, 50000, 5, 5, 200000));
+        houseMap_2.put("945", new House("945", "Panel", 2, 35000, 0, 7, 0));
 
-        shopList_1.add(new Shop("425", "Bakery", 1, 0));
-        shopList_1.add(new Shop("154", "Supermarket", 3, 0));
+        shopMap_1.put("425", new Shop("425", "Bakery", 1, 0));
+        shopMap_1.put("154", new Shop("154", "Supermarket", 3, 0));
 
-        shopList_2.add(new Shop("726", "HardwareStore", 1, 45000));
-        shopList_2.add(new Shop("426", "Supermarket", 2, 0));
+        shopMap_2.put("726", new Shop("726", "HardwareStore", 1, 45000));
+        shopMap_2.put("426", new Shop("426", "Supermarket", 2, 0));
 
-//        userList.add(new User(UUID.randomUUID().toString(), "Arbat", 0, new Advertisement(1000, 750), houseList_1, shopList_1));
-//        userList.add(new User(UUID.randomUUID().toString(), "Sokolniki", 0, new Advertisement(800, 1100), houseList_2, shopList_2));
+        String uid_1 = UUID.randomUUID().toString();
+        String uid_2 = UUID.randomUUID().toString();
 
-//        Room room = new Room(15641, 2, 2, 1, userList);
-//
-//        ConnectRealtimeDatabase.getInstance(this).testString(room);
+        userMap.put(uid_1, new User(uid_1, "Arbat", 0, new Advertisement(1000, 750), houseMap_1, shopMap_1));
+        userMap.put(uid_2, new User(uid_2, "Sokolniki", 0, new Advertisement(800, 1100), houseMap_2, shopMap_2));
+
+        Room room = new Room(15641, 2, 2, 1, userMap);
+
+        ConnectRealtimeDatabase.getInstance(this).testString(room);
     }
 
     @Override
@@ -216,5 +231,16 @@ public class MainActivity extends AppCompatActivity
         }
         user.getAdvertisement().setHouse(housesAdvertisement);
         user.getAdvertisement().setShop(shopsAdvertisement);
+    }
+
+    @Override
+    public void onDialogClickListener(boolean result) {
+        if (result) {
+            goToCPlusPlus();
+        }
+    }
+
+    private void goToCPlusPlus() {
+        ConnectRealtimeDatabase.getInstance(this).updateUser(roomCode, user.getUid(), user);
     }
 }
