@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.investmentinconstruction.AdapterState.ConstructionAdapter;
 import com.example.investmentinconstruction.AdapterState.ConstructionState;
 import com.example.investmentinconstruction.DialogFragment.AddInfoConstruction;
+import com.example.investmentinconstruction.DialogFragment.AdvertisementConstruction;
 import com.example.investmentinconstruction.DialogFragment.NewConstruction;
 import com.example.investmentinconstruction.LogicClasses.Advertisement;
 import com.example.investmentinconstruction.LogicClasses.House;
@@ -28,13 +29,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity implements NewConstruction.DialogListenerAdd, AddInfoConstruction.DialogListenerAddInfo {
+public class MainActivity extends AppCompatActivity
+        implements NewConstruction.DialogListenerAdd, AddInfoConstruction.DialogListenerAddInfo, AdvertisementConstruction.DialogListenerAdvertisement {
 
     private ActivityMainBinding binding_main;
     private String roomCode;
     private User user;
     protected NewConstruction newConstruction;
     protected AddInfoConstruction addInfoConstruction;
+    protected AdvertisementConstruction advertisementConstruction;
     private RecyclerView.LayoutManager layoutManager;
     private ConstructionAdapter constructionAdapter;
     private List<ConstructionState> constructionStateList;
@@ -58,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements NewConstruction.D
 
         addInfoConstruction = new AddInfoConstruction();
         addInfoConstruction.setDialogListenerAddInfo(this);
+
+        advertisementConstruction = new AdvertisementConstruction();
+        advertisementConstruction.setOnClickListener(this);
 
         binding_main.navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -131,6 +137,10 @@ public class MainActivity extends AppCompatActivity implements NewConstruction.D
         newConstruction.show(getSupportFragmentManager(), "newConstruction");
     }
 
+    public void seo(View view) {
+        advertisementConstruction.show(getSupportFragmentManager(), "advertisement");
+    }
+
     public void step(View view) {
         test();
     }
@@ -190,7 +200,14 @@ public class MainActivity extends AppCompatActivity implements NewConstruction.D
     public void onDialogClickListener(Integer countSale, Integer price, int index) {
         user.getHouseList().get(index).setSaleApartments(countSale);
         user.getHouseList().get(index).setSalePrice(price);
-        System.out.println(user.getHouseList().get(index).getSaleApartments());
-        System.out.println(user.getHouseList().get(index).getSalePrice());
+    }
+
+    @Override
+    public void onDialogClickListener(Integer housesAdvertisement, Integer shopsAdvertisement) {
+        if (user.getAdvertisement() == null) {
+            user.setAdvertisement(new Advertisement());
+        }
+        user.getAdvertisement().setHouse(housesAdvertisement);
+        user.getAdvertisement().setShop(shopsAdvertisement);
     }
 }
