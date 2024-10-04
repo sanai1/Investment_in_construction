@@ -41,6 +41,7 @@ public class EnterRoomActivity extends AppCompatActivity {
 
         String uid = FirebaseAuth.getInstance().getUid();
         User user = new User(uid, nameDistrict, 0, null, new HashMap<>(), new HashMap<>());
+        user.setNumberStep(0);
         boolean signInRoom =  ConnectRealtimeDatabase.getInstance(this)
                 .signInRoom(roomCode, FirebaseAuth.getInstance().getCurrentUser().getUid(), nameDistrict, user);
         Intent intent = new Intent(EnterRoomActivity.this, LoadingActivity.class);

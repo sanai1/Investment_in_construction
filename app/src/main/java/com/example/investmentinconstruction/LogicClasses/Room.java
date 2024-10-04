@@ -1,6 +1,5 @@
 package com.example.investmentinconstruction.LogicClasses;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Room {
@@ -9,8 +8,11 @@ public class Room {
     private Integer nowPeople;
     private Integer currentPeriod;
     private Map<String, User> userMap;
+    private Integer numberStep;
 
-    public Room() {}
+    public Room() {
+        this.numberStep = 0;
+    }
 
     public Room(Integer roomCode, Integer cntPeople, Integer nowPeople, Integer currentPeriod, Map<String, User> userHashMap) {
         this.roomCode = roomCode;
@@ -58,5 +60,13 @@ public class Room {
 
     public void setUserMap(Map<String, User> userMap) {
         this.userMap = userMap;
+    }
+
+    public Integer getNumberStep() {
+        return numberStep;
+    }
+
+    public void setNumberStep(Integer numberStep) {
+        this.numberStep = numberStep;
     }
 }

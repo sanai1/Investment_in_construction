@@ -72,6 +72,19 @@ public class ConnectRealtimeDatabase {
 
     public void updateUser(String roomCode, String uid, User user) {
         root.child(roomCode).child("userMap").child(uid).setValue(user);
+        root.child(roomCode).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int numberStepRoom = Integer.parseInt(snapshot.child("numberStep").getValue().toString());
+                root.child(roomCode).child("userMap").child(uid).child("numberStep").setValue(numberStepRoom + 1);
+                // TODO: выполнить проверку на наличия новых данных от всех игроков, если надо -> отправить данные в C++
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("Ошибка при обновлении user");
+            }
+        });
     }
 
     public void testString(Room room) { // запускается при нажатии на stepButton в MainActivity для получения тестовых данных

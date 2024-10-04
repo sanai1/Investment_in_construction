@@ -55,9 +55,11 @@ public class CreateRoomActivity extends AppCompatActivity {
         Map<String, User> userMap = new HashMap<String, User>();
         String uid = firebaseAuth.getCurrentUser().getUid().toString();
         User user = new User(firebaseAuth.getCurrentUser().getUid().toString(), nameDistrict, 0, null, new HashMap<>(), new HashMap<>());
+        user.setNumberStep(0);
         userMap.put(uid, user);
 
         Room room = new Room(roomCode, numberPeople, 1, 1, userMap);
+        room.setNumberStep(0);
 
         ConnectRealtimeDatabase.getInstance(this).createRoom(room);
 

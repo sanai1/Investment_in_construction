@@ -80,9 +80,13 @@ public class MainActivity extends AppCompatActivity
         binding_main.navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() != R.id.player1) {
+                if (item.getItemId() == R.id.player1) {
                     binding_main.drawerLayout.close();
-                    Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
+//                    Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
+//                    startActivity(intent);
+                } else if (item.getItemId() == R.id.exit) {
+                    binding_main.drawerLayout.close();
+                    Intent intent = new Intent(MainActivity.this, MainBottomNavigation.class);
                     startActivity(intent);
                 }
                 return true;
