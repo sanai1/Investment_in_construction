@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.MainFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/main_color_background"/>
+
+        <ImageView
+            android:id="@+id/imageViewNavigationMenu"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:onClick="menuPlayer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher_menu" />
+
+        <TextView
+            android:id="@+id/textViewNameGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewSeo"
+            app:layout_constraintStart_toEndOf="@+id/imageViewNavigationMenu"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewMoney"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewNavigationMenu"
+            app:srcCompat="@mipmap/ic_launcher_money" />
+
+        <TextView
+            android:id="@+id/textViewCountMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:gravity="start"
+            android:text="Money"
+            android:textColor="@color/black"
+            android:textSize="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewMoney"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewNavigationMenu" />
+
+        <ImageView
+            android:id="@+id/imageViewAddConstruction"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="35dp"
+            android:onClick="addConstruction"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewMoney"
+            app:srcCompat="@mipmap/ic_launcher_button_add" />
+
+        <TextView
+            android:id="@+id/textViewAddConstruction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add construction"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewAddConstruction"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewMoney" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listConstruction"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewAddConstruction"
+            app:layout_constraintVertical_bias="0.139" />
+
+        <Button
+            android:id="@+id/buttonStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/light_purple"
+            android:text="Step"
+            android:textColor="@color/white"
+            android:layout_marginBottom="35dp"
+            android:onClick="step"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewSeo"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="15dp"
+            android:onClick="seo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_icon_seo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

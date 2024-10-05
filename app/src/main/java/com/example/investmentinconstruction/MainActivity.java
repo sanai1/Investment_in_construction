@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +17,15 @@ import com.example.investmentinconstruction.DialogFragment.AddInfoConstruction;
 import com.example.investmentinconstruction.DialogFragment.AdvertisementConstruction;
 import com.example.investmentinconstruction.DialogFragment.NewConstruction;
 import com.example.investmentinconstruction.DialogFragment.QuestionAgain;
+import com.example.investmentinconstruction.Fragments.LoadingFragment;
+import com.example.investmentinconstruction.Fragments.MainFragment;
 import com.example.investmentinconstruction.LogicClasses.Advertisement;
 import com.example.investmentinconstruction.LogicClasses.House;
 import com.example.investmentinconstruction.LogicClasses.Room;
 import com.example.investmentinconstruction.LogicClasses.Shop;
 import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.databinding.ActivityMainBinding;
+import com.example.investmentinconstruction.databinding.FragmentMainBinding;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.navigation.NavigationView;
@@ -43,7 +45,8 @@ public class MainActivity extends AppCompatActivity
         QuestionAgain.OnDialogClickListenerQuestionAgain {
 
     public static boolean loading; // TODO: сделать загрузку после нажатия на Step если расчеты проводятся не на локальном устройстве
-    private ActivityMainBinding binding_main;
+    private ActivityMainBinding binding;
+    private FragmentMainBinding binding_main;
     private String roomCode;
     private User user;
     protected NewConstruction newConstruction;
@@ -53,22 +56,23 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager layoutManager;
     private ConstructionAdapter constructionAdapter;
     private List<ConstructionState> constructionStateList;
+    private MainFragment mainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding_main = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding_main.getRoot());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding_main = FragmentMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Bundle bundle = getIntent().getExtras();
         roomCode = bundle.get("roomCode").toString();
         user = (User) bundle.getSerializable(User.class.getSimpleName());
 
         loading = false;
-
-        binding_main.textViewNameGame.setText(roomCode);
-        binding_main.textViewCountMoney.setText(user.getProfitFull().toString());
+        layoutManager = new LinearLayoutManager(this);
+        updateView();
 
         newConstruction = new NewConstruction();
         newConstruction.setMyDialogListener(this);
@@ -82,28 +86,29 @@ public class MainActivity extends AppCompatActivity
         questionAgain = new QuestionAgain();
         questionAgain.setMyDialogClickListener(this);
 
-        binding_main.navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        binding.navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.player1) {
-                    binding_main.drawerLayout.close();
+                    binding.drawerLayout.close();
 //                    Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
 //                    startActivity(intent);
                 } else if (item.getItemId() == R.id.exit) {
-                    binding_main.drawerLayout.close();
+                    binding.drawerLayout.close();
                     Intent intent = new Intent(MainActivity.this, MainBottomNavigation.class);
                     startActivity(intent);
                 }
                 return true;
             }
         });
+        mainFragment = new MainFragment(layoutManager, constructionAdapter, roomCode, user);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, mainFragment).commit();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        layoutManager = new LinearLayoutManager(this);
         updateView();
     }
 
@@ -148,25 +153,26 @@ public class MainActivity extends AppCompatActivity
         }
         if (!constructionStateList.isEmpty()) {
             constructionAdapter = new ConstructionAdapter(this, constructionStateList, onStateHouseClickListener);
-            binding_main.listConstruction.setAdapter(constructionAdapter);
-            binding_main.listConstruction.setLayoutManager(layoutManager);
+            mainFragment.setConstructionAdapter(constructionAdapter);
+            mainFragment.setLayoutManager(layoutManager);
+            mainFragment.initRecycleView();
         }
     }
 
-    public void menuPlayer(View view) {
-        binding_main.drawerLayout.openDrawer(GravityCompat.START);
+    public void menuPlayer() {
+        binding.drawerLayout.openDrawer(GravityCompat.START);
     }
 
-    public void addConstruction(View view) {
+    public void addConstruction() {
         newConstruction.show(getSupportFragmentManager(), "newConstruction");
     }
 
-    public void seo(View view) {
+    public void seo() {
 //        testJSON();
         advertisementConstruction.show(getSupportFragmentManager(), "advertisement");
     }
 
-    public void step(View view) {
+    public void step() {
         // TODO: сделать DialogFragment для уточнения намерений сделать шаг
 //        test(); // необходимо запустить для получения String - пример входных данных от java к c++
         questionAgain.show(getSupportFragmentManager(), "questionAgain");
@@ -215,6 +221,7 @@ public class MainActivity extends AppCompatActivity
     public void onDialogClickListener(boolean result) {
         if (result) {
             goToCPlusPlus();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, new LoadingFragment()).commit();
         }
     }
 
