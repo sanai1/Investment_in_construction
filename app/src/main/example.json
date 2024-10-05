@@ -1,0 +1,99 @@
+{ "nowPeople" : 2,
+  "cntPeople" : 2,
+  "numberStep" : 0,
+  "roomCode" : 15641,
+  "userMap" : {
+    "40dd8d8a-4cd7-45fb-94a9-5963a5fd8e39" : {
+      "uid" : "40dd8d8a-4cd7-45fb-94a9-5963a5fd8e39",
+      "shopMap" : {
+        "154" : {
+          "duration" : 5,
+          "startPeriod" : 3,
+          "priceMonth" : 45000,
+          "soldProfit" : 0,
+          "sid" : "154",
+          "typeShop" : "Supermarket"},
+        "425" : {
+          "duration" : 5,
+          "startPeriod" : 1,
+          "priceMonth" : 4,
+          "soldProfit" : 0,
+          "sid" : "425",
+          "typeShop" : "Bakery"}
+      },
+      "houseMap" : {
+        "135" : {
+          "duration" : 5,
+          "startPeriod" : 1,
+          "hid": "135",
+          "salePrice": 0,
+          "typeHouse": "Monolithic",
+          "saleApartments": 0,
+          "countApartments": 60,
+          "soldApartments": 0,
+          "priceMonth": 5000,
+          "soldProfit": 0},
+        "436" : {
+          "duration": 7,
+          "startPeriod": 2,
+          "hid": "436",
+          "salePrice": 40000,
+          "typeHouse": "Panel",
+          "saleApartments": 10,
+          "countApartments": 50,
+          "soldApartments": 0,
+          "priceMonth": 10000,
+          "soldProfit": 0}},
+      "district": "Arbat",
+      "advertisement": {
+        "shop": 750,
+        "house": 1000},
+      "profitFull": 0,
+      "numberStep": 0},
+    "619ea132-517e-4c1c-aa16-4942726ec0ec": {
+      "uid": "619ea132-517e-4c1c-aa16-4942726ec0ec",
+      "shopMap": {
+        "426": {
+          "duration": 5,
+          "startPeriod": 2,
+          "priceMonth": 45000,
+          "soldProfit": 0,
+          "sid": "426",
+          "typeShop": "Supermarket"},
+        "726": {
+          "duration": 2,
+          "startPeriod": 1,
+          "priceMonth": 10000,
+          "soldProfit": 45000,
+          "sid": "726",
+          "typeShop": "HardwareStore"}},
+      "houseMap": {
+        "146": {
+          "duration": 6,
+          "startPeriod": 3,
+          "hid": "146",
+          "salePrice": 50000,
+          "typeHouse": "Brick",
+          "saleApartments": 5,
+          "countApartments": 40,
+          "soldApartments": 5,
+          "priceMonth": 7500,
+          "soldProfit": 200000},
+        "945": {
+          "duration": 7,
+          "startPeriod": 2,
+          "hid": "945",
+          "salePrice": 35000,
+          "typeHouse": "Panel",
+          "saleApartments": 7,
+          "countApartments": 50,
+          "soldApartments": 0,
+          "priceMonth": 10000,
+          "soldProfit": 0}},
+      "district": "Sokolniki",
+      "advertisement": {
+        "shop": 1100,
+        "house": 800},
+      "profitFull": 0,
+      "numberStep": 0}},
+  "currentPeriod": 1}

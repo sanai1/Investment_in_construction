@@ -23,11 +23,16 @@ public class InteractionJSON {
     }
 
     public Room contract(String jsonOld) {
-        String jsonNew = stringFromJNI(jsonOld);
-        System.out.println(jsonNew);
+        // TODO: запись строки в файл с виде json
+
+
+        stringFromJNI();
+        // TODO: на основе файла формируем объект Room и возвращаем
+
+
         return null;
     }
 
-    public native String stringFromJNI(String jsonOld);
+    public native String stringFromJNI();
 
 }
