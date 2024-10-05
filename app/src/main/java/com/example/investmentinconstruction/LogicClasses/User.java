@@ -12,12 +12,9 @@ public class User implements Serializable {
     private Advertisement advertisement;
     private Map<String, House> houseMap;
     private Map<String, Shop> shopMap;
-    private Integer numberInRoom;
     private Integer numberStep;
 
-    public User() {
-        this.numberStep = 0;
-    }
+    public User() {}
 
     public User(String uid, String district, Integer profitFull, Advertisement advertisement, Map<String, House> houseHashMap, Map<String, Shop> shopHashMap) {
         this.uid = uid;
@@ -26,6 +23,7 @@ public class User implements Serializable {
         this.advertisement = advertisement;
         this.houseMap = houseHashMap;
         this.shopMap = shopHashMap;
+        this.numberStep = 0;
     }
 
     public String getUid() {
@@ -74,14 +72,6 @@ public class User implements Serializable {
 
     public void setShopMap(Map<String, Shop> shopMap) {
         this.shopMap = shopMap;
-    }
-
-    public Integer getNumberInRoom() {
-        return numberInRoom;
-    }
-
-    public void setNumberInRoom(Integer numberInRoom) {
-        this.numberInRoom = numberInRoom;
     }
 
     public Integer getNumberStep() {

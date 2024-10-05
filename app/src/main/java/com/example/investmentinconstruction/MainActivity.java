@@ -24,6 +24,8 @@ import com.example.investmentinconstruction.LogicClasses.Room;
 import com.example.investmentinconstruction.LogicClasses.Shop;
 import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.databinding.ActivityMainBinding;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity
         AdvertisementConstruction.DialogListenerAdvertisement,
         QuestionAgain.OnDialogClickListenerQuestionAgain {
 
+    public static boolean loading; // TODO: сделать загрузку после нажатия на Step если расчеты проводятся не на локальном устройстве
     private ActivityMainBinding binding_main;
     private String roomCode;
     private User user;
@@ -61,6 +64,8 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = getIntent().getExtras();
         roomCode = bundle.get("roomCode").toString();
         user = (User) bundle.getSerializable(User.class.getSimpleName());
+
+        loading = false;
 
         binding_main.textViewNameGame.setText(roomCode);
         binding_main.textViewCountMoney.setText(user.getProfitFull().toString());
@@ -157,6 +162,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void seo(View view) {
+//        testJSON();
         advertisementConstruction.show(getSupportFragmentManager(), "advertisement");
     }
 
@@ -188,6 +194,33 @@ public class MainActivity extends AppCompatActivity
         } else {
             Log.w("fail in MainActivity", "onDialogClickListener (DialogFragment)");
         }
+    }
+
+    @Override
+    public void onDialogClickListener(Integer countSale, Integer price, String key) {
+        user.getHouseMap().get(key).setSaleApartments(countSale);
+        user.getHouseMap().get(key).setSalePrice(price);
+    }
+
+    @Override
+    public void onDialogClickListener(Integer housesAdvertisement, Integer shopsAdvertisement) {
+        if (user.getAdvertisement() == null) {
+            user.setAdvertisement(new Advertisement());
+        }
+        user.getAdvertisement().setHouse(housesAdvertisement);
+        user.getAdvertisement().setShop(shopsAdvertisement);
+    }
+
+    @Override
+    public void onDialogClickListener(boolean result) {
+        if (result) {
+            goToCPlusPlus();
+        }
+    }
+
+    private void goToCPlusPlus() {
+        ConnectRealtimeDatabase.getInstance(this).updateUser(roomCode, user.getUid(), user);
+        ConnectRealtimeDatabase.getInstance(this).checkUpdateRoom(roomCode);
     }
 
     private void test() {
@@ -222,29 +255,14 @@ public class MainActivity extends AppCompatActivity
         ConnectRealtimeDatabase.getInstance(this).testString(room);
     }
 
-    @Override
-    public void onDialogClickListener(Integer countSale, Integer price, String key) {
-        user.getHouseMap().get(key).setSaleApartments(countSale);
-        user.getHouseMap().get(key).setSalePrice(price);
-    }
-
-    @Override
-    public void onDialogClickListener(Integer housesAdvertisement, Integer shopsAdvertisement) {
-        if (user.getAdvertisement() == null) {
-            user.setAdvertisement(new Advertisement());
+    private void testJSON() {
+        String json = "{nowPeople=2, cntPeople=2, roomCode=15641, userMap={8f7f1e64-bc06-4611-9fa9-8b3fe85218f2={uid=8f7f1e64-bc06-4611-9fa9-8b3fe85218f2, shopMap={154={duration=5, startPeriod=3, priceMonth=45000, soldProfit=0, sid=154, typeShop=Supermarket}, 425={duration=5, startPeriod=1, priceMonth=4, soldProfit=0, sid=425, typeShop=Bakery}}, houseMap={135={duration=5, startPeriod=1, hid=135, salePrice=0, typeHouse=Monolithic, saleApartments=0, countApartments=60, soldApartments=0, priceMonth=5000, soldProfit=0}, 436={duration=7, startPeriod=2, hid=436, salePrice=40000, typeHouse=Panel, saleApartments=10, countApartments=50, soldApartments=0, priceMonth=10000, soldProfit=0}}, district=Arbat, advertisement={shop=750, house=1000}, profitFull=0}, 5388c414-f268-46e2-8fb2-5fbf5a1519bd={uid=5388c414-f268-46e2-8fb2-5fbf5a1519bd, shopMap={426={duration=5, startPeriod=2, priceMonth=45000, soldProfit=0, sid=426, typeShop=Supermarket}, 726={duration=2, startPeriod=1, priceMonth=10000, soldProfit=45000, sid=726, typeShop=HardwareStore}}, houseMap={146={duration=6, startPeriod=3, hid=146, salePrice=50000, typeHouse=Brick, saleApartments=5, countApartments=40, soldApartments=5, priceMonth=7500, soldProfit=200000}, 945={duration=7, startPeriod=2, hid=945, salePrice=35000, typeHouse=Panel, saleApartments=7, countApartments=50, soldApartments=0, priceMonth=10000, soldProfit=0}}, district=Sokolniki, advertisement={shop=1100, house=800}, profitFull=0}}, currentPeriod=1}";
+        Room room = null;
+        try {
+            room = new ObjectMapper().readValue(json, Room.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
-        user.getAdvertisement().setHouse(housesAdvertisement);
-        user.getAdvertisement().setShop(shopsAdvertisement);
-    }
-
-    @Override
-    public void onDialogClickListener(boolean result) {
-        if (result) {
-            goToCPlusPlus();
-        }
-    }
-
-    private void goToCPlusPlus() {
-        ConnectRealtimeDatabase.getInstance(this).updateUser(roomCode, user.getUid(), user);
+        System.out.println(room.toString());
     }
 }

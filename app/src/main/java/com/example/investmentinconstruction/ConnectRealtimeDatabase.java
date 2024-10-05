@@ -1,26 +1,22 @@
 package com.example.investmentinconstruction;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
-import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.investmentinconstruction.LogicClasses.Advertisement;
-import com.example.investmentinconstruction.LogicClasses.House;
 import com.example.investmentinconstruction.LogicClasses.Room;
-import com.example.investmentinconstruction.LogicClasses.Shop;
 import com.example.investmentinconstruction.LogicClasses.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ConnectRealtimeDatabase {
 
@@ -32,7 +28,7 @@ public class ConnectRealtimeDatabase {
     ConnectRealtimeDatabase(Context context) {
         this.context = context;
         this.root = FirebaseDatabase.getInstance().getReference().getRoot();
-        this.result = true;
+        this.result = false;
     }
 
     public synchronized static ConnectRealtimeDatabase getInstance(Context context) {
@@ -56,10 +52,7 @@ public class ConnectRealtimeDatabase {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(roomCode).getValue() != null) {
                     addUser(roomCode, snapshot.child(roomCode).child("nowPeople").getValue().toString(), user);
-                } else {
-                    result = false;
                 }
-                System.out.println(result + " listener");
             }
 
             @Override
@@ -67,7 +60,7 @@ public class ConnectRealtimeDatabase {
                 System.out.println("Ошибка при проверке наличия комнаты");
             }
         });
-        return result;
+        return true;
     }
 
     public void updateUser(String roomCode, String uid, User user) {
@@ -77,12 +70,66 @@ public class ConnectRealtimeDatabase {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int numberStepRoom = Integer.parseInt(snapshot.child("numberStep").getValue().toString());
                 root.child(roomCode).child("userMap").child(uid).child("numberStep").setValue(numberStepRoom + 1);
+                result = true;
                 // TODO: выполнить проверку на наличия новых данных от всех игроков, если надо -> отправить данные в C++
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 System.out.println("Ошибка при обновлении user");
+            }
+        });
+    }
+
+    public void checkUpdateRoom(String roomCode) {
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (result) {
+                    Room room = snapshot.getValue(Room.class);
+                    Map<String, User> userMap = room.getUserMap();
+                    Integer numberStepRoom = room.getNumberStep();
+                    Integer cntPeople = room.getCntPeople();
+                    int cntStepRoom = 0, cntStepUpRoom = 0;
+                    for (User user : userMap.values()) {
+                        if (user.getNumberStep() - 1 == numberStepRoom) {
+                            cntStepUpRoom++;
+                        } else {
+                            cntStepRoom++;
+                        }
+                    }
+                    if (cntStepUpRoom == cntPeople) {
+                        contract(roomCode);
+                    } else if (cntStepRoom == cntPeople) {
+                        // закрыть окно загрузки и показать новые данные
+                    } else {
+                        // необходимо запустить окно загрузки в MainActivity
+                        MainActivity.loading = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "checkUpdateUserMap", error.toException());
+            }
+        };
+        root.child(roomCode).addValueEventListener(valueEventListener);
+    }
+
+    private void contract(String roomCode) {
+        root.child(roomCode).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String json = snapshot.getValue().toString();
+                Room room = InteractionJSON.getInstance(context).contract(json);
+//                root.child(roomCode).setValue(room);
+                result = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "contract in ConnectRealtimeDatabase", error.toException());
             }
         });
     }

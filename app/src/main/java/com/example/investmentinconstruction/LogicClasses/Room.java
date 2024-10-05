@@ -10,9 +10,7 @@ public class Room {
     private Map<String, User> userMap;
     private Integer numberStep;
 
-    public Room() {
-        this.numberStep = 0;
-    }
+    public Room() {}
 
     public Room(Integer roomCode, Integer cntPeople, Integer nowPeople, Integer currentPeriod, Map<String, User> userHashMap) {
         this.roomCode = roomCode;
@@ -20,6 +18,7 @@ public class Room {
         this.nowPeople = nowPeople;
         this.currentPeriod = currentPeriod;
         this.userMap = userHashMap;
+        this.numberStep = 0;
     }
 
     public Integer getRoomCode() {
