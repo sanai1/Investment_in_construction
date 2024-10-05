@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity
         AdvertisementConstruction.DialogListenerAdvertisement,
         QuestionAgain.OnDialogClickListenerQuestionAgain {
 
-    public static boolean loading; // TODO: сделать загрузку после нажатия на Step если расчеты проводятся не на локальном устройстве
     private ActivityMainBinding binding;
     private FragmentMainBinding binding_main;
     private String roomCode;
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity
     protected AddInfoConstruction addInfoConstruction;
     protected AdvertisementConstruction advertisementConstruction;
     protected QuestionAgain questionAgain;
-    private RecyclerView.LayoutManager layoutManager;
     private ConstructionAdapter constructionAdapter;
     private List<ConstructionState> constructionStateList;
     private MainFragment mainFragment;
@@ -70,8 +68,6 @@ public class MainActivity extends AppCompatActivity
         roomCode = bundle.get("roomCode").toString();
         user = (User) bundle.getSerializable(User.class.getSimpleName());
 
-        loading = false;
-        layoutManager = new LinearLayoutManager(this);
         updateView();
 
         newConstruction = new NewConstruction();
@@ -101,7 +97,7 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
         });
-        mainFragment = new MainFragment(layoutManager, constructionAdapter, roomCode, user);
+        mainFragment = new MainFragment(constructionAdapter, roomCode, user);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, mainFragment).commit();
     }
 
@@ -154,7 +150,6 @@ public class MainActivity extends AppCompatActivity
         if (!constructionStateList.isEmpty()) {
             constructionAdapter = new ConstructionAdapter(this, constructionStateList, onStateHouseClickListener);
             mainFragment.setConstructionAdapter(constructionAdapter);
-            mainFragment.setLayoutManager(layoutManager);
             mainFragment.initRecycleView();
         }
     }
@@ -225,9 +220,17 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void replaceFragment(User user) {
+        this.user = user;
+        updateView();
+        mainFragment.setConstructionAdapter(constructionAdapter);
+        mainFragment.setUser(user);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, mainFragment).commit();
+    }
+
     private void goToCPlusPlus() {
         ConnectRealtimeDatabase.getInstance(this).updateUser(roomCode, user.getUid(), user);
-        ConnectRealtimeDatabase.getInstance(this).checkUpdateRoom(roomCode);
+        ConnectRealtimeDatabase.getInstance(this).checkUpdateRoom(roomCode, user.getUid(), this);
     }
 
     private void test() {

@@ -3,9 +3,9 @@ package com.example.investmentinconstruction.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +20,20 @@ import com.example.investmentinconstruction.R;
 
 public class MainFragment extends Fragment {
 
-    private RecyclerView.LayoutManager layoutManager;
     private ConstructionAdapter constructionAdapter;
     private String roomCode;
     private User user;
     private View view;
 
-    public MainFragment(RecyclerView.LayoutManager layoutManager, ConstructionAdapter constructionAdapter, String roomCode, User user) {
-        this.layoutManager = layoutManager;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public MainFragment(ConstructionAdapter constructionAdapter, String roomCode, User user) {
         this.constructionAdapter = constructionAdapter;
         this.roomCode = roomCode;
         this.user = user;
@@ -37,14 +43,6 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-    }
-
-    public RecyclerView.LayoutManager getLayoutManager() {
-        return layoutManager;
-    }
-
-    public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
-        this.layoutManager = layoutManager;
     }
 
     public ConstructionAdapter getConstructionAdapter() {
@@ -58,7 +56,6 @@ public class MainFragment extends Fragment {
     public void initRecycleView() {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.listConstruction);
         recyclerView.setAdapter(constructionAdapter);
-        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -73,7 +70,7 @@ public class MainFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.listConstruction);
         recyclerView.setAdapter(constructionAdapter);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ImageView imageViewAddConstruction = (ImageView) view.findViewById(R.id.imageViewAddConstruction);
         imageViewAddConstruction.setOnClickListener(v -> {

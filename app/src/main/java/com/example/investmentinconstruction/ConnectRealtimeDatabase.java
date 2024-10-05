@@ -81,7 +81,7 @@ public class ConnectRealtimeDatabase {
         });
     }
 
-    public void checkUpdateRoom(String roomCode) {
+    public void checkUpdateRoom(String roomCode, String uid, MainActivity mainActivity) {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -90,21 +90,18 @@ public class ConnectRealtimeDatabase {
                     Map<String, User> userMap = room.getUserMap();
                     Integer numberStepRoom = room.getNumberStep();
                     Integer cntPeople = room.getCntPeople();
-                    int cntStepRoom = 0, cntStepUpRoom = 0;
+                    int cntStepRoom = 0, cntStepUser = 0;
                     for (User user : userMap.values()) {
                         if (user.getNumberStep() - 1 == numberStepRoom) {
-                            cntStepUpRoom++;
+                            cntStepUser++;
                         } else {
                             cntStepRoom++;
                         }
                     }
-                    if (cntStepUpRoom == cntPeople) {
+                    if (cntStepUser == cntPeople) {
                         contract(roomCode);
                     } else if (cntStepRoom == cntPeople) {
-                        // закрыть окно загрузки и показать новые данные
-                    } else {
-                        // необходимо запустить окно загрузки в MainActivity
-                        MainActivity.loading = true;
+                        mainActivity.replaceFragment(room.getUserMap().get(uid));
                     }
                 }
             }
