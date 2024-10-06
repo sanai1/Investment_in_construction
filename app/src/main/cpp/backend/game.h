@@ -2,12 +2,13 @@
 
 class Game {
 public:
-	Game() {
-		///////////
-	}
-	void players_pay_month_construction(); // РРіСЂРѕРє РїР»Р°С‚РёС‚ Р·Р° РїРѕСЃС‚СЂРѕР№РєСѓ 1 РјРµСЃСЏС†Р° Р·РґР°РЅРёР№.
-	void players_get_cash_from_shops(); // РРіСЂРѕРєРё РїРѕР»СѓС‡Р°СЋС‚ РїСЂРёР±С‹Р»СЊ Р·Р° РјР°РіР°Р·РёРЅС‹
-	void players_get_cash_from_houses(); // РРіСЂРѕРєРё РїРѕР»СѓС‡Р°СЋС‚ РїСЂРёР±С‹Р»СЊ Р·Р° РєРІР°СЂС‚РёСЂС‹
+	Game();
+	void players_pay_month_construction(); // Игрок платит за постройку 1 месяца зданий.
+	void players_get_cash_from_shops(); // Игроки получают прибыль за магазины
+	void players_get_cash_from_houses();//Прибыль за продажи квартир
+	std::string convert_to_json();
+
+	~Game();
 private:
 	int _current_month;
 	std::vector<Player*> _players;

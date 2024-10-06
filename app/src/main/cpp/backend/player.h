@@ -7,7 +7,7 @@ class Building;
 
 class Player {
 public:
-	Player(std::vector<Building*>& houses, std::vector<Building*>& shops, long long cash, long long ad_shops, long long ad_houses, Microdistrict* district);
+	Player(long long cash, long long ad_shops, long long ad_houses, Microdistrict* district, std::string uid, int numberstep);
 	void get_cahs_shops(int );
 	void update_construction(int month);
 	Microdistrict* get_district() {
@@ -16,41 +16,14 @@ public:
 	void add_profit(long long x) {
 		_cash += x;
 	}
+	std::string convert_to_json();
+	void set_buildings(std::vector<Building*>& houses, std::vector<Building*>& shops);
 private:
-	long long _cash; // РёР·РјРµСЂСЏРµС‚СЃСЏ РІ Сѓ.Рµ
+	int _number_step;
+	std::string _uid;
+	long long _cash; // измеряется в у.е
 	std::vector<Building*> _houses, _shops;
 	Microdistrict* _my_district;
 	long long _shops_advertisment;
+	long long _house_advertisment;
 };
-
-class HumanPlayer : public Player {
-public:
-	//...
-
-private:
-
-};
-
-class BotPlayer : public Player {
-public:
-	//...
-
-private:
-	//...
-};
-
-class BotStrategy1 :public BotPlayer {
-public:
-	//...
-private:
-	//...
-};
-
-class BotStrategy2 : public BotPlayer {
-public:
-	//...
-private:
-	//...
-};
-
-//class BotStrategy3 ...

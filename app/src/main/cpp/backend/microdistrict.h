@@ -2,7 +2,7 @@
 #include <string>
 class Building;
 class Player;
-// РЎРїСЂРѕСЃ РЅР° Р¶РёР»СЊРµ Рё СЃСЂРµРґРЅРёР№ СѓСЂРѕРІРµРЅСЊ РїСЂРѕРґР°Р¶ РїРѕ РјРµСЃСЏС†Р°Рј:
+// Спрос на жилье и средний уровень продаж по месяцам:
 const std::vector<int> percent_of_demands = { 10, 5 ,10, 15, 20, 25, 30, 35, 40, 40, 35, 25 };
 const std::vector<int> percent_of_sales_levels = { 40, 40, 30, 25, 20, 20, 15, 20, 10, 20, 25, 30 };
 
@@ -36,7 +36,7 @@ private:
 	std::vector<Building*> _shops_here;
 	long long _demand;
 	long long _sales_level;
-	long long _inc_demand; // - РџРѕРІС‹С€РµРЅРёРµ СЃРїСЂРѕСЃР° РѕС‚ СЂРµРєР»Р°РјС‹, РёР·РјРµСЂСЏС‚РµСЃСЏ РІ %
+	long long _inc_demand; // - Повышение спроса от рекламы, измерятеся в %
 };
 
 void Microdistrict::add_building(Building* building) {

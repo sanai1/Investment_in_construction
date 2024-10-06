@@ -12,23 +12,34 @@ bool compare_with_costs(Building* b1, Building* b2) {
 	return hptr1->get_apartment_price() < hptr2->get_apartment_price();
 }
 
-Player::Player(std::vector<Building*>& houses, std::vector<Building*>& shops, long long cash, long long ad_shops, long long ad_houses, Microdistrict* district) :
+Player::Player(long long cash, long long ad_shops, long long ad_houses, Microdistrict* district, std::string uid, int numberstep) :
 	_cash(cash),
-	_houses(houses),
+	_number_step(numberstep),
 	_my_district(district),
-	_shops(shops),
+	_uid(uid),
+	_house_advertisment(ad_houses),
 	_shops_advertisment(ad_shops) {
+	_my_district->add_percent_demand(ad_houses / 2000);
+}
+
+void Player::set_buildings(std::vector<Building*>& houses, std::vector<Building*>& shops) {
+	_houses = houses;
+	_shops = shops;
 	for (Building* house : _houses) {
 		_my_district->add_building(house);
 	}
 	for (Building* shop : _shops) {
 		_my_district->add_building(shop);
 	}
-	_my_district->add_percent_demand(ad_houses / 2000);
 }
 
 void Player::update_construction(int month) {
 	for (Building* build : _houses) {
+		if (!build->is_builded(month)) {
+			_cash -= build->get_cost();
+		}
+	}
+	for (Building* build : _shops) {
 		if (!build->is_builded(month)) {
 			_cash -= build->get_cost();
 		}
@@ -52,11 +63,10 @@ void Microdistrict::sell_some_apartments() {
 	long long offer = 0;
 	for (int i = 0; i < _houses_here.size(); ++i) {
 		House* cur_house = dynamic_cast<House*>(_houses_here[i]);
-		House* next_house = dynamic_cast<House*>(_houses_here[i + 1]);
 		if (offer + cur_house->get_sale_apartments() >= cur_demand) {
 			int sold_apart = cur_demand - offer;
-			cur_house->add_profit(sold_apart * cur_house->get_sale_apartments());
-			cur_house->get_owner()->add_profit(sold_apart * cur_house->get_sale_apartments());
+			cur_house->add_profit(sold_apart * cur_house->get_apartment_price());
+			cur_house->get_owner()->add_profit(sold_apart * cur_house->get_apartment_price());
 			cur_house->add_sold_apartments(sold_apart);
 			cur_house->minus_sale_apartments(sold_apart);
 			break;
@@ -65,7 +75,7 @@ void Microdistrict::sell_some_apartments() {
 			int sold_apart = cur_house->get_sale_apartments();
 			offer += sold_apart;
 			cur_house->add_profit(sold_apart * cur_house->get_apartment_price());
-			cur_house->get_owner()->add_profit(sold_apart * cur_house->get_sale_apartments());
+			cur_house->get_owner()->add_profit(sold_apart * cur_house->get_apartment_price());
 			cur_house->add_sold_apartments(sold_apart);
 			cur_house->minus_sale_apartments(sold_apart);
 		}
