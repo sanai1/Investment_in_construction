@@ -23,11 +23,11 @@ public class InteractionJSON {
     }
 
     public Room contract(String jsonOld) {
-        String jsonNew = stringFromJNI(jsonOld);
+        String jsonNew = contractWithCJNI(jsonOld);
         System.out.println(jsonNew);
         return null;
     }
 
-    public native String stringFromJNI(String jsonOld);
+    public native String contractWithCJNI(String jsonOld);
 
 }

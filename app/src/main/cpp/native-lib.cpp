@@ -13,7 +13,9 @@ Java_com_example_investmentinconstruction_MainActivity_stringFromJNI(
 }
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_example_investmentinconstruction_InteractionJSON_stringFromJNI(JNIEnv *env, jobject thiz, string json) {
+Java_com_example_investmentinconstruction_InteractionJSON_contractWithCJNI(JNIEnv *env, jobject thiz, jstring json) {
+
+
     string hello = "Hello from C++";
     return env->NewStringUTF(hello.c_str());
 }
