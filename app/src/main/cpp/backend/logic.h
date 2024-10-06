@@ -2,6 +2,7 @@
 #include "buildings.h"
 #include "microdistrict.h"
 #include <algorithm>
+#pragma once
 
 bool compare_with_costs(Building* b1, Building* b2) {
 	House* hptr1 = dynamic_cast<House*> (b1);

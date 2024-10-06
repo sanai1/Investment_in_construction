@@ -3,6 +3,7 @@
 #include "game.h"
 #include "../json-develop/single_include/nlohmann/json.hpp"
 #include <map>
+#pragma once
 
 const std::string PATH = "../../room.json";
 

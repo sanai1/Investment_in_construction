@@ -1,4 +1,5 @@
 #include "parcer.h"
+#pragma once
 
 void make_run() {
 	Game game;
