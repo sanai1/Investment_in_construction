@@ -99,7 +99,7 @@ public class ConnectRealtimeDatabase {
                         }
                     }
                     if (cntStepUser == cntPeople) {
-                        contract(roomCode);
+                        contract(roomCode, mainActivity, uid);
                     } else if (cntStepRoom == cntPeople) {
                         mainActivity.replaceFragment(room.getUserMap().get(uid));
                     }
@@ -114,14 +114,18 @@ public class ConnectRealtimeDatabase {
         root.child(roomCode).addValueEventListener(valueEventListener);
     }
 
-    private void contract(String roomCode) {
+    private void contract(String roomCode, MainActivity mainActivity, String uid) {
         root.child(roomCode).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String json = snapshot.getValue().toString();
+                Map<String, Object> json = (Map<String, Object>) snapshot.getValue();
                 Room room = InteractionJSON.getInstance(context).contract(json);
-//                root.child(roomCode).setValue(room);
+                System.out.println("0000000000000000000000");
+                System.out.println(room);
+                System.out.println("99999999999999999999999");
+                root.child(roomCode).setValue(room);
                 result = false;
+                mainActivity.replaceFragment(room.getUserMap().get(uid));
             }
 
             @Override
