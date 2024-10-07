@@ -47,7 +47,7 @@ public class InteractionJSON {
             e.printStackTrace();
         }
 
-        stringFromJNI();
+        contractWithCJNI();
         // TODO: на основе файла формируем объект Room и возвращаем
 
         try (FileInputStream fileInputStream = context.openFileInput(fileName) ; InputStreamReader streamReader = new InputStreamReader(fileInputStream)) {
@@ -62,6 +62,6 @@ public class InteractionJSON {
         return null;
     }
 
-    public native String stringFromJNI();
+    public native String contractWithCJNI();
 
 }
