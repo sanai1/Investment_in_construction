@@ -2,7 +2,7 @@
 
 class Game {
 public:
-	Game();
+	Game(std::string s);
 	void players_pay_month_construction(); // Игрок платит за постройку 1 месяца зданий.
 	void players_get_cash_from_shops(); // Игроки получают прибыль за магазины
 	void players_get_cash_from_houses();//Прибыль за продажи квартир

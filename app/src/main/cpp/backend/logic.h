@@ -65,8 +65,8 @@ void Microdistrict::sell_some_apartments() {
 		House* cur_house = dynamic_cast<House*>(_houses_here[i]);
 		if (offer + cur_house->get_sale_apartments() >= cur_demand) {
 			int sold_apart = cur_demand - offer;
-			cur_house->add_profit(sold_apart * cur_house->get_apartment_price());
-			cur_house->get_owner()->add_profit(sold_apart * cur_house->get_apartment_price());
+			cur_house->add_profit(sold_apart * cur_house->get_sale_apartments());
+			cur_house->get_owner()->add_profit(sold_apart * cur_house->get_sale_apartments());
 			cur_house->add_sold_apartments(sold_apart);
 			cur_house->minus_sale_apartments(sold_apart);
 			break;

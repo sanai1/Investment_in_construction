@@ -1,10 +1,10 @@
 #include <fstream>
 #include <iostream>
 #include "game.h"
-#include "../json-develop/single_include/nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 #include <map>
 
-const std::string PATH = "../../room.json";
+const std::string PATH = "room.json";
 
 struct Info {
 	int nowPeople;
@@ -16,15 +16,15 @@ struct Info {
 
 Info info_for_json;
 
-Game::Game() {
-	std::ifstream in(PATH);
-	std::string s;
-	std::string ans = "";
+Game::Game(std::string s) {
+	//std::ifstream in(PATH);
+	//std::string s;
+	/*std::string ans = "";
 	while (std::getline(in, s)) {
 		ans += s;
 		ans += "\n";
-	}
-	nlohmann::json jsonData = nlohmann::json::parse(ans);
+	}*/
+	nlohmann::json jsonData = nlohmann::json::parse(s);
 	_current_month = jsonData["currentPeriod"];
 	info_for_json.cntPeople = jsonData["cntPeople"];
 	info_for_json.nowPeople = jsonData["nowPeople"];
