@@ -28,7 +28,7 @@ Game::Game(std::string s) {
 	_current_month = jsonData["currentPeriod"];
 	info_for_json.cntPeople = jsonData["cntPeople"];
 	info_for_json.nowPeople = jsonData["nowPeople"];
-	info_for_json.numberStep = jsonData["numberStep"] + 1;
+	info_for_json.numberStep = jsonData["numberStep"];
 	info_for_json.roomCode = jsonData["roomCode"];
 	
 	std::map<std::string, Microdistrict*> mp_districts;

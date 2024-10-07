@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 
 import com.example.investmentinconstruction.LogicClasses.Room;
 import com.example.investmentinconstruction.LogicClasses.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectRealtimeDatabase {
 
@@ -24,11 +28,13 @@ public class ConnectRealtimeDatabase {
     private DatabaseReference root, checkRoom;
     private Context context;
     private boolean result;
+    private Lock lock;
 
     ConnectRealtimeDatabase(Context context) {
         this.context = context;
         this.root = FirebaseDatabase.getInstance().getReference().getRoot();
-        this.result = false;
+        this.result = true;
+        lock = new ReentrantLock();
     }
 
     public synchronized static ConnectRealtimeDatabase getInstance(Context context) {
@@ -64,55 +70,80 @@ public class ConnectRealtimeDatabase {
     }
 
     public void updateUser(String roomCode, String uid, User user) {
-        root.child(roomCode).child("userMap").child(uid).setValue(user);
-        root.child(roomCode).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int numberStepRoom = Integer.parseInt(snapshot.child("numberStep").getValue().toString());
-                root.child(roomCode).child("userMap").child(uid).child("numberStep").setValue(numberStepRoom + 1);
-                result = true;
-                // TODO: выполнить проверку на наличия новых данных от всех игроков, если надо -> отправить данные в C++
-            }
+        lock.lock();
+        System.out.println("lock in updateUser");
+        try {
+            user.setNumberStep(1);
+            root.child(roomCode).child("userMap").child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    lock.unlock();
+                    System.out.println("unlock in updateUser");
+                }
+            });
+        }
+        finally {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("Ошибка при обновлении user");
-            }
-        });
+        }
     }
 
-    public void checkUpdateRoom(String roomCode, String uid, MainActivity mainActivity) {
-        ValueEventListener valueEventListener = new ValueEventListener() {
+    public void checkRoom(String roomCode, String uid, MainActivity mainActivity) {
+        Thread thread = new Thread(new Runnable() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (result) {
-                    Room room = snapshot.getValue(Room.class);
-                    Integer numberStepRoom = room.getNumberStep();
-                    Map<String, User> userMap = room.getUserMap();
-                    Integer cntPeople = room.getCntPeople();
-                    int cntStepRoomRavn = 0;
-                    int cntStepUser = 0;
-                    for (User user : userMap.values()) {
-                        if (user.getNumberStep().equals(numberStepRoom)) {
-                            cntStepRoomRavn++;
-                        } else {
-                            cntStepUser++;
+            public void run() {
+                lock.lock();
+                System.out.println("lock in checkRoom");
+                try {
+                    result = true;
+                    while (result) {
+                        try {
+                            System.out.println("start new while");
+                            root.child(roomCode).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Room room = snapshot.getValue(Room.class);
+                                    Integer cntPeopleRoom = room.getCntPeople();
+                                    Map<String, User> userMap = room.getUserMap();
+                                    int cntNumberStepOne = 0;
+                                    int cntNumberStepZero = 0;
+                                    for (User user : userMap.values()) {
+                                        if (user.getNumberStep() == 1) {
+                                            cntNumberStepOne++;
+                                        } else { // user.getNumberStep == 0
+                                            cntNumberStepZero++;
+                                        }
+                                    }
+                                    if (cntPeopleRoom == cntNumberStepOne) {
+                                        // переход в contact
+                                        System.out.println("переход в contact");
+                                        result = false;
+//                                        lock.unlock();
+                                        contract(roomCode, mainActivity, uid);
+                                    } else if (cntPeopleRoom == cntNumberStepZero) {
+                                        // переход в MainActivity
+                                        System.out.println("переход в MainActivity");
+                                        result = false;
+//                                        lock.unlock();
+                                        mainActivity.replaceFragment(room.getUserMap().get(uid));
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {}
+                            });
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
                         }
                     }
-                    if (cntStepUser == cntPeople) {
-                        contract(roomCode, mainActivity, uid);
-                    } else if (cntStepRoomRavn == cntPeople) {
-                        mainActivity.replaceFragment(room.getUserMap().get(uid));
-                    }
+                }
+                finally {
+                    System.out.println("unlock in checkRoom");
+                    lock.unlock();
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "checkUpdateUserMap", error.toException());
-            }
-        };
-        root.child(roomCode).addValueEventListener(valueEventListener);
+        });
+        thread.start();
     }
 
     private void contract(String roomCode, MainActivity mainActivity, String uid) {
@@ -121,11 +152,16 @@ public class ConnectRealtimeDatabase {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Map<String, Object> json = (Map<String, Object>) snapshot.getValue();
                 Room room = InteractionJSON.getInstance(context).contract(json);
+                for(User user : room.getUserMap().values()) {
+                    user.setNumberStep(0);
+                }
+                for (User user : room.getUserMap().values()) {
+                    System.out.println(user.getNumberStep());
+                }
                 System.out.println("0000000000000000000000");
                 System.out.println(room);
                 System.out.println("99999999999999999999999");
                 root.child(roomCode).setValue(room);
-                result = false;
                 mainActivity.replaceFragment(room.getUserMap().get(uid));
             }
 

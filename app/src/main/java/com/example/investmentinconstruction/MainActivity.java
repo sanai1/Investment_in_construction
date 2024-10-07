@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity
 
     private void goToCPlusPlus() {
         ConnectRealtimeDatabase.getInstance(this).updateUser(roomCode, user.getUid(), user);
-        ConnectRealtimeDatabase.getInstance(this).checkUpdateRoom(roomCode, user.getUid(), this);
+        ConnectRealtimeDatabase.getInstance(this).checkRoom(roomCode, user.getUid(), this);
     }
 
     private void test() {
