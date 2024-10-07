@@ -12,6 +12,13 @@ bool compare_with_costs(Building* b1, Building* b2) {
 	return hptr1->get_apartment_price() < hptr2->get_apartment_price();
 }
 
+bool compare_with_duration(Building* b1, Building* b2) {
+	if (b1->end_period() == b2->end_period()) {
+		return b1->get_cost() < b2->get_cost();
+	}
+	return b1->end_period() < b2->end_period();
+}
+
 Player::Player(long long cash, long long ad_shops, long long ad_houses, Microdistrict* district, std::string uid, int numberstep) :
 	_cash(cash),
 	_number_step(numberstep),
@@ -34,15 +41,55 @@ void Player::set_buildings(std::vector<Building*>& houses, std::vector<Building*
 }
 
 void Player::update_construction(int month) {
-	for (Building* build : _houses) {
-		if (!build->is_builded(month)) {
-			_cash -= build->get_cost();
+	std::sort(_houses.begin(), _houses.end(), compare_with_duration);
+	std::sort(_shops.begin(), _shops.end(), compare_with_duration);
+	int i = 0;
+	int j = 0;
+	for (i, j; i < _houses.size() && j < _shops.size();) {
+		if (compare_with_duration(_houses[i], _shops[j])) {
+			if (!_houses[i]->is_builded(month)) {
+				if (_cash >= _houses[i]->get_cost()) {
+					_cash -= _houses[i]->get_cost();
+				}
+				else {
+					_houses[i]->delay();
+				}
+			}
+			i++;
+		}
+		else {
+			if (!_shops[j]->is_builded(month)) {
+				if (_cash >= _shops[j]->get_cost()) {
+					_cash -= _shops[j]->get_cost();
+				}
+				else {
+					_shops[j]->delay();
+				}
+			}
+			j++;
 		}
 	}
-	for (Building* build : _shops) {
-		if (!build->is_builded(month)) {
-			_cash -= build->get_cost();
+	while (i < _houses.size()) {
+		if (!_houses[i]->is_builded(month)) {
+			if (_cash >= _houses[i]->get_cost()) {
+				_cash -= _houses[i]->get_cost();
+			}
+			else {
+				_houses[i]->delay();
+			}
 		}
+		i++;
+	}
+	while (j < _shops.size()) {
+		if (!_shops[j]->is_builded(month)) {
+			if (_cash >= _shops[j]->get_cost()) {
+				_cash -= _shops[j]->get_cost();
+			}
+			else {
+				_shops[j]->delay();
+			}
+		}
+		j++;
 	}
 }
 

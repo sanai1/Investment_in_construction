@@ -11,6 +11,7 @@ struct Info {
 	int cntPeople;
 	int numberStep;
 	int roomCode;
+	int currentPeriod;
 	Info() {}
 };
 
@@ -25,7 +26,8 @@ Game::Game(std::string s) {
 		ans += "\n";
 	}*/
 	nlohmann::json jsonData = nlohmann::json::parse(s);
-	_current_month = jsonData["currentPeriod"];
+	_current_month = jsonData["numberStep"];
+	info_for_json.currentPeriod = jsonData["currentPeriod"];
 	info_for_json.cntPeople = jsonData["cntPeople"];
 	info_for_json.nowPeople = jsonData["nowPeople"];
 	info_for_json.numberStep = jsonData["numberStep"] + 1;
@@ -184,6 +186,6 @@ std::string Game::convert_to_json() {
 		}
 	}
 	ans += "},\n";
-	ans += R"(  "currentPeriod": )" + std::to_string(_current_month) + "}";
+	ans += R"(  "currentPeriod": )" + std::to_string(info_for_json.currentPeriod) + "}";
 	return ans;
 }

@@ -26,6 +26,12 @@ public:
 	Player* get_owner() {
 		return _owner;
 	}
+	int end_period() {
+		return _start_period + _duration;
+	}
+	void delay() {
+		_duration++;
+	}
 	std::string convert();
 	virtual std::string convert_to_json() = 0;
 private:
