@@ -7,10 +7,15 @@ using namespace std;
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_example_investmentinconstruction_InteractionJSON_contractWithCJNI(JNIEnv *env, jobject thiz) {
+Java_com_example_investmentinconstruction_InteractionJSON_contractWithCJNI(JNIEnv *env, jobject thiz, jstring str) {
 
-    contract();
+    const char *cparam = env->GetStringUTFChars(str, 0);
 
-    string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+    string newJson = contract(cparam);
+
+    const char *t = newJson.c_str();
+
+    env->ReleaseStringUTFChars(str, t);
+
+    return env->NewStringUTF(cparam);
 }

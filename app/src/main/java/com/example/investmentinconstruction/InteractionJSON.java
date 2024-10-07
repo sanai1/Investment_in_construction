@@ -35,33 +35,18 @@ public class InteractionJSON {
     }
 
     public Room contract(Map<String, Object> jsonOld) {
-        // TODO: запись строки в файл с виде json
         Gson gson = new Gson();
         String toJson = gson.toJson(jsonOld);
         System.out.println(toJson);
 
-        try (FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE)) {
-            fileOutputStream.write(toJson.getBytes());
-        } catch (Exception e) {
-            Toast.makeText(context, "Problem with write in room.json", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
+        System.out.println("start C++");
+        String json = contractWithCJNI(toJson);
+        System.out.println(json);
+        System.out.println("finish C++");
 
-        contractWithCJNI();
-        // TODO: на основе файла формируем объект Room и возвращаем
-
-        try (FileInputStream fileInputStream = context.openFileInput(fileName) ; InputStreamReader streamReader = new InputStreamReader(fileInputStream)) {
-            Room room = gson.fromJson(streamReader, Room.class);
-            System.out.println(room);
-            return room;
-        } catch (Exception e) {
-            Toast.makeText(context, "Problem with read from room.json", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-
-        return null;
+        return gson.fromJson(json, Room.class);
     }
 
-    public native String contractWithCJNI();
+    public native String contractWithCJNI(String json);
 
 }

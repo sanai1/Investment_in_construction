@@ -1,6 +1,6 @@
 #pragma once
 #include "main.h"
 
-void contract() {
-    make_run();
+std::string contract(std::string json) {
+    return make_run(json);
 }

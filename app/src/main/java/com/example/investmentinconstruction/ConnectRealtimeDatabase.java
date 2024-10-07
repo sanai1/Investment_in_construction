@@ -87,20 +87,21 @@ public class ConnectRealtimeDatabase {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (result) {
                     Room room = snapshot.getValue(Room.class);
-                    Map<String, User> userMap = room.getUserMap();
                     Integer numberStepRoom = room.getNumberStep();
+                    Map<String, User> userMap = room.getUserMap();
                     Integer cntPeople = room.getCntPeople();
-                    int cntStepRoom = 0, cntStepUser = 0;
+                    int cntStepRoomRavn = 0;
+                    int cntStepUser = 0;
                     for (User user : userMap.values()) {
-                        if (user.getNumberStep() - 1 == numberStepRoom) {
-                            cntStepUser++;
+                        if (user.getNumberStep().equals(numberStepRoom)) {
+                            cntStepRoomRavn++;
                         } else {
-                            cntStepRoom++;
+                            cntStepUser++;
                         }
                     }
                     if (cntStepUser == cntPeople) {
                         contract(roomCode, mainActivity, uid);
-                    } else if (cntStepRoom == cntPeople) {
+                    } else if (cntStepRoomRavn == cntPeople) {
                         mainActivity.replaceFragment(room.getUserMap().get(uid));
                     }
                 }
