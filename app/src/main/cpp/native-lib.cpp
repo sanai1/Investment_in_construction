@@ -15,7 +15,5 @@ Java_com_example_investmentinconstruction_InteractionJSON_contractWithCJNI(JNIEn
 
     const char *t = newJson.c_str();
 
-    env->ReleaseStringUTFChars(str, t);
-
-    return env->NewStringUTF(cparam);
+    return env->NewStringUTF(t);
 }
