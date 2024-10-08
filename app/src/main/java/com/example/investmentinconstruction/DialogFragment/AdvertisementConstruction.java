@@ -11,7 +11,6 @@ import androidx.fragment.app.DialogFragment;
 import com.example.investmentinconstruction.R;
 
 public class AdvertisementConstruction extends DialogFragment implements View.OnClickListener {
-// TODO: сделать поля для заполнения полей на экране при открытиии окна, если они были ранее заполнены
     private DialogListenerAdvertisement dialogListenerAdvertisement;
     private Integer houseAdv;
     private Integer shopAdv;
@@ -46,12 +45,19 @@ public class AdvertisementConstruction extends DialogFragment implements View.On
 
     public void onStart() {
         super.onStart();
-
         EditText editTextHouse = getDialog().findViewById(R.id.editTextNumberHouseAdvertisement);
         EditText editTextShop = getDialog().findViewById(R.id.editTextNumberShopAdvertisement);
 
-        editTextHouse.setText("");
-        editTextShop.setText("");
+        if (houseAdv == 0){
+            editTextHouse.setText("");
+        } else {
+            editTextHouse.setText(String.valueOf(houseAdv));
+        }
+        if (shopAdv == 0) {
+            editTextShop.setText("");
+        } else {
+            editTextShop.setText(String.valueOf(shopAdv));
+        }
     }
 
     @Override
@@ -60,7 +66,9 @@ public class AdvertisementConstruction extends DialogFragment implements View.On
         EditText editTextShop = getDialog().findViewById(R.id.editTextNumberShopAdvertisement);
 
         if (!editTextHouse.getText().toString().isEmpty() && !editTextShop.getText().toString().isEmpty()) {
-            dialogListenerAdvertisement.onDialogClickListener(Integer.valueOf(editTextHouse.getText().toString()), Integer.valueOf(editTextShop.getText().toString()));
+            houseAdv = Integer.valueOf(editTextHouse.getText().toString());
+            shopAdv = Integer.valueOf(editTextShop.getText().toString());
+            dialogListenerAdvertisement.onDialogClickListener(houseAdv, shopAdv);
             dismiss();
         }
     }

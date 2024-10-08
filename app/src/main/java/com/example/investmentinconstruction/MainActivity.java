@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = getIntent().getExtras();
         roomCode = bundle.get("roomCode").toString();
         user = (User) bundle.getSerializable(User.class.getSimpleName());
+        if (user.getAdvertisement() == null) {
+            user.setAdvertisement(new Advertisement());
+        }
 
         updateView();
 
@@ -163,13 +166,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void seo() {
-//        testJSON();
         advertisementConstruction.show(getSupportFragmentManager(), "advertisement");
     }
 
     public void step() {
-        // TODO: сделать DialogFragment для уточнения намерений сделать шаг
-//        test(); // необходимо запустить для получения String - пример входных данных от java к c++
         questionAgain.show(getSupportFragmentManager(), "questionAgain");
     }
 
@@ -225,54 +225,13 @@ public class MainActivity extends AppCompatActivity
         updateView();
         mainFragment.setConstructionAdapter(constructionAdapter);
         mainFragment.setUser(user);
+        advertisementConstruction.setHouseAdv(user.getAdvertisement().getHouse());
+        advertisementConstruction.setShopAdv(user.getAdvertisement().getShop());
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, mainFragment).commit();
     }
 
     private void goToCPlusPlus() {
         ConnectRealtimeDatabase.getInstance(this).updateUser(roomCode, user.getUid(), user);
         ConnectRealtimeDatabase.getInstance(this).checkRoom(roomCode, user.getUid(), this);
-    }
-
-    private void test() {
-        Map<String, User> userMap = new HashMap<>();
-
-        Map<String, House> houseMap_1 = new HashMap<>();
-        Map<String, Shop> shopMap_1 = new HashMap<>();
-
-        Map<String, House> houseMap_2 = new HashMap<>();
-        Map<String, Shop> shopMap_2 = new HashMap<>();
-
-        houseMap_1.put("436", new House("436", "Panel", 2, 40000, 0, 10, 0));
-        houseMap_1.put("135", new House("135", "Monolithic", 1, 0, 0, 0, 0));
-
-        houseMap_2.put("146", new House("146", "Brick", 3, 50000, 5, 5, 200000));
-        houseMap_2.put("945", new House("945", "Panel", 2, 35000, 0, 7, 0));
-
-        shopMap_1.put("425", new Shop("425", "Bakery", 1, 0));
-        shopMap_1.put("154", new Shop("154", "Supermarket", 3, 0));
-
-        shopMap_2.put("726", new Shop("726", "HardwareStore", 1, 45000));
-        shopMap_2.put("426", new Shop("426", "Supermarket", 2, 0));
-
-        String uid_1 = UUID.randomUUID().toString();
-        String uid_2 = UUID.randomUUID().toString();
-
-        userMap.put(uid_1, new User(uid_1, "Arbat", 0, new Advertisement(1000, 750), houseMap_1, shopMap_1));
-        userMap.put(uid_2, new User(uid_2, "Sokolniki", 0, new Advertisement(800, 1100), houseMap_2, shopMap_2));
-
-        Room room = new Room(15641, 2, 2, 1, userMap);
-
-        ConnectRealtimeDatabase.getInstance(this).testString(room);
-    }
-
-    private void testJSON() {
-        String json = "{nowPeople=2, cntPeople=2, roomCode=15641, userMap={8f7f1e64-bc06-4611-9fa9-8b3fe85218f2={uid=8f7f1e64-bc06-4611-9fa9-8b3fe85218f2, shopMap={154={duration=5, startPeriod=3, priceMonth=45000, soldProfit=0, sid=154, typeShop=Supermarket}, 425={duration=5, startPeriod=1, priceMonth=4, soldProfit=0, sid=425, typeShop=Bakery}}, houseMap={135={duration=5, startPeriod=1, hid=135, salePrice=0, typeHouse=Monolithic, saleApartments=0, countApartments=60, soldApartments=0, priceMonth=5000, soldProfit=0}, 436={duration=7, startPeriod=2, hid=436, salePrice=40000, typeHouse=Panel, saleApartments=10, countApartments=50, soldApartments=0, priceMonth=10000, soldProfit=0}}, district=Arbat, advertisement={shop=750, house=1000}, profitFull=0}, 5388c414-f268-46e2-8fb2-5fbf5a1519bd={uid=5388c414-f268-46e2-8fb2-5fbf5a1519bd, shopMap={426={duration=5, startPeriod=2, priceMonth=45000, soldProfit=0, sid=426, typeShop=Supermarket}, 726={duration=2, startPeriod=1, priceMonth=10000, soldProfit=45000, sid=726, typeShop=HardwareStore}}, houseMap={146={duration=6, startPeriod=3, hid=146, salePrice=50000, typeHouse=Brick, saleApartments=5, countApartments=40, soldApartments=5, priceMonth=7500, soldProfit=200000}, 945={duration=7, startPeriod=2, hid=945, salePrice=35000, typeHouse=Panel, saleApartments=7, countApartments=50, soldApartments=0, priceMonth=10000, soldProfit=0}}, district=Sokolniki, advertisement={shop=1100, house=800}, profitFull=0}}, currentPeriod=1}";
-        Room room = null;
-        try {
-            room = new ObjectMapper().readValue(json, Room.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(room.toString());
     }
 }

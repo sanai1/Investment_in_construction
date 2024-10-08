@@ -5,7 +5,10 @@ public class Advertisement {
     private Integer house;
     private Integer shop;
 
-    public Advertisement() {}
+    public Advertisement() {
+        this.house = 0;
+        this.shop = 0;
+    }
 
     public Advertisement(Integer house, Integer shop) {
         this.house = house;
