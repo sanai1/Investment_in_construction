@@ -37,7 +37,6 @@ public class EnterRoomActivity extends AppCompatActivity {
     public void enterRoom(View view) {
         String nameDistrict = binding_enterRoom.spinner.getSelectedItem().toString();
         String roomCode = binding_enterRoom.editTextNumberCheckCode.getText().toString();
-        // TODO: поправить переход на новую activity после окончания загрузки
 
         String uid = FirebaseAuth.getInstance().getUid();
         User user = new User(uid, nameDistrict, 0, null, new HashMap<>(), new HashMap<>());

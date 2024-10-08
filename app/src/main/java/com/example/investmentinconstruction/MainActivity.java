@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
         if (user.getAdvertisement() == null) {
             user.setAdvertisement(new Advertisement());
         }
+        ConnectRealtimeDatabase.getInstance(this).getRoom(roomCode, this);
 
         updateView();
 
@@ -83,16 +84,15 @@ public class MainActivity extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.otherPlayers) {
                     binding.drawerLayout.close();
-                    Intent intent = new Intent(MainActivity.this, OtherPlayersActivity.class);
-                    intent.putExtra("roomCode", roomCode);
-                    intent.putExtra(User.class.getSimpleName(), user);
-                    startActivity(intent);
+//                    OtherPlayersFragment otherPlayersFragment = new OtherPlayersFragment(user, this, room.getUserMap());
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, otherPlayersFragment).commit();
                 } else if (item.getItemId() == R.id.exit) {
                     binding.drawerLayout.close();
                     Intent intent = new Intent(MainActivity.this, MainBottomNavigation.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.me) {
                     binding.drawerLayout.close();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, mainFragment).commit();
                 }
                 return true;
             }
@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
 
-        updateView();
     }
 
     private void updateView() {
@@ -230,5 +229,9 @@ public class MainActivity extends AppCompatActivity
     private void goToCPlusPlus() {
         ConnectRealtimeDatabase.getInstance(this).updateUser(roomCode, user.getUid(), user);
         ConnectRealtimeDatabase.getInstance(this).checkRoom(roomCode, user.getUid(), this);
+    }
+
+    public void goToPlayerFragment(String name) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, new PlayerFragment()).commit();
     }
 }

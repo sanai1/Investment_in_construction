@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.Map;
 import java.util.Objects;
@@ -44,6 +45,25 @@ public class ConnectRealtimeDatabase {
 
     public void createRoom(Room room) {
         root.child(room.getRoomCode().toString()).setValue(room);
+    }
+
+    public void getRoom(String roomCode, MainActivity mainActivity) {
+        root.child(roomCode).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println(snapshot.getValue());
+                Gson gson = new Gson();
+                String room = gson.toJson(snapshot.getValue());
+                System.out.println(room);
+                mainActivity.setRoom(gson.fromJson(room, Room.class));
+                System.out.println("unlock in getRoom");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("Ошибка при чтении комнаты в getRoom");
+            }
+        });
     }
 
     private void addUser(String roomCode, String nowPeople, User user) {
@@ -123,7 +143,6 @@ public class ConnectRealtimeDatabase {
                                         // переход в MainActivity
                                         System.out.println("переход в MainActivity");
                                         result = false;
-//                                        lock.unlock();
                                         mainActivity.replaceFragment(room.getUserMap().get(uid));
                                     }
                                 }
@@ -138,7 +157,6 @@ public class ConnectRealtimeDatabase {
                     }
                 }
                 finally {
-                    System.out.println("unlock in checkRoom");
                     lock.unlock();
                 }
             }

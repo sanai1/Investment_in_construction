@@ -54,7 +54,7 @@ public class CreateRoomActivity extends AppCompatActivity {
 
         Map<String, User> userMap = new HashMap<String, User>();
         String uid = firebaseAuth.getCurrentUser().getUid().toString();
-        User user = new User(firebaseAuth.getCurrentUser().getUid().toString(), nameDistrict, 0, null, new HashMap<>(), new HashMap<>());
+        User user = new User(firebaseAuth.getCurrentUser().getUid().toString(), nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>());
         user.setNumberStep(0);
         userMap.put(uid, user);
 
