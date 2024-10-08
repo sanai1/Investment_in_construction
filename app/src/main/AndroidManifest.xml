@@ -27,7 +27,7 @@
         <activity android:name=".Room.EnterRoomActivity"/>
         <activity android:name=".Room.CreateRoomActivity"/>
         <activity android:name=".LoadingActivity"/>
-        <activity android:name=".PlayerActivity"/>
+        <activity android:name=".OtherPlayersActivity"/>
         <activity android:name=".MainActivity"/>
     </application>
 

@@ -1,6 +1,8 @@
 package com.example.investmentinconstruction.LogicClasses;
 
-public class Advertisement {
+import java.io.Serializable;
+
+public class Advertisement implements Serializable {
 
     private Integer house;
     private Integer shop;

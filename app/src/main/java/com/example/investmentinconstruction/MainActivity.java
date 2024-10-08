@@ -8,8 +8,6 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.investmentinconstruction.AdapterState.ConstructionAdapter;
 import com.example.investmentinconstruction.AdapterState.ConstructionState;
@@ -21,21 +19,16 @@ import com.example.investmentinconstruction.Fragments.LoadingFragment;
 import com.example.investmentinconstruction.Fragments.MainFragment;
 import com.example.investmentinconstruction.LogicClasses.Advertisement;
 import com.example.investmentinconstruction.LogicClasses.House;
-import com.example.investmentinconstruction.LogicClasses.Room;
 import com.example.investmentinconstruction.LogicClasses.Shop;
 import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.databinding.ActivityMainBinding;
 import com.example.investmentinconstruction.databinding.FragmentMainBinding;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
         implements
@@ -88,14 +81,18 @@ public class MainActivity extends AppCompatActivity
         binding.navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.player1) {
+                if (item.getItemId() == R.id.otherPlayers) {
                     binding.drawerLayout.close();
-//                    Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent(MainActivity.this, OtherPlayersActivity.class);
+                    intent.putExtra("roomCode", roomCode);
+                    intent.putExtra(User.class.getSimpleName(), user);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.exit) {
                     binding.drawerLayout.close();
                     Intent intent = new Intent(MainActivity.this, MainBottomNavigation.class);
                     startActivity(intent);
+                } else if (item.getItemId() == R.id.me) {
+                    binding.drawerLayout.close();
                 }
                 return true;
             }
