@@ -44,7 +44,8 @@ Game::Game(std::string s) {
 		long long cash = el["profitFull"];
 		long long ad_shop = el["advertisement"]["shop"];
 		long long ad_house = el["advertisement"]["house"];
-		Player* cur_player = new Player(cash, ad_shop, ad_house, mp_districts[distr], uid, numberstep);
+		long long prev_ad = el["advertisement"]["prevHouse"];
+		Player* cur_player = new Player(cash, ad_shop, ad_house, mp_districts[distr], uid, numberstep, prev_ad);
 		std::vector<Building*> houses;
 		std::vector<Building*> shops;
 
@@ -164,8 +165,9 @@ std::string Player::convert_to_json() {
 	ans += "\n";
 	ans += R"(      "advertisement": {)";
 	ans += "\n";
-	ans += R"(        "shop": )" + std::to_string(_shops_advertisment) + ",\n";
-	ans += R"(        "house": )" + std::to_string(_house_advertisment) + "},\n";
+	ans += R"(        "shop": )" + std::to_string(0) + ",\n";
+	ans += R"(        "house": )" + std::to_string(0) + ",\n";
+	ans += R"(        "prevHouse":)" + std::to_string(_house_advertisment) + "},\n";
 	ans += R"(     "profitFull": )" + std::to_string(_cash) + ",\n";
 	ans += R"(      "numberStep": )" + std::to_string(_number_step) + "}";
 	return ans;

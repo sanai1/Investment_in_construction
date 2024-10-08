@@ -26,7 +26,7 @@ public:
 		return _demand + _demand * (_inc_demand + percent_of_demands[_month % 12]) / 100;
 	}
 	long long get_sales_level() {
-		return _sales_level * percent_of_sales_levels[_month % 12] / 100;
+		return _sales_level + _sales_level * percent_of_sales_levels[_month % 12] / 100;
 	}
 	void sell_some_apartments();
 private:
