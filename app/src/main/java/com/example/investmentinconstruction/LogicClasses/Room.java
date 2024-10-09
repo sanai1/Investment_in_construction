@@ -3,12 +3,12 @@ package com.example.investmentinconstruction.LogicClasses;
 import java.util.Map;
 
 public class Room {
-    private Integer roomCode;
-    private Integer cntPeople;
-    private Integer nowPeople;
-    private Integer currentPeriod;
-    private Map<String, User> userMap;
-    private Integer numberStep;
+    private Integer roomCode; // приватный код комнаты
+    private Integer cntPeople; // кол-во людей в комнате (на сколько расчитана)
+    private Integer nowPeople; // кол-во людей в комнате (требует доработки)
+    private Integer currentPeriod; // кол-во шагов моделирования
+    private Map<String, User> userMap; // мапа игроков
+    private Integer numberStep; // номер месяца, который сейчас идет
 
     public Room() {}
 

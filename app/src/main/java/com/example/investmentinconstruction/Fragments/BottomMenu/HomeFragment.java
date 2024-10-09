@@ -1,4 +1,4 @@
-package com.example.investmentinconstruction.Fragments;
+package com.example.investmentinconstruction.Fragments.BottomMenu;
 
 import android.os.Bundle;
 

@@ -7,9 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.investmentinconstruction.Authorization.WelcomeActivity;
-import com.example.investmentinconstruction.Fragments.FriendsFragment;
-import com.example.investmentinconstruction.Fragments.HomeFragment;
-import com.example.investmentinconstruction.Fragments.SettingsFragment;
+import com.example.investmentinconstruction.Fragments.BottomMenu.FriendsFragment;
+import com.example.investmentinconstruction.Fragments.BottomMenu.HomeFragment;
+import com.example.investmentinconstruction.Fragments.BottomMenu.SettingsFragment;
 import com.example.investmentinconstruction.Room.CreateRoomActivity;
 import com.example.investmentinconstruction.Room.EnterRoomActivity;
 import com.example.investmentinconstruction.databinding.MainLayoutBottomnavigationmenuBinding;

@@ -137,13 +137,16 @@ public class ConnectRealtimeDatabase {
                                         // переход в contact
                                         System.out.println("переход в contact");
                                         result = false;
-//                                        lock.unlock();
                                         contract(roomCode, mainActivity, uid);
                                     } else if (cntPeopleRoom == cntNumberStepZero) {
                                         // переход в MainActivity
                                         System.out.println("переход в MainActivity");
                                         result = false;
-                                        mainActivity.replaceFragment(room.getUserMap().get(uid));
+                                        if (checkCurrentPeriod(room)) {
+                                            mainActivity.finalGame(room);
+                                        } else {
+                                            mainActivity.replaceFragment(room.getUserMap().get(uid));
+                                        }
                                     }
                                 }
 
@@ -157,6 +160,7 @@ public class ConnectRealtimeDatabase {
                     }
                 }
                 finally {
+                    System.out.println("unlock in checkRoom");
                     lock.unlock();
                 }
             }
@@ -173,14 +177,12 @@ public class ConnectRealtimeDatabase {
                 for(User user : room.getUserMap().values()) {
                     user.setNumberStep(0);
                 }
-                for (User user : room.getUserMap().values()) {
-                    System.out.println(user.getNumberStep());
-                }
-                System.out.println("0000000000000000000000");
-                System.out.println(room);
-                System.out.println("99999999999999999999999");
                 root.child(roomCode).setValue(room);
-                mainActivity.replaceFragment(room.getUserMap().get(uid));
+                if (checkCurrentPeriod(room)) {
+                    mainActivity.finalGame(room);
+                } else {
+                    mainActivity.replaceFragment(room.getUserMap().get(uid));
+                }
             }
 
             @Override
@@ -190,19 +192,7 @@ public class ConnectRealtimeDatabase {
         });
     }
 
-    public void testString(Room room) { // запускается при нажатии на stepButton в MainActivity для получения тестовых данных
-        root.child(room.getRoomCode().toString()).setValue(room);
-        root.child(room.getRoomCode().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String json = snapshot.getValue().toString();
-                System.out.println(json);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    private boolean checkCurrentPeriod(Room room) {
+        return Objects.equals(room.getCurrentPeriod(), room.getNumberStep());
     }
 }

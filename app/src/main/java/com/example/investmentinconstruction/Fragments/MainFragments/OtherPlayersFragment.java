@@ -1,4 +1,4 @@
-package com.example.investmentinconstruction.Fragments;
+package com.example.investmentinconstruction.Fragments.MainFragments;
 
 import android.os.Bundle;
 
@@ -20,12 +20,18 @@ import java.util.Map;
 public class OtherPlayersFragment extends Fragment {
 
     private String[] nameList;
+    private String uid;
 
-    public OtherPlayersFragment(Map<String, User> userMap) {
+    public OtherPlayersFragment(Map<String, User> userMap, String uid) {
+        this.uid = uid;
         nameList = new String[6];
         int i = 0;
         for (User user : userMap.values()) {
-            nameList[i++] = user.getUid();
+//            if (user.getUid().equals(uid)) {
+//                nameList[i++] = "YOU";
+//            } else {
+                nameList[i++] = user.getUid();
+//            }
         }
         for (;i < 6;) {
             nameList[i++] = "";
@@ -56,26 +62,30 @@ public class OtherPlayersFragment extends Fragment {
         arrayList.add(view.findViewById(R.id.textViewSix));
 
         for (int i = 0; i < arrayList.size(); i++) {
-            arrayList.get(i).setText(nameList[i]);
+            if (nameList[i].equals("")) {
+                arrayList.get(i).setText(nameList[i]);
+            } else {
+                arrayList.get(i).setText(nameList[i].substring(0, 11));
+            }
         }
 
         arrayList.get(0).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(0).getText().toString());
+            ((MainActivity) getActivity()).goToPlayerFragment(nameList[0]);
         });
         arrayList.get(1).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(1).getText().toString());
+            ((MainActivity) getActivity()).goToPlayerFragment(nameList[1]);
         });
         arrayList.get(2).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(2).getText().toString());
+            ((MainActivity) getActivity()).goToPlayerFragment(nameList[2]);
         });
         arrayList.get(3).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(3).getText().toString());
+            ((MainActivity) getActivity()).goToPlayerFragment(nameList[3]);
         });
         arrayList.get(4).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(4).getText().toString());
+            ((MainActivity) getActivity()).goToPlayerFragment(nameList[4]);
         });
         arrayList.get(5).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(5).getText().toString());
+            ((MainActivity) getActivity()).goToPlayerFragment(nameList[5]);
         });
 
         return view;

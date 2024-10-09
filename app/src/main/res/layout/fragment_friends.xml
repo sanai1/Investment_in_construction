@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.FriendsFragment">
+    tools:context=".Fragments.BottomMenu.FriendsFragment">
 
     <include layout="@layout/main_color_background"/>
 

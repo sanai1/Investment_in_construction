@@ -3,6 +3,7 @@ package com.example.investmentinconstruction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -10,18 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 
-import com.example.investmentinconstruction.AdapterState.ConstructionAdapter;
-import com.example.investmentinconstruction.AdapterState.ConstructionState;
-import com.example.investmentinconstruction.AdapterState.PlayerAdapter;
-import com.example.investmentinconstruction.AdapterState.PlayerState;
+import com.example.investmentinconstruction.AdapterState.Construction.ConstructionAdapter;
+import com.example.investmentinconstruction.AdapterState.Construction.ConstructionState;
+import com.example.investmentinconstruction.AdapterState.FinalGame.FinalGameAdapter;
+import com.example.investmentinconstruction.AdapterState.FinalGame.FinalGameState;
+import com.example.investmentinconstruction.AdapterState.OtherPlayers.PlayerAdapter;
+import com.example.investmentinconstruction.AdapterState.OtherPlayers.PlayerState;
 import com.example.investmentinconstruction.DialogFragment.AddInfoConstruction;
 import com.example.investmentinconstruction.DialogFragment.AdvertisementConstruction;
 import com.example.investmentinconstruction.DialogFragment.NewConstruction;
 import com.example.investmentinconstruction.DialogFragment.QuestionAgain;
-import com.example.investmentinconstruction.Fragments.LoadingFragment;
-import com.example.investmentinconstruction.Fragments.MainFragment;
-import com.example.investmentinconstruction.Fragments.OtherPlayersFragment;
-import com.example.investmentinconstruction.Fragments.PlayerFragment;
+import com.example.investmentinconstruction.Fragments.MainFragments.FinalGameFragment;
+import com.example.investmentinconstruction.Fragments.MainFragments.LoadingFragment;
+import com.example.investmentinconstruction.Fragments.MainFragments.MainFragment;
+import com.example.investmentinconstruction.Fragments.MainFragments.OtherPlayersFragment;
+import com.example.investmentinconstruction.Fragments.MainFragments.PlayerFragment;
 import com.example.investmentinconstruction.LogicClasses.Advertisement;
 import com.example.investmentinconstruction.LogicClasses.House;
 import com.example.investmentinconstruction.LogicClasses.Room;
@@ -34,8 +38,8 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.Lock;
 
 public class MainActivity extends AppCompatActivity
         implements
@@ -56,7 +60,6 @@ public class MainActivity extends AppCompatActivity
     private ConstructionAdapter constructionAdapter;
     private List<ConstructionState> constructionStateList;
     private MainFragment mainFragment;
-    private Lock lock;
 
     public void setRoom(Room room) {
         this.room = room;
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.otherPlayers) {
                     binding.drawerLayout.close();
-                    OtherPlayersFragment otherPlayersFragment = new OtherPlayersFragment(room.getUserMap());
+                    OtherPlayersFragment otherPlayersFragment = new OtherPlayersFragment(room.getUserMap(), user.getUid());
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, otherPlayersFragment).commit();
                 } else if (item.getItemId() == R.id.exit) {
                     binding.drawerLayout.close();
@@ -276,6 +279,35 @@ public class MainActivity extends AppCompatActivity
         } else {
             Toast.makeText(this, "The beggar player!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void goHome() {
+        Intent intent = new Intent(MainActivity.this, MainBottomNavigation.class);
+        startActivity(intent);
+    }
+
+    public void finalGame(Room room) {
+        String uid = user.getUid();
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        for (User user1 : room.getUserMap().values()) {
+            hashMap.put(user1.getUid(), user1.getProfitFull());
+        }
+        hashMap.entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByValue().reversed());
+        System.out.println(hashMap);
+
+        List<FinalGameState> pairList = new ArrayList<>();
+        Set<String> stringSet = hashMap.keySet();
+        for (String string : stringSet) {
+            if (string.equals(uid)) {
+                pairList.add(new FinalGameState(uid, hashMap.get(string), 0));
+            } else {
+                pairList.add(new FinalGameState(string, hashMap.get(string), 0));
+            }
+        }
+
+        FinalGameAdapter finalGameAdapter = new FinalGameAdapter(pairList);
+        FinalGameFragment finalGameFragment = new FinalGameFragment(finalGameAdapter);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, finalGameFragment).commit();
     }
 
 }

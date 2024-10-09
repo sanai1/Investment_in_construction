@@ -75,10 +75,10 @@
         android:text="Create Room"
         android:textColor="@color/white"
         android:textSize="25dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDistrictCreateRoom" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberModelStep" />
 
     <ImageView
         android:id="@+id/imageViewBackCreateRoom"
@@ -114,5 +114,34 @@
         android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCountPeople" />
+
+    <EditText
+        android:id="@+id/editTextNumberModelStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="11"
+        android:inputType="number"
+        android:hint="number of modeling steps"
+        android:textColorHint="@color/creamy"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDistrictCreateRoom" />
+
+    <TextView
+        android:id="@+id/textViewDetailedSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="detailed settings"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:onClick="detailSetting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCreateRoom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

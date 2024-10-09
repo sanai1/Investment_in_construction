@@ -1,4 +1,4 @@
-package com.example.investmentinconstruction.Fragments;
+package com.example.investmentinconstruction.Fragments.MainFragments;
 
 import android.os.Bundle;
 
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.investmentinconstruction.AdapterState.PlayerAdapter;
+import com.example.investmentinconstruction.AdapterState.OtherPlayers.PlayerAdapter;
 import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.MainActivity;
 import com.example.investmentinconstruction.R;

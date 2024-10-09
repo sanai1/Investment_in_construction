@@ -1,4 +1,4 @@
-package com.example.investmentinconstruction.AdapterState;
+package com.example.investmentinconstruction.AdapterState.Construction;
 
 public class ConstructionState {
 

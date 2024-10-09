@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -51,14 +52,28 @@ public class CreateRoomActivity extends AppCompatActivity {
     public void createRoom(View view) {
         Integer numberPeople = Integer.valueOf(binding_createRoom.spinnerNumberPeople.getSelectedItem().toString());
         String nameDistrict = binding_createRoom.spinnerDistrict.getSelectedItem().toString();
+        Integer numberModelStep;
+        if (binding_createRoom.editTextNumberModelStep.getText().toString().equals("")) {
+            Toast.makeText(this, "No data available", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            numberModelStep = Integer.valueOf(binding_createRoom.editTextNumberModelStep.getText().toString());
+        }
+        if (numberModelStep < 6) {
+            Toast.makeText(this, "Enter a longer period", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (numberModelStep > 24) {
+            Toast.makeText(this, "enter a shorter period", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        Map<String, User> userMap = new HashMap<String, User>();
+        Map<String, User> userMap = new HashMap<>();
         String uid = firebaseAuth.getCurrentUser().getUid().toString();
         User user = new User(firebaseAuth.getCurrentUser().getUid().toString(), nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>());
         user.setNumberStep(0);
         userMap.put(uid, user);
 
-        Room room = new Room(roomCode, numberPeople, 1, 1, userMap);
+        Room room = new Room(roomCode, numberPeople, 1, numberModelStep, userMap);
         room.setNumberStep(0);
 
         ConnectRealtimeDatabase.getInstance(this).createRoom(room);
@@ -83,6 +98,10 @@ public class CreateRoomActivity extends AppCompatActivity {
     public void goToHome(View view) {
         Intent intent = new Intent(CreateRoomActivity.this, MainBottomNavigation.class);
         startActivity(intent);
+    }
+    
+    public void detailSetting() {
+        Toast.makeText(this, "It will be possible to set\nmore detailed parameters soon", Toast.LENGTH_SHORT).show();
     }
 
 }
