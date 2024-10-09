@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.EnterRoomFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/main_color_background"/>
+
+        <EditText
+            android:id="@+id/editTextNumberCheckCode"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="225dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="enter the room code"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textColorHint="@color/creamy"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonEnterRoom"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/light_purple"
+            android:text="Enter Room"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_marginTop="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <ImageView
+            android:id="@+id/imageViewBackEnterRoom"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginStart="1dp"
+            android:onClick="goToHome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher_back" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select a district"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            android:layout_marginTop="85dp"
+            android:layout_marginStart="50dp"
+            android:gravity="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNumberCheckCode" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNumberCheckCode">
+
+
+            <RadioButton
+                android:id="@+id/radioButtonArbat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Arbat"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                tools:layout_editor_absoluteX="244dp"
+                tools:layout_editor_absoluteY="324dp" />
+
+            <RadioButton
+                android:id="@+id/radioButtonGagarin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gagarin"
+                android:textColor="@color/black"
+                android:textSize="20dp"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonSokolniki"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sokolniki"
+                android:textColor="@color/black"
+                android:textSize="20dp"/>
+
+        </RadioGroup>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

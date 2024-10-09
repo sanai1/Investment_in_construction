@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.investmentinconstruction.ConnectRealtimeDatabase;
+import com.example.investmentinconstruction.Fragments.EnterRoomFragment;
+import com.example.investmentinconstruction.Fragments.MainFragments.LoadingFragment;
 import com.example.investmentinconstruction.LoadingActivity;
 import com.example.investmentinconstruction.LogicClasses.Advertisement;
 import com.example.investmentinconstruction.LogicClasses.User;
@@ -23,6 +25,10 @@ public class EnterRoomActivity extends AppCompatActivity {
 
     private ActivityEnterRoomBinding binding_enterRoom;
     private String[] masDistrict = {"Arbat", "Gagarin", "Sokolniki"};
+    private LoadingFragment loadingFragment;
+    private EnterRoomFragment enterRoomFragment;
+    private String roomCode;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,36 +37,33 @@ public class EnterRoomActivity extends AppCompatActivity {
         binding_enterRoom = ActivityEnterRoomBinding.inflate(getLayoutInflater());
         setContentView(binding_enterRoom.getRoot());
 
-        initSpinner();
+        loadingFragment = new LoadingFragment();
+        enterRoomFragment = new EnterRoomFragment();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.containerEnter, enterRoomFragment).commit();
     }
 
-    public void enterRoom(View view) {
-        String nameDistrict = binding_enterRoom.spinner.getSelectedItem().toString();
-        String roomCode = binding_enterRoom.editTextNumberCheckCode.getText().toString();
-
+    public void enterRoom(int n, int roomCode) {
+        this.roomCode = String.valueOf(roomCode);
         String uid = FirebaseAuth.getInstance().getUid();
-        User user = new User(uid, nameDistrict, 0, null, new HashMap<>(), new HashMap<>());
-        user.setNumberStep(0);
-        boolean signInRoom =  ConnectRealtimeDatabase.getInstance(this)
-                .signInRoom(roomCode, FirebaseAuth.getInstance().getCurrentUser().getUid(), nameDistrict, user);
-        Intent intent = new Intent(EnterRoomActivity.this, LoadingActivity.class);
-        if (signInRoom) {
-            intent.putExtra("activity", "MainActivity");
-        } else {
-            intent.putExtra("activity", "EnterRoomActivity");
-        }
+        User user = new User(uid, masDistrict[n], 0, new Advertisement(), new HashMap<>(), new HashMap<>());
+        this.user = user;
+        ConnectRealtimeDatabase.getInstance(this).signInRoom(this.roomCode, user, this);
+        getSupportFragmentManager().beginTransaction().replace(R.id.containerEnter, new LoadingFragment()).commit();
+    }
+
+    public void again() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.containerEnter, enterRoomFragment).commit();
+    }
+
+    public void goToGame() {
+        Intent intent = new Intent(EnterRoomActivity.this, MainActivity.class);
         intent.putExtra("roomCode", roomCode);
         intent.putExtra(User.class.getSimpleName(), user);
         startActivity(intent);
     }
 
-    private void initSpinner() {
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, masDistrict);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding_enterRoom.spinner.setAdapter(adapter);
-    }
-
-    public void goToHome(View view) {
+    public void goToHome() {
         Intent intent = new Intent(EnterRoomActivity.this, MainBottomNavigation.class);
         startActivity(intent);
     }

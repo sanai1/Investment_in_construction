@@ -27,11 +27,7 @@ public class OtherPlayersFragment extends Fragment {
         nameList = new String[6];
         int i = 0;
         for (User user : userMap.values()) {
-//            if (user.getUid().equals(uid)) {
-//                nameList[i++] = "YOU";
-//            } else {
-                nameList[i++] = user.getUid();
-//            }
+            nameList[i++] = user.getUid();
         }
         for (;i < 6;) {
             nameList[i++] = "";
@@ -64,6 +60,8 @@ public class OtherPlayersFragment extends Fragment {
         for (int i = 0; i < arrayList.size(); i++) {
             if (nameList[i].equals("")) {
                 arrayList.get(i).setText(nameList[i]);
+            } else if (nameList[i].equals(uid)){
+                arrayList.get(i).setText("YOU");
             } else {
                 arrayList.get(i).setText(nameList[i].substring(0, 11));
             }

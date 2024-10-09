@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.example.investmentinconstruction.LogicClasses.Room;
 import com.example.investmentinconstruction.LogicClasses.User;
+import com.example.investmentinconstruction.Room.EnterRoomActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -66,18 +67,21 @@ public class ConnectRealtimeDatabase {
         });
     }
 
-    private void addUser(String roomCode, String nowPeople, User user) {
+    private void addUser(String roomCode, String nowPeople, User user, EnterRoomActivity enterRoomActivity) {
         // TODO: сделать проверку на кол-во людей в комнате (если уже все присоеденились запретить вход новых людей)
         root.child(roomCode).child("nowPeople").setValue(Integer.valueOf(nowPeople) + 1);
         root.child(roomCode).child("userMap").child(user.getUid()).setValue(user);
+        enterRoomActivity.goToGame();
     }
 
-    public boolean signInRoom(String roomCode, String uid, String nameDistrict, User user) {
+    public boolean signInRoom(String roomCode, User user, EnterRoomActivity enterRoomActivity) {
         root.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(roomCode).getValue() != null) {
-                    addUser(roomCode, snapshot.child(roomCode).child("nowPeople").getValue().toString(), user);
+                    addUser(roomCode, snapshot.child(roomCode).child("nowPeople").getValue().toString(), user, enterRoomActivity);
+                } else {
+                    enterRoomActivity.again();
                 }
             }
 
