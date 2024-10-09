@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,14 +12,19 @@ import androidx.core.view.GravityCompat;
 
 import com.example.investmentinconstruction.AdapterState.ConstructionAdapter;
 import com.example.investmentinconstruction.AdapterState.ConstructionState;
+import com.example.investmentinconstruction.AdapterState.PlayerAdapter;
+import com.example.investmentinconstruction.AdapterState.PlayerState;
 import com.example.investmentinconstruction.DialogFragment.AddInfoConstruction;
 import com.example.investmentinconstruction.DialogFragment.AdvertisementConstruction;
 import com.example.investmentinconstruction.DialogFragment.NewConstruction;
 import com.example.investmentinconstruction.DialogFragment.QuestionAgain;
 import com.example.investmentinconstruction.Fragments.LoadingFragment;
 import com.example.investmentinconstruction.Fragments.MainFragment;
+import com.example.investmentinconstruction.Fragments.OtherPlayersFragment;
+import com.example.investmentinconstruction.Fragments.PlayerFragment;
 import com.example.investmentinconstruction.LogicClasses.Advertisement;
 import com.example.investmentinconstruction.LogicClasses.House;
+import com.example.investmentinconstruction.LogicClasses.Room;
 import com.example.investmentinconstruction.LogicClasses.Shop;
 import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.databinding.ActivityMainBinding;
@@ -29,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
 
 public class MainActivity extends AppCompatActivity
         implements
@@ -41,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     private FragmentMainBinding binding_main;
     private String roomCode;
     private User user;
+    private Room room;
     protected NewConstruction newConstruction;
     protected AddInfoConstruction addInfoConstruction;
     protected AdvertisementConstruction advertisementConstruction;
@@ -48,6 +56,11 @@ public class MainActivity extends AppCompatActivity
     private ConstructionAdapter constructionAdapter;
     private List<ConstructionState> constructionStateList;
     private MainFragment mainFragment;
+    private Lock lock;
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +97,8 @@ public class MainActivity extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.otherPlayers) {
                     binding.drawerLayout.close();
-//                    OtherPlayersFragment otherPlayersFragment = new OtherPlayersFragment(user, this, room.getUserMap());
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, otherPlayersFragment).commit();
+                    OtherPlayersFragment otherPlayersFragment = new OtherPlayersFragment(room.getUserMap());
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, otherPlayersFragment).commit();
                 } else if (item.getItemId() == R.id.exit) {
                     binding.drawerLayout.close();
                     Intent intent = new Intent(MainActivity.this, MainBottomNavigation.class);
@@ -99,12 +112,6 @@ public class MainActivity extends AppCompatActivity
         });
         mainFragment = new MainFragment(constructionAdapter, roomCode, user);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, mainFragment).commit();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
     }
 
     private void updateView() {
@@ -223,6 +230,7 @@ public class MainActivity extends AppCompatActivity
         mainFragment.setUser(user);
         advertisementConstruction.setHouseAdv(user.getAdvertisement().getHouse());
         advertisementConstruction.setShopAdv(user.getAdvertisement().getShop());
+        ConnectRealtimeDatabase.getInstance(this).getRoom(roomCode, this);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, mainFragment).commit();
     }
 
@@ -231,7 +239,43 @@ public class MainActivity extends AppCompatActivity
         ConnectRealtimeDatabase.getInstance(this).checkRoom(roomCode, user.getUid(), this);
     }
 
-    public void goToPlayerFragment(String name) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, new PlayerFragment()).commit();
+    public void goToMainFragment() {
+        ConnectRealtimeDatabase.getInstance(this).getRoom(roomCode, this);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, mainFragment).commit();
     }
+
+    public void goToPlayerFragment(String name) {
+        User userInfo = room.getUserMap().get(name);
+        List<PlayerState> playerStateList = new ArrayList<>();
+        int picture = 0;
+        if (userInfo.getHouseMap() != null) {
+            Set<String> integerSet = userInfo.getHouseMap().keySet();
+            for (String string : integerSet) {
+                if (userInfo.getHouseMap().get(string).getTypeHouse().equals("Brick")) picture = R.drawable.house_brick;
+                else if (userInfo.getHouseMap().get(string).getTypeHouse().equals("Panel")) picture = R.drawable.house_panel;
+                else if (userInfo.getHouseMap().get(string).getTypeHouse().equals("Monolithic")) picture = R.drawable.house_monolithic;
+
+                playerStateList.add(new PlayerState(userInfo.getHouseMap().get(string).getHid(), userInfo.getHouseMap().get(string).getTypeHouse(), "0%", picture));
+                playerStateList.get(playerStateList.size() - 1).setSoldApartment(userInfo.getHouseMap().get(string).getSoldApartments());
+            }
+        }
+        if (userInfo.getShopMap() != null) {
+            Set<String> stringSet = userInfo.getShopMap().keySet();
+            for (String string : stringSet) {
+                if (userInfo.getShopMap().get(string).getTypeShop().equals("Supermarket")) picture = R.drawable.shop_supermarket;
+                else if (userInfo.getShopMap().get(string).getTypeShop().equals("Bakery")) picture = R.drawable.shop_bakery;
+                else if (userInfo.getShopMap().get(string).getTypeShop().equals("HardwareStore")) picture = R.drawable.shop_hardware;
+
+                playerStateList.add(new PlayerState(userInfo.getShopMap().get(string).getSid(), userInfo.getShopMap().get(string).getTypeShop(), "0%", picture));
+            }
+        }
+        if (!playerStateList.isEmpty()) {
+            PlayerAdapter playerAdapter = new PlayerAdapter(playerStateList);
+            PlayerFragment playerFragment = new PlayerFragment(playerAdapter, room.getUserMap().get(name));
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, playerFragment).commit();
+        } else {
+            Toast.makeText(this, "The beggar player!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.example.investmentinconstruction.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,24 +12,24 @@ import android.widget.TextView;
 
 import com.example.investmentinconstruction.LogicClasses.User;
 import com.example.investmentinconstruction.MainActivity;
-import com.example.investmentinconstruction.OtherPlayersActivity;
 import com.example.investmentinconstruction.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class OtherPlayersFragment extends Fragment {
 
-    private ArrayList<String> nameList;
-    private User user;
-    private Context mainActivity;
+    private String[] nameList;
 
-    public OtherPlayersFragment(User user, MainActivity mainActivity, Map<String, User> nameList) {
-        this.user = user;
-        this.mainActivity = mainActivity;
-        this.nameList = nameList;
+    public OtherPlayersFragment(Map<String, User> userMap) {
+        nameList = new String[6];
+        int i = 0;
+        for (User user : userMap.values()) {
+            nameList[i++] = user.getUid();
+        }
+        for (;i < 6;) {
+            nameList[i++] = "";
+        }
     }
 
     @Override
@@ -45,38 +44,38 @@ public class OtherPlayersFragment extends Fragment {
 
         ImageView imageViewBack = view.findViewById(R.id.imageViewBack);
         imageViewBack.setOnClickListener(v -> {
-            mainActivity.replaceFragment(user);
+            ((MainActivity) getActivity()).goToMainFragment();
         });
 
-        TextView textViewOne = view.findViewById(R.id.textViewPlayerOne);
-        textViewOne.setText(nameList.);
-        textViewOne.setOnClickListener(v -> {
-            mainActivity.goToPlayerFragment(textViewOne.getText().toString());
-        });
+        ArrayList<TextView> arrayList = new ArrayList<>();
+        arrayList.add(view.findViewById(R.id.textViewPlayerOne));
+        arrayList.add(view.findViewById(R.id.textViewPlayerTwo));
+        arrayList.add(view.findViewById(R.id.textViewThree));
+        arrayList.add(view.findViewById(R.id.textViewFour));
+        arrayList.add(view.findViewById(R.id.textViewFive));
+        arrayList.add(view.findViewById(R.id.textViewSix));
 
-        TextView textViewTwo = view.findViewById(R.id.textViewPlayerTwo);
-        textViewTwo.setOnClickListener(v -> {
-            mainActivity.goToPlayerFragment(textViewTwo.getText().toString());
-        });
+        for (int i = 0; i < arrayList.size(); i++) {
+            arrayList.get(i).setText(nameList[i]);
+        }
 
-        TextView textViewThree = view.findViewById(R.id.textViewThree);
-        textViewThree.setOnClickListener(v -> {
-            mainActivity.goToPlayerFragment(textViewThree.getText().toString());
+        arrayList.get(0).setOnClickListener(v -> {
+            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(0).getText().toString());
         });
-
-        TextView textViewPlayerFour = view.findViewById(R.id.textViewFour);
-        textViewPlayerFour.setOnClickListener(v -> {
-            mainActivity.goToPlayerFragment(textViewPlayerFour.getText().toString());
+        arrayList.get(1).setOnClickListener(v -> {
+            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(1).getText().toString());
         });
-
-        TextView textViewPlayerFive = view.findViewById(R.id.textViewFive);
-        textViewPlayerFive.setOnClickListener(v -> {
-            mainActivity.goToPlayerFragment(textViewPlayerFive.getText().toString());
+        arrayList.get(2).setOnClickListener(v -> {
+            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(2).getText().toString());
         });
-
-        TextView textViewPlayerSix = view.findViewById(R.id.textViewSix);
-        textViewPlayerSix.setOnClickListener(v -> {
-            mainActivity.goToPlayerFragment(textViewPlayerSix.getText().toString());
+        arrayList.get(3).setOnClickListener(v -> {
+            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(3).getText().toString());
+        });
+        arrayList.get(4).setOnClickListener(v -> {
+            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(4).getText().toString());
+        });
+        arrayList.get(5).setOnClickListener(v -> {
+            ((MainActivity) getActivity()).goToPlayerFragment(arrayList.get(5).getText().toString());
         });
 
         return view;
