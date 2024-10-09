@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity
         if (user.getAdvertisement() == null) {
             user.setAdvertisement(new Advertisement());
         }
+        user.setProfitFull(1000000);
         ConnectRealtimeDatabase.getInstance(this).getRoom(roomCode, this);
 
         updateView();
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity
                 else if (user.getHouseMap().get(string).getTypeHouse().equals("Panel")) picture = R.drawable.house_panel;
                 else if (user.getHouseMap().get(string).getTypeHouse().equals("Monolithic")) picture = R.drawable.house_monolithic;
 
-                constructionStateList.add(new ConstructionState(user.getHouseMap().get(string).getHid(), user.getHouseMap().get(string).getTypeHouse(), "0%", picture));
+                constructionStateList.add(new ConstructionState(user.getHouseMap().get(string).getHid(), user.getHouseMap().get(string).getTypeHouse(), String.valueOf(Math.round((float) (100 * user.getHouseMap().get(string).getStartPeriod()) /user.getHouseMap().get(string).getDuration())) + "%", picture));
                 constructionStateList.get(constructionStateList.size() - 1).setFullApartment(user.getHouseMap().get(string).getCountApartments().toString());
                 constructionStateList.get(constructionStateList.size() - 1).setSoldApartment(user.getHouseMap().get(string).getSoldApartments().toString());
                 constructionStateList.get(constructionStateList.size() - 1).setKey(string);
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity
                 if (user.getShopMap().get(string).getTypeShop().equals("Supermarket")) picture = R.drawable.shop_supermarket;
                 else if (user.getShopMap().get(string).getTypeShop().equals("Bakery")) picture = R.drawable.shop_bakery;
                 else if (user.getShopMap().get(string).getTypeShop().equals("HardwareStore")) picture = R.drawable.shop_hardware;
-                constructionStateList.add(new ConstructionState(user.getShopMap().get(string).getSid(), user.getShopMap().get(string).getTypeShop(), "0%", picture));
+                constructionStateList.add(new ConstructionState(user.getShopMap().get(string).getSid(), user.getShopMap().get(string).getTypeShop(), String.valueOf(Math.round((float) (100 * user.getShopMap().get(string).getStartPeriod()) /user.getShopMap().get(string).getDuration())) + "%", picture));
             }
         }
         if (!constructionStateList.isEmpty()) {
@@ -187,14 +188,14 @@ public class MainActivity extends AppCompatActivity
                 user.setHouseMap(new HashMap<>());
             }
             String hid = String.valueOf(100 + (int) (Math.random() * 900));
-            user.getHouseMap().put(hid, new House(hid, typeHouse, 1, 0, 0, 0, 0));
+            user.getHouseMap().put(hid, new House(hid, typeHouse, 0, 0, 0, 0, 0));
         }
         if (shop) {
             if (user.getShopMap() == null) {
                 user.setShopMap(new HashMap<>());
             }
             String sid = String.valueOf(100 + (int) (Math.random() * 900));
-            user.getShopMap().put(sid, new Shop(sid, typeShop, 1, 0));
+            user.getShopMap().put(sid, new Shop(sid, typeShop, 0, 0));
         }
         if (house || shop) {
             updateView();
