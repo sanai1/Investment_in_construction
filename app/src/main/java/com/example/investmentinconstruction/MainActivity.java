@@ -188,14 +188,14 @@ public class MainActivity extends AppCompatActivity
                 user.setHouseMap(new HashMap<>());
             }
             String hid = String.valueOf(100 + (int) (Math.random() * 900));
-            user.getHouseMap().put(hid, new House(hid, typeHouse, 0, 0, 0, 0, 0));
+            user.getHouseMap().put(hid, new House(hid, typeHouse, 0, 0, 0, 0, 0, 0));
         }
         if (shop) {
             if (user.getShopMap() == null) {
                 user.setShopMap(new HashMap<>());
             }
             String sid = String.valueOf(100 + (int) (Math.random() * 900));
-            user.getShopMap().put(sid, new Shop(sid, typeShop, 0, 0));
+            user.getShopMap().put(sid, new Shop(sid, typeShop, 0, 0, 0));
         }
         if (house || shop) {
             updateView();

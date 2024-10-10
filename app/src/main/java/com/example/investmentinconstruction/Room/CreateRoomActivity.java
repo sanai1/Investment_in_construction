@@ -69,11 +69,11 @@ public class CreateRoomActivity extends AppCompatActivity {
 
         Map<String, User> userMap = new HashMap<>();
         String uid = firebaseAuth.getCurrentUser().getUid().toString();
-        User user = new User(firebaseAuth.getCurrentUser().getUid().toString(), nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>());
+        User user = new User(firebaseAuth.getCurrentUser().getUid().toString(), nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "name", 15, 0);
         user.setNumberStep(0);
         userMap.put(uid, user);
 
-        Room room = new Room(roomCode, numberPeople, 1, numberModelStep, userMap);
+        Room room = new Room(roomCode, numberPeople, 1, numberModelStep, userMap, 0);
         room.setNumberStep(0);
 
         ConnectRealtimeDatabase.getInstance(this).createRoom(room);
@@ -101,6 +101,7 @@ public class CreateRoomActivity extends AppCompatActivity {
     }
     
     public void detailSetting() {
+        // TODO: падает с ошибкой при нажатии на текст (в этом методе)
         Toast.makeText(this, "It will be possible to set\nmore detailed parameters soon", Toast.LENGTH_SHORT).show();
     }
 

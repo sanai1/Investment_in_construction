@@ -9,15 +9,17 @@ public class Room {
     private Integer currentPeriod; // кол-во шагов моделирования
     private Map<String, User> userMap; // мапа игроков
     private Integer numberStep; // номер месяца, который сейчас идет
+    private Integer startPeriod; // номер месяца в который началась игра
 
     public Room() {}
 
-    public Room(Integer roomCode, Integer cntPeople, Integer nowPeople, Integer currentPeriod, Map<String, User> userHashMap) {
+    public Room(Integer roomCode, Integer cntPeople, Integer nowPeople, Integer currentPeriod, Map<String, User> userHashMap, Integer startPeriod) {
         this.roomCode = roomCode;
         this.cntPeople = cntPeople;
         this.nowPeople = nowPeople;
         this.currentPeriod = currentPeriod;
         this.userMap = userHashMap;
+        this.startPeriod = startPeriod;
         this.numberStep = 0;
     }
 
@@ -67,5 +69,13 @@ public class Room {
 
     public void setNumberStep(Integer numberStep) {
         this.numberStep = numberStep;
+    }
+
+    public Integer getStartPeriod() {
+        return startPeriod;
+    }
+
+    public void setStartPeriod(Integer startPeriod) {
+        this.startPeriod = startPeriod;
     }
 }

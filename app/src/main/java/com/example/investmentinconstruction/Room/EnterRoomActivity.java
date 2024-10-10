@@ -46,7 +46,7 @@ public class EnterRoomActivity extends AppCompatActivity {
     public void enterRoom(int n, int roomCode) {
         this.roomCode = String.valueOf(roomCode);
         String uid = FirebaseAuth.getInstance().getUid();
-        User user = new User(uid, masDistrict[n], 0, new Advertisement(), new HashMap<>(), new HashMap<>());
+        User user = new User(uid, masDistrict[n], 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "name", 15, 0);
         this.user = user;
         ConnectRealtimeDatabase.getInstance(this).signInRoom(this.roomCode, user, this);
         getSupportFragmentManager().beginTransaction().replace(R.id.containerEnter, new LoadingFragment()).commit();

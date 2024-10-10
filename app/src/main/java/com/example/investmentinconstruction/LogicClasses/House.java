@@ -12,11 +12,12 @@ public class House {
     private Integer soldApartments; // кол-во проданных квартир в доме
     private Integer saleApartments; // кол-во квартир, которые выставлены на продажу в этом месяце
     private Integer soldProfit; // общая прибыль с дома (считается сумма по проданным квартирам)
+    private Integer percent; // процент выполненой стройки (в %)
 
     public House() {}
 
     public House(String hid, String typeHouse, Integer startPeriod,
-                 Integer salePrice, Integer soldApartments, Integer saleApartments, Integer soldProfit) {
+                 Integer salePrice, Integer soldApartments, Integer saleApartments, Integer soldProfit, Integer persent) {
         this.hid = hid;
         this.typeHouse = typeHouse;
         this.startPeriod = startPeriod;
@@ -24,6 +25,7 @@ public class House {
         this.soldApartments = soldApartments;
         this.saleApartments = saleApartments;
         this.soldProfit = soldProfit;
+        this.percent = persent;
         initHouse();
     }
 
@@ -121,5 +123,13 @@ public class House {
 
     public void setSoldProfit(Integer soldProfit) {
         this.soldProfit = soldProfit;
+    }
+
+    public Integer getPercent() {
+        return percent;
+    }
+
+    public void setPercent(Integer percent) {
+        this.percent = percent;
     }
 }
