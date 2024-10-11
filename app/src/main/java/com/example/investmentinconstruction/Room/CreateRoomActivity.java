@@ -11,32 +11,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.investmentinconstruction.ConnectRealtimeDatabase;
 import com.example.investmentinconstruction.LoadingActivity;
 import com.example.investmentinconstruction.LogicClasses.Advertisement;
-import com.example.investmentinconstruction.LogicClasses.House;
 import com.example.investmentinconstruction.LogicClasses.Room;
-import com.example.investmentinconstruction.LogicClasses.Shop;
 import com.example.investmentinconstruction.LogicClasses.User;
-import com.example.investmentinconstruction.MainActivity;
 import com.example.investmentinconstruction.MainBottomNavigation;
 import com.example.investmentinconstruction.databinding.ActivityCreateRoomBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class CreateRoomActivity extends AppCompatActivity {
 
     private ActivityCreateRoomBinding binding_createRoom;
     private FirebaseAuth firebaseAuth;
     private Integer roomCode;
-    private String[] masNumberPeople = {"2", "3", "4", "5", "6"};
     private String[] masDistrict = {"Arbat", "Gagarin", "Sokolniki"};
+    private Map<String, Integer> mapMonth = new HashMap<>();
+    private String[] masMonth = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        for (int i = 0; i < masMonth.length; i++) {
+            mapMonth.put(masMonth[i], i);
+        }
 
         binding_createRoom = ActivityCreateRoomBinding.inflate(getLayoutInflater());
         setContentView(binding_createRoom.getRoot());
@@ -50,8 +50,11 @@ public class CreateRoomActivity extends AppCompatActivity {
     }
 
     public void createRoom(View view) {
-        Integer numberPeople = Integer.valueOf(binding_createRoom.spinnerNumberPeople.getSelectedItem().toString());
-        String nameDistrict = binding_createRoom.spinnerDistrict.getSelectedItem().toString();
+        Integer numberPeople = Integer.parseInt(binding_createRoom.editTextNumberPeople.getText().toString());
+        if (numberPeople < 1 || numberPeople > 4) {
+            Toast.makeText(this, "Check the entered number of people", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Integer numberModelStep;
         if (binding_createRoom.editTextNumberModelStep.getText().toString().equals("")) {
             Toast.makeText(this, "No data available", Toast.LENGTH_SHORT).show();
@@ -69,12 +72,29 @@ public class CreateRoomActivity extends AppCompatActivity {
 
         Map<String, User> userMap = new HashMap<>();
         String uid = firebaseAuth.getCurrentUser().getUid().toString();
-        User user = new User(firebaseAuth.getCurrentUser().getUid().toString(), nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "name", 15, 0);
-        user.setNumberStep(0);
+        String nameDistrict = binding_createRoom.spinnerDistrict.getSelectedItem().toString();
+        Integer numberMonth = mapMonth.get(binding_createRoom.spinnerMonth.getSelectedItem().toString());
+
+        if (binding_createRoom.checkBoxGalina.isChecked()) {
+            String botUid = "BOT" + UUID.randomUUID().toString();
+            userMap.put(botUid, new User(botUid, nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "GalinaBOT", 35, -1));
+            userMap.get(botUid).setNumberStep(1);
+        }
+        if (binding_createRoom.checkBoxIvan.isChecked()) {
+            String botUid = "BOT" + UUID.randomUUID().toString();
+            userMap.put(botUid, new User(botUid, nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "IvanBot", 45, 1));
+            userMap.get(botUid).setNumberStep(1);
+        }
+        if (binding_createRoom.checkBoxEdward.isChecked()) {
+            String botUid = "BOT" + UUID.randomUUID().toString();
+            userMap.put(botUid, new User(botUid, nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "EdwardBot", 65, 1));
+            userMap.get(botUid).setNumberStep(1);
+        }
+
+        User user = new User(uid, nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "name", 15, 0);
         userMap.put(uid, user);
 
-        Room room = new Room(roomCode, numberPeople, 1, numberModelStep, userMap, 0);
-        room.setNumberStep(0);
+        Room room = new Room(roomCode, numberPeople, 1, numberModelStep, userMap, numberMonth);
 
         ConnectRealtimeDatabase.getInstance(this).createRoom(room);
 
@@ -86,13 +106,13 @@ public class CreateRoomActivity extends AppCompatActivity {
     }
 
     private void initSpinner() {
-        ArrayAdapter<String> adapter_numberPeople = new ArrayAdapter(this, android.R.layout.simple_spinner_item, masNumberPeople);
-        adapter_numberPeople.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding_createRoom.spinnerNumberPeople.setAdapter(adapter_numberPeople);
-
         ArrayAdapter<String> adapter_District = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, masDistrict);
         adapter_District.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding_createRoom.spinnerDistrict.setAdapter(adapter_District);
+
+        ArrayAdapter<String> adapter_Month = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, masMonth);
+        adapter_Month.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding_createRoom.spinnerMonth.setAdapter(adapter_Month);
     }
 
     public void goToHome(View view) {
@@ -100,9 +120,8 @@ public class CreateRoomActivity extends AppCompatActivity {
         startActivity(intent);
     }
     
-    public void detailSetting() {
-        // TODO: падает с ошибкой при нажатии на текст (в этом методе)
-        Toast.makeText(this, "It will be possible to set\nmore detailed parameters soon", Toast.LENGTH_SHORT).show();
+    public void detailSetting(View view) {
+        Toast.makeText(this, "It will be possible to set more detailed parameters soon", Toast.LENGTH_SHORT).show();
     }
 
 }

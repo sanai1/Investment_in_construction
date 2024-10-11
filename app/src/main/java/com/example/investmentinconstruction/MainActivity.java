@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity
         };
         constructionStateList = new ArrayList<>();
         int picture = 0;
-        // TODO: сделать правильно progress - проверить разницу между текущим месяцев и месяцев начала стройки, при разнице больше 1 вычислить % иначе 0%
         if (user.getHouseMap() != null) {
             Set<String> integerSet = user.getHouseMap().keySet();
             for (String string : integerSet) {
@@ -142,7 +141,7 @@ public class MainActivity extends AppCompatActivity
                 else if (user.getHouseMap().get(string).getTypeHouse().equals("Panel")) picture = R.drawable.house_panel;
                 else if (user.getHouseMap().get(string).getTypeHouse().equals("Monolithic")) picture = R.drawable.house_monolithic;
 
-                constructionStateList.add(new ConstructionState(user.getHouseMap().get(string).getHid(), user.getHouseMap().get(string).getTypeHouse(), String.valueOf(Math.round((float) (100 * user.getHouseMap().get(string).getStartPeriod()) /user.getHouseMap().get(string).getDuration())) + "%", picture));
+                constructionStateList.add(new ConstructionState(user.getHouseMap().get(string).getHid(), user.getHouseMap().get(string).getTypeHouse(), user.getHouseMap().get(string).getPercent()+ "%", picture));
                 constructionStateList.get(constructionStateList.size() - 1).setFullApartment(user.getHouseMap().get(string).getCountApartments().toString());
                 constructionStateList.get(constructionStateList.size() - 1).setSoldApartment(user.getHouseMap().get(string).getSoldApartments().toString());
                 constructionStateList.get(constructionStateList.size() - 1).setKey(string);
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity
                 if (user.getShopMap().get(string).getTypeShop().equals("Supermarket")) picture = R.drawable.shop_supermarket;
                 else if (user.getShopMap().get(string).getTypeShop().equals("Bakery")) picture = R.drawable.shop_bakery;
                 else if (user.getShopMap().get(string).getTypeShop().equals("HardwareStore")) picture = R.drawable.shop_hardware;
-                constructionStateList.add(new ConstructionState(user.getShopMap().get(string).getSid(), user.getShopMap().get(string).getTypeShop(), String.valueOf(Math.round((float) (100 * user.getShopMap().get(string).getStartPeriod()) /user.getShopMap().get(string).getDuration())) + "%", picture));
+                constructionStateList.add(new ConstructionState(user.getShopMap().get(string).getSid(), user.getShopMap().get(string).getTypeShop(), user.getShopMap().get(string).getPercent() + "%", picture));
             }
         }
         if (!constructionStateList.isEmpty()) {
@@ -182,20 +181,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDialogClickListener(boolean house, String typeHouse, boolean shop, String typeShop) {
-        // TODO: аргумент startPeriod необходимо выставить правильно, взяв откуда-то
         if (house) {
             if (user.getHouseMap() == null){
                 user.setHouseMap(new HashMap<>());
             }
             String hid = String.valueOf(100 + (int) (Math.random() * 900));
-            user.getHouseMap().put(hid, new House(hid, typeHouse, 0, 0, 0, 0, 0, 0));
+            user.getHouseMap().put(hid, new House(hid, typeHouse, room.getStartPeriod() + room.getNumberStep(), 0, 0, 0, 0, 0));
         }
         if (shop) {
             if (user.getShopMap() == null) {
                 user.setShopMap(new HashMap<>());
             }
             String sid = String.valueOf(100 + (int) (Math.random() * 900));
-            user.getShopMap().put(sid, new Shop(sid, typeShop, 0, 0, 0));
+            user.getShopMap().put(sid, new Shop(sid, typeShop, room.getStartPeriod() + room.getNumberStep(), 0, 0));
         }
         if (house || shop) {
             updateView();
