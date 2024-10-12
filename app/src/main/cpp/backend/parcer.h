@@ -4,27 +4,19 @@
 #include "../json-develop/single_include/nlohmann/json.hpp"
 #include <map>
 
-const std::string PATH = "room.json";
-
 struct Info {
 	int nowPeople;
 	int cntPeople;
 	int numberStep;
 	int roomCode;
 	int currentPeriod;
+	int startPeriod;
 	Info() {}
 };
 
 Info info_for_json;
 
 Game::Game(std::string s) {
-	//std::ifstream in(PATH);
-	//std::string s;
-	/*std::string ans = "";
-	while (std::getline(in, s)) {
-		ans += s;
-		ans += "\n";
-	}*/
 	nlohmann::json jsonData = nlohmann::json::parse(s);
 	_current_month = jsonData["numberStep"];
 	info_for_json.currentPeriod = jsonData["currentPeriod"];
@@ -32,7 +24,8 @@ Game::Game(std::string s) {
 	info_for_json.nowPeople = jsonData["nowPeople"];
 	info_for_json.numberStep = jsonData["numberStep"] + 1;
 	info_for_json.roomCode = jsonData["roomCode"];
-	
+	info_for_json.startPeriod = jsonData["startPeriod"];
+	_start_period = info_for_json.startPeriod;
 	std::map<std::string, Microdistrict*> mp_districts;
 	for (auto el : jsonData["userMap"]) {
 		std::string distr = el["district"];
@@ -45,7 +38,16 @@ Game::Game(std::string s) {
 		long long ad_shop = el["advertisement"]["shop"];
 		long long ad_house = el["advertisement"]["house"];
 		long long prev_ad = el["advertisement"]["prevHouse"];
-		Player* cur_player = new Player(cash, ad_shop, ad_house, mp_districts[distr], uid, numberstep, prev_ad);
+		std::string name = el["name"];
+		int age = el["age"];
+		int gen = el["gender"];
+		Player* cur_player = nullptr;
+		if (uid.size() >= 3 && uid.substr(0, 3) == "BOT") {
+			cur_player = new Bot(cash, ad_shop, ad_house, mp_districts[distr], uid, numberstep, prev_ad, name, age, gen);
+		}
+		else {
+			cur_player = new Player(cash, ad_shop, ad_house, mp_districts[distr], uid, numberstep, prev_ad, name, age, gen);
+		}
 		std::vector<Building*> houses;
 		std::vector<Building*> shops;
 
@@ -54,15 +56,17 @@ Game::Game(std::string s) {
 			int startPeriod = shop["startPeriod"];
 			long long priceMonth = shop["priceMonth"];	
 			long long soldProfit = shop["soldProfit"];
+			int percent = shop["percent"];
 			std::string sid = shop["sid"];
 			std::string type = shop["typeShop"];
 			Microdistrict* sh_district = mp_districts[distr];
-			Shop* cur_shop = new Shop(duration, startPeriod, priceMonth, cur_player, sh_district, soldProfit, sid, type);
+			Shop* cur_shop = new Shop(duration, startPeriod, priceMonth, cur_player, sh_district, soldProfit, sid, type, percent);
 			shops.push_back(cur_shop);
 			_all_buildings.push_back(cur_shop);
 		}
 
 		for (auto house : el["houseMap"]) {
+			int percent = house["percent"];
 			int duration = house["duration"];
 			int startPeriod = house["startPeriod"];
 			std::string hid = house["hid"];
@@ -73,12 +77,15 @@ Game::Game(std::string s) {
 			int soldApartments = house["soldApartments"];
 			long long priceMonth = house["priceMonth"];
 			long long soldProfit = house["soldProfit"];
-			House* cur_house = new House(duration, startPeriod, priceMonth, soldProfit, cur_player, mp_districts[distr], countApartments, soldApartments, saleApartments,salePrice, hid, type);
+			House* cur_house = new House(duration, startPeriod, priceMonth, soldProfit, cur_player, mp_districts[distr], countApartments, soldApartments, saleApartments,salePrice, hid, type, percent);
 			houses.push_back(cur_house);
 			_all_buildings.push_back(cur_house);
 		}
 		cur_player->set_buildings(houses, shops);
 		_players.push_back(cur_player);
+		if (uid.size() >= 0 && uid.substr(0, 3) == "BOT") {
+			_bots.push_back(cur_player);
+		}
 
 	}
 
@@ -103,6 +110,7 @@ std::string Building::convert() {
 	std::string ans = R"(          "duration" : )" + std::to_string(_duration) + ",\n";
 	ans += R"(          "startPeriod" : )" + std::to_string(_start_period) + ",\n";
 	ans += R"(          "priceMonth" : )" + std::to_string(_construction_cost) + ",\n";
+	ans += R"(          "percent" : )" + std::to_string(int(_percent_of_construction)) + ",\n";
 	return ans;
 }
 
@@ -135,6 +143,9 @@ std::string House::convert_to_json() {
 std::string Player::convert_to_json() {
 	std::string ans = R"(    ")" + _uid + R"(" : {)" + "\n";
 	ans += R"(      "uid" : ")" + _uid + R"(",)" + "\n";
+	ans += R"(      "gender" : )" + std::to_string(_gender) + R"(,)" + "\n";
+	ans += R"(      "age" : )" + std::to_string(_age) + R"(,)" + "\n";
+	ans += R"(      "name" : ")" + _name + R"(",)" + "\n";
 	ans += R"(      "shopMap" : {)";
 	ans += "\n";
 	for (int i = 0; i < _shops.size(); ++i) {
@@ -176,6 +187,7 @@ std::string Player::convert_to_json() {
 
 std::string Game::convert_to_json() {
 	std::string ans = R"({ "nowPeople" : )" + std::to_string(info_for_json.nowPeople) + ",\n";
+	ans += R"(  "startPeriod": )" + std::to_string(_start_period) + ",\n";
 	ans += R"(  "cntPeople" : )" + std::to_string(info_for_json.cntPeople) + ",\n";
 	ans += R"(  "numberStep" : )" + std::to_string(info_for_json.numberStep) + ",\n";
 	ans += R"(  "roomCode" : )" + std::to_string(info_for_json.roomCode) + ",\n";
