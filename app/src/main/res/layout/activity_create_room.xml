@@ -37,6 +37,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="25dp"
+        android:onClick="copyRoomCode"
         android:src="?attr/actionModeCopyDrawable"
         app:layout_constraintBottom_toBottomOf="@+id/textViewRomeCode"
         app:layout_constraintStart_toEndOf="@+id/textViewRomeCode"

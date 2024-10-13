@@ -1,5 +1,8 @@
 package com.example.investmentinconstruction.Room;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -122,6 +125,13 @@ public class CreateRoomActivity extends AppCompatActivity {
     
     public void detailSetting(View view) {
         Toast.makeText(this, "It will be possible to set more detailed parameters soon", Toast.LENGTH_SHORT).show();
+    }
+
+    public void copyRoomCode(View view) {
+        ClipboardManager clipboardManager = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("", roomCode.toString());
+        clipboardManager.setPrimaryClip(clipData);
+        Toast.makeText(this, "copy " + roomCode.toString(), Toast.LENGTH_SHORT).show();
     }
 
 }
