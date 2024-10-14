@@ -2,6 +2,9 @@
 #include "buildings.h"
 #include "microdistrict.h"
 #include <algorithm>
+#include <set>
+
+std::set<int> used_id;
 
 bool compare_with_costs(Building* b1, Building* b2) {
     House* hptr1 = dynamic_cast<House*> (b1);
@@ -50,9 +53,11 @@ void Player::set_buildings(std::vector<Building*>& houses, std::vector<Building*
     _houses = houses;
     _shops = shops;
     for (Building* house : _houses) {
+        used_id.insert(house->get_id());
         _my_district->add_building(house);
     }
     for (Building* shop : _shops) {
+        used_id.insert(shop->get_id());
         _my_district->add_building(shop);
     }
 }
@@ -100,6 +105,15 @@ void Player::update_construction(int month) {
         }
         j++;
     }
+}
+
+int generate_id() {
+    int id = 10000 + rand() % 90000;
+    while (used_id.find(id) != used_id.end()) {
+        id = 10000 + rand() % 90000;
+    }
+    used_id.insert(id);
+    return id;
 }
 
 void Player::get_cahs_shops(int month) {
@@ -166,7 +180,7 @@ void Bot::set_data(int current_month) {
             if (type_house == 1) {
                 if (on_houses >= 600000) {
                     on_houses -= 600000;
-                    Building* house = new House(6, current_month, 600000, 0, this, _my_district, 30, 0, 30, 60000, std::to_string(rand() % 900 + 100), "Panel", 0);
+                    Building* house = new House(6, current_month, 600000, 0, this, _my_district, 30, 0, 30, 60000, std::to_string(generate_id()), "Panel", 0);
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -177,7 +191,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 2) {
                 if (on_houses >= 700000) {
                     on_houses -= 700000;
-                    Building* house = new House(7, current_month, 700000, 0, this, _my_district, 40, 0, 40, 70000, std::to_string(rand() % 900 + 100), "Brick", 0);
+                    Building* house = new House(7, current_month, 700000, 0, this, _my_district, 40, 0, 40, 70000, std::to_string(generate_id()), "Brick", 0);
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -188,7 +202,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 3) {
                 if (on_houses >= 800000) {
                     on_houses -= 800000;
-                    Building* house = new House(8, current_month, 800000, 0, this, _my_district, 50, 0, 50, 80000, std::to_string(rand() % 900 + 100), "Monolithic", 0);
+                    Building* house = new House(8, current_month, 800000, 0, this, _my_district, 50, 0, 50, 80000, std::to_string(generate_id()), "Monolithic", 0);
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -202,7 +216,7 @@ void Bot::set_data(int current_month) {
             if (type_shop == 1) {
                 if (on_shops >= 300000) {
                     on_shops -= 300000;
-                    Building* shop = new Shop(3, current_month, 300000, this, _my_district, 0, std::to_string(rand() % 900 + 100), "Bakery", 0);
+                    Building* shop = new Shop(3, current_month, 300000, this, _my_district, 0, std::to_string(generate_id()), "Bakery", 0);
                     _shops.push_back(shop);
                     _my_district->add_building(shop);
                 }
@@ -213,7 +227,7 @@ void Bot::set_data(int current_month) {
             else if (type_shop == 2) {
                 if (on_shops >= 500000) {
                     on_shops -= 500000;
-                    Building* shop = new Shop(5, current_month, 500000, this, _my_district, 0, std::to_string(rand() % 900 + 100), "Supermarket", 0);
+                    Building* shop = new Shop(5, current_month, 500000, this, _my_district, 0, std::to_string(generate_id()), "Supermarket", 0);
                     _shops.push_back(shop);
                     _my_district->add_building(shop);
                 }
@@ -224,7 +238,7 @@ void Bot::set_data(int current_month) {
             else if (type_shop == 3) {
                 if (on_shops >= 500000) {
                     on_shops -= 500000;
-                    Building* shop = new Shop(5, current_month, 300000, this, _my_district, 0, std::to_string(rand() % 900 + 100), "HardwareStore", 0);
+                    Building* shop = new Shop(5, current_month, 300000, this, _my_district, 0, std::to_string(generate_id()), "HardwareStore", 0);
                     _shops.push_back(shop);
                     _my_district->add_building(shop);
                 }
@@ -245,7 +259,7 @@ void Bot::set_data(int current_month) {
             if (type_house == 1) {
                 if (on_houses >= 600000) {
                     on_houses -= 600000;
-                    Building* house = new House(6, current_month, 600000, 0, this, _my_district, 30, 0, 30, 45000, std::to_string(rand() % 900 + 100), "Panel", 0);
+                    Building* house = new House(6, current_month, 600000, 0, this, _my_district, 30, 0, 30, 45000, std::to_string(generate_id()), "Panel", 0);
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -256,7 +270,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 2) {
                 if (on_houses >= 700000) {
                     on_houses -= 700000;
-                    Building* house = new House(7, current_month, 700000, 0, this, _my_district, 40, 0, 40, 55000, std::to_string(rand() % 900 + 100), "Brick", 0);
+                    Building* house = new House(7, current_month, 700000, 0, this, _my_district, 40, 0, 40, 55000, std::to_string(generate_id()), "Brick", 0);
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -267,7 +281,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 3) {
                 if (on_houses >= 800000) {
                     on_houses -= 800000;
-                    Building* house = new House(8, current_month, 800000, 0, this, _my_district, 50, 0, 50, 70000, std::to_string(rand() % 900 + 100), "Monolithic", 0);
+                    Building* house = new House(8, current_month, 800000, 0, this, _my_district, 50, 0, 50, 70000, std::to_string(generate_id()), "Monolithic", 0);
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -281,7 +295,7 @@ void Bot::set_data(int current_month) {
             if (type_shop == 2) {
                 if (on_shops >= 500000) {
                     on_shops -= 500000;
-                    Building* shop = new Shop(5, current_month, 500000, this, _my_district, 0, std::to_string(rand() % 900 + 100), "Supermarket", 0);
+                    Building* shop = new Shop(5, current_month, 500000, this, _my_district, 0, std::to_string(generate_id()), "Supermarket", 0);
                     _shops.push_back(shop);
                     _my_district->add_building(shop);
                 }
@@ -292,7 +306,7 @@ void Bot::set_data(int current_month) {
             else if (type_shop == 3) {
                 if (on_shops >= 500000) {
                     on_shops -= 500000;
-                    Building* shop = new Shop(5, current_month, 300000, this, _my_district, 0, std::to_string(rand() % 900 + 100), "HardwareStore", 0);
+                    Building* shop = new Shop(5, current_month, 300000, this, _my_district, 0, std::to_string(generate_id()), "HardwareStore", 0);
                     _shops.push_back(shop);
                     _my_district->add_building(shop);
                 }
@@ -312,7 +326,7 @@ void Bot::set_data(int current_month) {
             if (type_house == 1) {
                 if (on_houses >= 600000) {
                     on_houses -= 600000;
-                    Building* house = new House(6, current_month, 600000, 0, this, _my_district, 30, 0, 30, 55000, std::to_string(rand() % 900 + 100), "Panel", 0);
+                    Building* house = new House(6, current_month, 600000, 0, this, _my_district, 30, 0, 30, 55000, std::to_string(generate_id()), "Panel", 0);
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -323,7 +337,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 2) {
                 if (on_houses >= 700000) {
                     on_houses -= 700000;
-                    Building* house = new House(7, current_month, 700000, 0, this, _my_district, 40, 0, 40, 65000, std::to_string(rand() % 900 + 100), "Brick", 0);
+                    Building* house = new House(7, current_month, 700000, 0, this, _my_district, 40, 0, 40, 65000, std::to_string(generate_id()), "Brick", 0);
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -334,7 +348,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 3) {
                 if (on_houses >= 800000) {
                     on_houses -= 800000;
-                    Building* house = new House(8, current_month, 800000, 0, this, _my_district, 50, 0, 50, 81000, std::to_string(rand() % 900 + 100), "Monolithic", 0);
+                    Building* house = new House(8, current_month, 800000, 0, this, _my_district, 50, 0, 50, 81000, std::to_string(generate_id()), "Monolithic", 0);
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -348,7 +362,7 @@ void Bot::set_data(int current_month) {
             if (type_shop == 2) {
                 if (on_shops >= 500000) {
                     on_shops -= 500000;
-                    Building* shop = new Shop(5, current_month, 500000, this, _my_district, 0, std::to_string(rand() % 900 + 100), "Supermarket", 0);
+                    Building* shop = new Shop(5, current_month, 500000, this, _my_district, 0, std::to_string(generate_id()), "Supermarket", 0);
                     _shops.push_back(shop);
                     _my_district->add_building(shop);
                 }
@@ -359,7 +373,7 @@ void Bot::set_data(int current_month) {
             else if (type_shop == 3) {
                 if (on_shops >= 500000) {
                     on_shops -= 500000;
-                    Building* shop = new Shop(5, current_month, 300000, this, _my_district, 0, std::to_string(rand() % 900 + 100), "HardwareStore", 0);
+                    Building* shop = new Shop(5, current_month, 300000, this, _my_district, 0, std::to_string(generate_id()), "HardwareStore", 0);
                     _shops.push_back(shop);
                     _my_district->add_building(shop);
                 }

@@ -43,6 +43,7 @@ public:
 	int get_percent() {
 		return _percent_of_construction;
 	}
+	virtual int get_id() = 0;
 	std::string convert();
 	virtual std::string convert_to_json() = 0;
 private:
@@ -82,6 +83,9 @@ public:
 	long long get_apartment_price() {
 		return _apartment_price;
 	}
+	int get_id() {
+		return std::stoi(_hid);
+	}
 	void add_sold_apartments(int x) {
 		_sold_apartments += x;
 	}
@@ -120,6 +124,9 @@ public:
 	}
 	int get_info() {
 		return 0;
+	}
+	int get_id() {
+		return std::stoi(_sid);
 	}
 	std::string convert_to_json();
 private:
