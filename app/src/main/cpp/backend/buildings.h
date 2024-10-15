@@ -31,8 +31,9 @@ public:
 	Microdistrict* get_district() {
 		return _district;
 	}
-	int end_period() {
-		return _start_period + _duration;
+	int end_period() { // months left
+		double d = _percent_of_construction * _duration / 100;
+		return (_duration - static_cast<int>(d));
 	}
 	void add_percent() {
 		_percent_of_construction += 100.0 / double(_duration);
