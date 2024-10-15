@@ -45,14 +45,14 @@ public:
 	int get_percent() {
 		return _percent_of_construction;
 	}
-	virtual int get_id() = 0;
+	virtual std::string get_id() = 0;
 	std::string convert();
 	virtual std::string convert_to_json() = 0;
 private:
 	std::string _type;
 	long long _construction_cost; // стоимость постройки измеряется в у.е в месяц.
-	int _duration; // Срок стройки в месяцах
-	int _start_period; // Месяц начала стройки
+	long long _duration; // Срок стройки в месяцах
+	long long _start_period; // Месяц начала стройки
 	double _percent_of_construction;
 	Player* _owner;
 	Microdistrict* _district;
@@ -86,8 +86,8 @@ public:
 	long long get_apartment_price() {
 		return _apartment_price;
 	}
-	int get_id() {
-		return std::stoi(_hid);
+	std::string get_id() {
+		return _hid;
 	}
 	void add_sold_apartments(int x) {
 		_sold_apartments += x;
@@ -102,7 +102,7 @@ public:
 private:
 	std::string _house_type;
 	long long _house_profit;
-	int _cnt_apartments;// количество квартир
+	long long _cnt_apartments;// количество квартир
 	long long _apartment_price; // цена одной квартиры
 	int _sold_apartments; // количество проданных квартир
 	int _sale_apartments; // количество квартир на продаже
@@ -128,8 +128,8 @@ public:
 	int get_info() {
 		return 0;
 	}
-	int get_id() {
-		return std::stoi(_sid);
+	std::string get_id() {
+		return _sid;
 	}
 	std::string convert_to_json();
 private:

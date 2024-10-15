@@ -3,8 +3,9 @@
 class Building;
 class Player;
 // —прос на жилье и средний уровень продаж по мес€цам:
-const std::vector<int> percent_of_demands = { 10, 5 ,10, 15, 20, 25, 30, 35, 40, 40, 35, 25 };
-const std::vector<int> percent_of_sales_levels = { 40, 40, 30, 25, 20, 20, 15, 20, 10, 20, 25, 30 };
+const std::vector<long long> percent_of_demands = { 5, 5 ,10, 15, 10, 15, 20, 25, 30, 30, 25, 20 };
+const std::vector<long long> percent_of_sales_levels = { 25, 25, 20, 20, 15, 15, 10, 20, 10, 15, 20, 25 };
+const long long start_demand = 10;
 
 class Microdistrict {
 public:
@@ -21,11 +22,11 @@ public:
 	std::string get_name() {
 		return _name;
 	}
-	void add_percent_demand(int x) {
+	void add_percent_demand(long long x) {
 		_inc_demand += x;
 	}
 	long long get_demand() {
-		return _demand + _demand * (_inc_demand + percent_of_demands[_month % 12]) / 100;
+		return _demand + _demand * (_inc_demand + percent_of_demands[_month % 12]) / 100 + start_demand;
 	}
 	long long get_sales_level() {
 		return _sales_level + _sales_level * percent_of_sales_levels[_month % 12] / 100;
@@ -36,12 +37,12 @@ public:
 	void add_apart(int x) {
 		_cnt_apart_sold_now += x;
 	}
-	int get_sold_apart() {
+	long long get_sold_apart() {
 		return _cnt_apart_sold_now;
 	}
 	void sell_some_apartments();
 private:
-	int _cnt_apart_sold_now;
+	long long _cnt_apart_sold_now;
 	bool _have_supermarket;
 	int _month;
 	std::string _name;
@@ -56,15 +57,15 @@ void Microdistrict::add_building(Building* building) {
 	if (building->is_shop()) {
 		if (building->get_type() == "Supermarket") {
 			_have_supermarket = 1;
-			_demand += 50;
+			_demand += 10;
 		}
 		else {
-			_demand += 25;
+			_demand += 5;
 		}
 		_shops_here.push_back(building);
 	}
 	else {
 		_houses_here.push_back(building);
-		_sales_level += building->get_info() * 1000;
+		_sales_level += building->get_info() * 500;
 	}
 }
