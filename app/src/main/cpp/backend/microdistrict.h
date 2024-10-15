@@ -13,7 +13,9 @@ public:
 		_demand(0),
 		_sales_level(0),
 		_inc_demand(0),
-		_month(month)
+		_month(month),
+		_cnt_apart_sold_now(0),
+		_have_supermarket(0)
 	{}
 	void add_building(Building*);
 	std::string get_name() {
@@ -28,8 +30,19 @@ public:
 	long long get_sales_level() {
 		return _sales_level + _sales_level * percent_of_sales_levels[_month % 12] / 100;
 	}
+	bool is_have_supermarket() {
+		return _have_supermarket;
+	}
+	void add_apart(int x) {
+		_cnt_apart_sold_now += x;
+	}
+	int get_sold_apart() {
+		return _cnt_apart_sold_now;
+	}
 	void sell_some_apartments();
 private:
+	int _cnt_apart_sold_now;
+	bool _have_supermarket;
 	int _month;
 	std::string _name;
 	std::vector<Building*> _houses_here;
@@ -41,11 +54,17 @@ private:
 
 void Microdistrict::add_building(Building* building) {
 	if (building->is_shop()) {
+		if (building->get_type() == "Supermarket") {
+			_have_supermarket = 1;
+			_demand += 50;
+		}
+		else {
+			_demand += 25;
+		}
 		_shops_here.push_back(building);
-		_demand += 100;
 	}
 	else {
 		_houses_here.push_back(building);
-		_sales_level += building->get_info();
+		_sales_level += building->get_info() * 1000;
 	}
 }
