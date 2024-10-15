@@ -169,6 +169,10 @@ void Microdistrict::sell_some_apartments() {
     }
 }
 
+long long generate_price() {
+    return (rand() % 5000 + 5000);
+}
+
 void Bot::set_data(int current_month) {
     long long spend = std::min(_cash, (long long) 1000000);
 
@@ -181,7 +185,7 @@ void Bot::set_data(int current_month) {
             if (type_house == 1) {
                 if (on_houses >= 60000) {
                     on_houses -= 60000;
-                    Building* house = new House(6, current_month, 60000, 0, this, _my_district, 30, 0, 30, 6000, generate_id(), "Panel", 0, last_num());
+                    Building* house = new House(6, current_month, 60000, 0, this, _my_district, 30, 0, 30, generate_price(), generate_id(), "Panel", 0, last_num());
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -192,7 +196,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 2) {
                 if (on_houses >= 70000) {
                     on_houses -= 70000;
-                    Building* house = new House(7, current_month, 70000, 0, this, _my_district, 40, 0, 40, 7000, generate_id(), "Brick", 0, last_num());
+                    Building* house = new House(7, current_month, 70000, 0, this, _my_district, 40, 0, 40, generate_price(), generate_id(), "Brick", 0, last_num());
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -203,7 +207,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 3) {
                 if (on_houses >= 80000) {
                     on_houses -= 80000;
-                    Building* house = new House(8, current_month, 80000, 0, this, _my_district, 50, 0, 50, 8000, generate_id(), "Monolithic", 0, last_num());
+                    Building* house = new House(8, current_month, 80000, 0, this, _my_district, 50, 0, 50, generate_price(), generate_id(), "Monolithic", 0, last_num());
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -289,7 +293,7 @@ void Bot::set_data(int current_month) {
             if (type_house == 1) {
                 if (on_houses >= 60000) {
                     on_houses -= 60000;
-                    Building* house = new House(6, current_month, 60000, 0, this, _my_district, 30, 0, 30, 4500, generate_id(), "Panel", 0, last_num());
+                    Building* house = new House(6, current_month, 60000, 0, this, _my_district, 30, 0, 30, generate_price(), generate_id(), "Panel", 0, last_num());
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -300,7 +304,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 2) {
                 if (on_houses >= 70000) {
                     on_houses -= 70000;
-                    Building* house = new House(7, current_month, 70000, 0, this, _my_district, 40, 0, 40, 5500, generate_id(), "Brick", 0, last_num());
+                    Building* house = new House(7, current_month, 70000, 0, this, _my_district, 40, 0, 40, generate_price(), generate_id(), "Brick", 0, last_num());
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -311,7 +315,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 3) {
                 if (on_houses >= 80000) {
                     on_houses -= 80000;
-                    Building* house = new House(8, current_month, 80000, 0, this, _my_district, 50, 0, 50, 7000, generate_id(), "Monolithic", 0, last_num());
+                    Building* house = new House(8, current_month, 80000, 0, this, _my_district, 50, 0, 50, generate_price(), generate_id(), "Monolithic", 0, last_num());
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -331,7 +335,7 @@ void Bot::set_data(int current_month) {
             if (type_house == 1) {
                 if (on_houses >= 60000) {
                     on_houses -= 60000;
-                    Building* house = new House(6, current_month, 60000, 0, this, _my_district, 30, 0, 30, 5500, generate_id(), "Panel", 0, last_num());
+                    Building* house = new House(6, current_month, 60000, 0, this, _my_district, 30, 0, 30, generate_price(), generate_id(), "Panel", 0, last_num());
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -342,7 +346,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 2) {
                 if (on_houses >= 70000) {
                     on_houses -= 70000;
-                    Building* house = new House(7, current_month, 70000, 0, this, _my_district, 40, 0, 40, 6500, generate_id(), "Brick", 0, last_num());
+                    Building* house = new House(7, current_month, 70000, 0, this, _my_district, 40, 0, 40, generate_price(), generate_id(), "Brick", 0, last_num());
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
@@ -353,7 +357,7 @@ void Bot::set_data(int current_month) {
             else if (type_house == 3) {
                 if (on_houses >= 80000) {
                     on_houses -= 80000;
-                    Building* house = new House(8, current_month, 80000, 0, this, _my_district, 50, 0, 50, 8100, generate_id(), "Monolithic", 0, last_num());
+                    Building* house = new House(8, current_month, 80000, 0, this, _my_district, 50, 0, 50, generate_price(), generate_id(), "Monolithic", 0, last_num());
                     _houses.push_back(house);
                     _my_district->add_building(house);
                 }
