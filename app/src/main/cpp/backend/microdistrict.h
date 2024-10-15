@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include "buildings.h"
 class Building;
 class Player;
 // —прос на жилье и средний уровень продаж по мес€цам:
@@ -66,6 +67,6 @@ void Microdistrict::add_building(Building* building) {
 	}
 	else {
 		_houses_here.push_back(building);
-		_sales_level += building->get_info() * 100;
+		_sales_level += building->get_info();
 	}
 }
