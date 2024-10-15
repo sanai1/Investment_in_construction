@@ -302,7 +302,11 @@ public class MainActivity extends AppCompatActivity
             if (string.equals(uid)) {
                 pairList.add(new FinalGameState("YOU", hashMap.get(string), 0));
             } else {
-                pairList.add(new FinalGameState(room.getUserMap().get(string).getName(), hashMap.get(string), 0));
+                int picture = 0;
+                if (room.getUserMap().get(string).getName().equals("GalinaBOT")) picture = R.drawable.investor_galina;
+                else if (room.getUserMap().get(string).getName().equals("IvanBot")) picture = R.drawable.investor_ivan;
+                else if (room.getUserMap().get(string).getName().equals("EdwardBot")) picture = R.drawable.investor_edward;
+                pairList.add(new FinalGameState(room.getUserMap().get(string).getName(), hashMap.get(string), picture));
             }
         }
 

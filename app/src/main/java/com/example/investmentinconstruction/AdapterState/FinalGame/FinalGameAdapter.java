@@ -53,7 +53,7 @@ public class FinalGameAdapter extends RecyclerView.Adapter<FinalGameAdapter.View
         }
 
         public void update(FinalGameState finalGameState) {
-            textViewName.setText(finalGameState.getName().substring(0, 11));
+            textViewName.setText(finalGameState.getName());
             textViewProfit.setText(String.valueOf(finalGameState.getFullProfit()));
             picture.setImageResource(finalGameState.getPicture());
         }
