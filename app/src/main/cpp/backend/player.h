@@ -51,6 +51,9 @@ public:
 		srand(time(0));
 	}
 	void set_data(int current_month);
+	int last_num() {
+		return _houses.size() + _shops.size() + 1;
+	}
 private:
 	int _strategy;
 };

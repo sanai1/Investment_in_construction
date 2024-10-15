@@ -60,7 +60,8 @@ Game::Game(std::string s) {
 			std::string sid = shop["sid"];
 			std::string type = shop["typeShop"];
 			Microdistrict* sh_district = mp_districts[distr];
-			Shop* cur_shop = new Shop(duration, startPeriod, priceMonth, cur_player, sh_district, soldProfit, sid, type, percent);
+			int number = shop["number"];
+			Shop* cur_shop = new Shop(duration, startPeriod, priceMonth, cur_player, sh_district, soldProfit, sid, type, percent, number);
 			shops.push_back(cur_shop);
 			_all_buildings.push_back(cur_shop);
 		}
@@ -77,7 +78,8 @@ Game::Game(std::string s) {
 			int soldApartments = house["soldApartments"];
 			long long priceMonth = house["priceMonth"];
 			long long soldProfit = house["soldProfit"];
-			House* cur_house = new House(duration, startPeriod, priceMonth, soldProfit, cur_player, mp_districts[distr], countApartments, soldApartments, saleApartments,salePrice, hid, type, percent);
+			int number = house["number"];
+			House* cur_house = new House(duration, startPeriod, priceMonth, soldProfit, cur_player, mp_districts[distr], countApartments, soldApartments, saleApartments,salePrice, hid, type, percent, number);
 			houses.push_back(cur_house);
 			_all_buildings.push_back(cur_house);
 		}
@@ -110,6 +112,7 @@ std::string Building::convert() {
 	std::string ans = R"(          "duration" : )" + std::to_string(_duration) + ",\n";
 	ans += R"(          "startPeriod" : )" + std::to_string(_start_period) + ",\n";
 	ans += R"(          "priceMonth" : )" + std::to_string(_construction_cost) + ",\n";
+	ans += R"(          "number" : )" + std::to_string(_number) + ",\n";
 	ans += R"(          "percent" : )" + std::to_string(int(_percent_of_construction)) + ",\n";
 	return ans;
 }
