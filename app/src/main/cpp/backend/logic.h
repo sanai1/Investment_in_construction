@@ -179,6 +179,7 @@ void Bot::set_data(int current_month) {
     if (_strategy == 1) { 
         long long on_houses = spend * 60 / 100;
         long long on_shops = spend * 30 / 100;
+      
         long long advertisment = spend - on_houses - on_shops;
         while (true) {
             int type_house = rand() % 3 + 1;
