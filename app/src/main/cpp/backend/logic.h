@@ -41,7 +41,7 @@ Player::Player(long long cash, long long ad_shops, long long ad_houses, Microdis
     }
     if (_cash >= _shops_advertisment) {
         _cash -= _shops_advertisment;
-        _shops_advertisment = _shops_advertisment * 3 / 500; // перевод в проценты
+        _shops_advertisment = _shops_advertisment * 3 / 500; // ГЇГҐГ°ГҐГўГ®Г¤ Гў ГЇГ°Г®Г¶ГҐГ­ГІГ»
     }
     else {
         _shops_advertisment = 0;
@@ -253,7 +253,7 @@ void Bot::set_data(int current_month) {
     else if (_strategy == 2) {
         long long on_houses = spend * 75 / 100;
         long long on_shops = spend * 15 / 100;
-        long long advertisment = spend - on_shops - on_shops;
+        long long advertisment = spend - on_shops - on_houses;
         while (true) {
             int type_house = rand() % 3 + 1;
             if (type_house == 1) {
