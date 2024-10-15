@@ -66,6 +66,6 @@ void Microdistrict::add_building(Building* building) {
 	}
 	else {
 		_houses_here.push_back(building);
-		_sales_level += building->get_info() * 500;
+		_sales_level += building->get_info() * 100;
 	}
 }
