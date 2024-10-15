@@ -1,18 +1,10 @@
 package com.example.investmentinconstruction;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.example.investmentinconstruction.LogicClasses.Room;
-import com.fasterxml.jackson.core.JsonParser;
 import com.google.gson.Gson;
 
-import org.json.JSONObject;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Map;
 
 public class InteractionJSON {

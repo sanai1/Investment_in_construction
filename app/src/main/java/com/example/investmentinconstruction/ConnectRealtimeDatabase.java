@@ -131,6 +131,9 @@ public class ConnectRealtimeDatabase {
                                     int cntNumberStepOne = 0;
                                     int cntNumberStepZero = 0;
                                     for (User user : userMap.values()) {
+                                        if (user.getUid().substring(0, 3).equals("BOT")) {
+                                            continue;
+                                        }
                                         if (user.getNumberStep() == 1) {
                                             cntNumberStepOne++;
                                         } else { // user.getNumberStep == 0
@@ -179,6 +182,9 @@ public class ConnectRealtimeDatabase {
                 Map<String, Object> json = (Map<String, Object>) snapshot.getValue();
                 Room room = InteractionJSON.getInstance(context).contract(json);
                 for(User user : room.getUserMap().values()) {
+                    if (user.getUid().substring(0, 3).equals("BOT")) {
+                        continue;
+                    }
                     user.setNumberStep(0);
                 }
                 root.child(roomCode).setValue(room);

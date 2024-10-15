@@ -18,10 +18,10 @@ public class User implements Serializable {
 
     public User() {}
 
-    public User(String uid, String district, Integer profitFull, Advertisement advertisement, Map<String, House> houseHashMap, Map<String, Shop> shopHashMap, String name, Integer age, Integer gender) {
+    public User(String uid, String district, Advertisement advertisement, Map<String, House> houseHashMap, Map<String, Shop> shopHashMap, String name, Integer age, Integer gender) {
         this.uid = uid;
         this.district = district;
-        this.profitFull = profitFull;
+        this.profitFull = 5000000;
         this.advertisement = advertisement;
         this.houseMap = houseHashMap;
         this.shopMap = shopHashMap;

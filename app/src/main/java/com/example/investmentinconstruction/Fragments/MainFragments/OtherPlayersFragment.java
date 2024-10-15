@@ -19,17 +19,20 @@ import java.util.Map;
 
 public class OtherPlayersFragment extends Fragment {
 
-    private String[] nameList;
+    private String[] uidList, nameList;
     private String uid;
 
     public OtherPlayersFragment(Map<String, User> userMap, String uid) {
         this.uid = uid;
-        nameList = new String[6];
+        uidList = new String[7];
+        nameList = new String[7];
         int i = 0;
         for (User user : userMap.values()) {
-            nameList[i++] = user.getUid();
+            uidList[i] = user.getUid();
+            nameList[i++] = user.getName();
         }
-        for (;i < 6;) {
+        for (;i < 7;) {
+            uidList[i] = "";
             nameList[i++] = "";
         }
     }
@@ -56,34 +59,35 @@ public class OtherPlayersFragment extends Fragment {
         arrayList.add(view.findViewById(R.id.textViewFour));
         arrayList.add(view.findViewById(R.id.textViewFive));
         arrayList.add(view.findViewById(R.id.textViewSix));
+        arrayList.add(view.findViewById(R.id.textViewSeven));
 
         for (int i = 0; i < arrayList.size(); i++) {
-            if (nameList[i].equals("")) {
-                arrayList.get(i).setText(nameList[i]);
-            } else if (nameList[i].equals(uid)){
+            if (uidList[i].equals("")) {
+                arrayList.get(i).setText(uidList[i]);
+            } else if (uidList[i].equals(uid)){
                 arrayList.get(i).setText("YOU");
             } else {
-                arrayList.get(i).setText(nameList[i].substring(0, 11));
+                arrayList.get(i).setText(nameList[i]);
             }
         }
 
         arrayList.get(0).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(nameList[0]);
+            ((MainActivity) getActivity()).goToPlayerFragment(uidList[0]);
         });
         arrayList.get(1).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(nameList[1]);
+            ((MainActivity) getActivity()).goToPlayerFragment(uidList[1]);
         });
         arrayList.get(2).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(nameList[2]);
+            ((MainActivity) getActivity()).goToPlayerFragment(uidList[2]);
         });
         arrayList.get(3).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(nameList[3]);
+            ((MainActivity) getActivity()).goToPlayerFragment(uidList[3]);
         });
         arrayList.get(4).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(nameList[4]);
+            ((MainActivity) getActivity()).goToPlayerFragment(uidList[4]);
         });
         arrayList.get(5).setOnClickListener(v -> {
-            ((MainActivity) getActivity()).goToPlayerFragment(nameList[5]);
+            ((MainActivity) getActivity()).goToPlayerFragment(uidList[5]);
         });
 
         return view;

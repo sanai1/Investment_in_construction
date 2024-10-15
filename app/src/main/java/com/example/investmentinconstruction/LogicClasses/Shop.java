@@ -24,13 +24,13 @@ public class Shop {
     private void initShop() {
         if (typeShop.equals("Supermarket")) {
             this.duration = 5;
-            this.priceMonth = 45000;
+            this.priceMonth = 500000;
         } else if (typeShop.equals("Bakery")) {
-            this.duration = 5;
-            this.priceMonth = 4;
+            this.duration = 3;
+            this.priceMonth = 300000;
         } else if (typeShop.equals("HardwareStore")) {
-            this.duration = 2;
-            this.priceMonth = 10000;
+            this.duration = 5;
+            this.priceMonth = 500000;
         }
     }
 
