@@ -258,7 +258,7 @@ void Bot::set_data(int current_month) {
             on_houses -= 500000 - on_shops;
             on_shops = 500000;
         }
-        long long advertisment = spend - on_shops - on_shops;
+        long long advertisment = spend - on_shops - on_houses;
         while (true) {
             int type_shop = rand() % 2 + 2;
             if (type_shop == 2) {
