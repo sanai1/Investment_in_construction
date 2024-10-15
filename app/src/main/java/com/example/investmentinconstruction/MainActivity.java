@@ -1,9 +1,10 @@
 package com.example.investmentinconstruction;
 
+import static java.util.Collections.*;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -36,10 +37,14 @@ import com.example.investmentinconstruction.databinding.FragmentMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
@@ -294,25 +299,64 @@ public class MainActivity extends AppCompatActivity
         for (User user1 : room.getUserMap().values()) {
             hashMap.put(user1.getUid(), user1.getProfitFull());
         }
-        hashMap.entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByValue().reversed());
+
+        List<Player> values = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
+            values.add(new Player(entry.getKey(), entry.getValue()));
+        }
+        Collections.sort(values);
+        Collections.reverse(values);
 
         List<FinalGameState> pairList = new ArrayList<>();
         Set<String> stringSet = hashMap.keySet();
+        int indx = 0;
         for (String string : stringSet) {
+            if (indx >= values.size()) break;
             if (string.equals(uid)) {
-                pairList.add(new FinalGameState("YOU", hashMap.get(string), 0));
+                pairList.add(new FinalGameState("YOU", values.get(indx++).getFullProfit(), 0));
             } else {
                 int picture = 0;
-                if (room.getUserMap().get(string).getName().equals("GalinaBOT")) picture = R.drawable.investor_galina;
+                if (room.getUserMap().get(string).getName().equals("GalinaBot")) picture = R.drawable.investor_galina;
                 else if (room.getUserMap().get(string).getName().equals("IvanBot")) picture = R.drawable.investor_ivan;
                 else if (room.getUserMap().get(string).getName().equals("EdwardBot")) picture = R.drawable.investor_edward;
-                pairList.add(new FinalGameState(room.getUserMap().get(string).getName(), hashMap.get(string), picture));
+                pairList.add(new FinalGameState(room.getUserMap().get(string).getName(), values.get(indx++).getFullProfit(), picture));
             }
         }
 
         FinalGameAdapter finalGameAdapter = new FinalGameAdapter(pairList);
         FinalGameFragment finalGameFragment = new FinalGameFragment(finalGameAdapter);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, finalGameFragment).commit();
+    }
+
+    class Player implements Comparable<Player>{
+        private String name;
+        private Integer fullProfit;
+
+        public Player(String name, Integer fullProfit) {
+            this.name = name;
+            this.fullProfit = fullProfit;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getFullProfit() {
+            return fullProfit;
+        }
+
+        public void setFullProfit(Integer fullProfit) {
+            this.fullProfit = fullProfit;
+        }
+
+        @Override
+        public int compareTo(Player o) {
+            return this.fullProfit.compareTo(o.fullProfit);
+        }
     }
 
 }

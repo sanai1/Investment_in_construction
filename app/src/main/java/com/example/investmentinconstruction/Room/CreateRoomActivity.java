@@ -80,7 +80,7 @@ public class CreateRoomActivity extends AppCompatActivity {
 
         if (binding_createRoom.checkBoxGalina.isChecked()) {
             String botUid = "BOT" + UUID.randomUUID().toString();
-            userMap.put(botUid, new User(botUid, nameDistrict, new Advertisement(), new HashMap<>(), new HashMap<>(), "GalinaBOT", 35, -1));
+            userMap.put(botUid, new User(botUid, nameDistrict, new Advertisement(), new HashMap<>(), new HashMap<>(), "GalinaBot", 35, -1));
             userMap.get(botUid).setNumberStep(1);
         }
         if (binding_createRoom.checkBoxIvan.isChecked()) {
