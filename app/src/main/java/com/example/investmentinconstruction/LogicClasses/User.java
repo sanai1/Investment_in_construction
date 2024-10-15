@@ -21,7 +21,7 @@ public class User implements Serializable {
     public User(String uid, String district, Advertisement advertisement, Map<String, House> houseHashMap, Map<String, Shop> shopHashMap, String name, Integer age, Integer gender) {
         this.uid = uid;
         this.district = district;
-        this.profitFull = 5000000;
+        this.profitFull = 500000;
         this.advertisement = advertisement;
         this.houseMap = houseHashMap;
         this.shopMap = shopHashMap;

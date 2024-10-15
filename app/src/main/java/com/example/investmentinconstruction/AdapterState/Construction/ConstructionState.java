@@ -9,12 +9,14 @@ public class ConstructionState {
     private String fullApartment;
     private String soldApartment;
     private String key;
+    private Integer number;
 
-    public ConstructionState(String hid, String type, String progress, int picture) {
+    public ConstructionState(String hid, String type, String progress, int picture, Integer number) {
         this.cid = hid;
         this.type = type;
         this.progressBuild = progress;
         this.picture = picture;
+        this.number = number;
         this.fullApartment = "";
         this.soldApartment = "";
     }
@@ -73,5 +75,13 @@ public class ConstructionState {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }

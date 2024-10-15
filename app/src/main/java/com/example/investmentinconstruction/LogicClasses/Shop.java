@@ -9,28 +9,30 @@ public class Shop {
     private Integer priceMonth; // цена стройки 1 месяца (хардкодим)
     private Integer soldProfit; // общая прибыль с магазина (считается как сумма прибыли за все месяцы)
     private Integer percent; // процент постройки (в %)
+    private Integer number; // номер постройки у конкретного пользователя
 
     public Shop() {}
 
-    public Shop(String sid, String typeShop, Integer startPeriod, Integer soldProfit, Integer percent) {
+    public Shop(String sid, String typeShop, Integer startPeriod, Integer soldProfit, Integer percent, Integer number) {
         this.sid = sid;
         this.typeShop = typeShop;
         this.startPeriod = startPeriod;
         this.soldProfit = soldProfit;
         this.percent = percent;
+        this.number = number;
         initShop();
     }
 
     private void initShop() {
         if (typeShop.equals("Supermarket")) {
             this.duration = 5;
-            this.priceMonth = 500000;
+            this.priceMonth = 50000;
         } else if (typeShop.equals("Bakery")) {
             this.duration = 3;
-            this.priceMonth = 300000;
+            this.priceMonth = 30000;
         } else if (typeShop.equals("HardwareStore")) {
             this.duration = 5;
-            this.priceMonth = 500000;
+            this.priceMonth = 50000;
         }
     }
 
@@ -88,5 +90,13 @@ public class Shop {
 
     public void setPercent(Integer percent) {
         this.percent = percent;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }

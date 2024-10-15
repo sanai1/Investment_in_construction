@@ -54,9 +54,9 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
 
         public void update(PlayerState playerState) {
             if (playerState.getType().equals("Brick") || playerState.getType().equals("Panel") || playerState.getType().equals("Monolithic")) {
-                textViewType.setText(playerState.getType() + " (" + playerState.getCid() + ")" + " sold:" + playerState.getSoldApartment());
+                textViewType.setText(playerState.getType() + " (" + playerState.getNumber() + ")" + " sold:" + playerState.getSoldApartment());
             } else {
-                textViewType.setText(playerState.getType() + " (" + playerState.getCid() + ")");
+                textViewType.setText(playerState.getType() + " (" + playerState.getNumber() + ")");
             }
             textViewProgress.setText(playerState.getProgressBuild());
             picture.setImageResource(playerState.getPicture());

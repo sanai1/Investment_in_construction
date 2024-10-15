@@ -82,7 +82,7 @@ public class ConstructionAdapter extends RecyclerView.Adapter<ConstructionAdapte
         }
 
         public void update(ConstructionState constructionState) {
-            textViewType.setText(constructionState.getType() + " (" + constructionState.getCid() + ")");
+            textViewType.setText(constructionState.getType() + " (" + constructionState.getNumber() + ")");
             textViewProgress.setText(constructionState.getProgressBuild());
             picture.setImageResource(constructionState.getPicture());
         }

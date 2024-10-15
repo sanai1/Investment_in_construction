@@ -19,6 +19,7 @@ public class AddInfoConstruction extends DialogFragment implements View.OnClickL
     private String fullApartment;
     private String soldApartment;
     private String key;
+    private Integer number;
 
     public AddInfoConstruction() {}
 
@@ -78,7 +79,7 @@ public class AddInfoConstruction extends DialogFragment implements View.OnClickL
         TextView textViewFullApartment = getDialog().findViewById(R.id.textViewFullApartment);
         TextView textViewSoldApartment = getDialog().findViewById(R.id.textViewSoldApartment);
 
-        textViewTypeCID.setText(typeCID);
+        textViewTypeCID.setText(number);
         textViewProgressBuild.setText(progressBuild);
         textViewFullApartment.setText(fullApartment);
         textViewSoldApartment.setText(soldApartment);
@@ -94,6 +95,14 @@ public class AddInfoConstruction extends DialogFragment implements View.OnClickL
             editTextPrice.setText("");
             dismiss();
         }
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public interface DialogListenerAddInfo {

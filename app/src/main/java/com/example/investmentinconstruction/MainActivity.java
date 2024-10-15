@@ -40,6 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
         implements
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity
                     addInfoConstruction.setFullApartment(constructionState.getFullApartment());
                     addInfoConstruction.setSoldApartment(constructionState.getSoldApartment());
                     addInfoConstruction.setKey(constructionState.getKey());
+                    addInfoConstruction.setNumber(constructionState.getNumber());
                     addInfoConstruction.show(getSupportFragmentManager(), constructionState.getCid());
                 }
             }
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity
                 else if (user.getHouseMap().get(string).getTypeHouse().equals("Panel")) picture = R.drawable.house_panel;
                 else if (user.getHouseMap().get(string).getTypeHouse().equals("Monolithic")) picture = R.drawable.house_monolithic;
 
-                constructionStateList.add(new ConstructionState(user.getHouseMap().get(string).getHid(), user.getHouseMap().get(string).getTypeHouse(), user.getHouseMap().get(string).getPercent()+ "%", picture));
+                constructionStateList.add(new ConstructionState(user.getHouseMap().get(string).getHid(), user.getHouseMap().get(string).getTypeHouse(), user.getHouseMap().get(string).getPercent()+ "%", picture, user.getHouseMap().get(string).getNumber()));
                 constructionStateList.get(constructionStateList.size() - 1).setFullApartment(user.getHouseMap().get(string).getCountApartments().toString());
                 constructionStateList.get(constructionStateList.size() - 1).setSoldApartment(user.getHouseMap().get(string).getSoldApartments().toString());
                 constructionStateList.get(constructionStateList.size() - 1).setKey(string);
@@ -152,7 +154,7 @@ public class MainActivity extends AppCompatActivity
                 if (user.getShopMap().get(string).getTypeShop().equals("Supermarket")) picture = R.drawable.shop_supermarket;
                 else if (user.getShopMap().get(string).getTypeShop().equals("Bakery")) picture = R.drawable.shop_bakery;
                 else if (user.getShopMap().get(string).getTypeShop().equals("HardwareStore")) picture = R.drawable.shop_hardware;
-                constructionStateList.add(new ConstructionState(user.getShopMap().get(string).getSid(), user.getShopMap().get(string).getTypeShop(), user.getShopMap().get(string).getPercent() + "%", picture));
+                constructionStateList.add(new ConstructionState(user.getShopMap().get(string).getSid(), user.getShopMap().get(string).getTypeShop(), user.getShopMap().get(string).getPercent() + "%", picture, user.getShopMap().get(string).getNumber()));
             }
         }
         if (!constructionStateList.isEmpty()) {
@@ -184,15 +186,17 @@ public class MainActivity extends AppCompatActivity
             if (user.getHouseMap() == null){
                 user.setHouseMap(new HashMap<>());
             }
-            String hid = String.valueOf(10000 + (int) (Math.random() * 90000));
-            user.getHouseMap().put(hid, new House(hid, typeHouse, room.getStartPeriod() + room.getNumberStep(), 0, 0, 0, 0, 0));
+            String hid = UUID.randomUUID().toString();
+            Integer number = user.getHouseMap().size() + user.getShopMap().size() + 1;
+            user.getHouseMap().put(hid, new House(hid, typeHouse, room.getStartPeriod() + room.getNumberStep(), 0, 0, 0, 0, 0, number));
         }
         if (shop) {
             if (user.getShopMap() == null) {
                 user.setShopMap(new HashMap<>());
             }
-            String sid = String.valueOf(10000 + (int) (Math.random() * 90000));
-            user.getShopMap().put(sid, new Shop(sid, typeShop, room.getStartPeriod() + room.getNumberStep(), 0, 0));
+            String sid = UUID.randomUUID().toString();
+            Integer number = user.getHouseMap().size() + user.getShopMap().size() + 1;
+            user.getShopMap().put(sid, new Shop(sid, typeShop, room.getStartPeriod() + room.getNumberStep(), 0, 0, number));
         }
         if (house || shop) {
             updateView();
@@ -256,7 +260,7 @@ public class MainActivity extends AppCompatActivity
                 else if (userInfo.getHouseMap().get(string).getTypeHouse().equals("Panel")) picture = R.drawable.house_panel;
                 else if (userInfo.getHouseMap().get(string).getTypeHouse().equals("Monolithic")) picture = R.drawable.house_monolithic;
 
-                playerStateList.add(new PlayerState(userInfo.getHouseMap().get(string).getHid(), userInfo.getHouseMap().get(string).getTypeHouse(), userInfo.getHouseMap().get(string).getPercent() + "%", picture));
+                playerStateList.add(new PlayerState(userInfo.getHouseMap().get(string).getHid(), userInfo.getHouseMap().get(string).getTypeHouse(), userInfo.getHouseMap().get(string).getPercent() + "%", picture, userInfo.getHouseMap().get(string).getNumber()));
                 playerStateList.get(playerStateList.size() - 1).setSoldApartment(userInfo.getHouseMap().get(string).getSoldApartments());
             }
         }
@@ -267,7 +271,7 @@ public class MainActivity extends AppCompatActivity
                 else if (userInfo.getShopMap().get(string).getTypeShop().equals("Bakery")) picture = R.drawable.shop_bakery;
                 else if (userInfo.getShopMap().get(string).getTypeShop().equals("HardwareStore")) picture = R.drawable.shop_hardware;
 
-                playerStateList.add(new PlayerState(userInfo.getShopMap().get(string).getSid(), userInfo.getShopMap().get(string).getTypeShop(), userInfo.getShopMap().get(string).getPercent() + "%", picture));
+                playerStateList.add(new PlayerState(userInfo.getShopMap().get(string).getSid(), userInfo.getShopMap().get(string).getTypeShop(), userInfo.getShopMap().get(string).getPercent() + "%", picture, userInfo.getShopMap().get(string).getNumber()));
             }
         }
         if (!playerStateList.isEmpty()) {

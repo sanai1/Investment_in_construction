@@ -7,12 +7,14 @@ public class PlayerState {
     private String progressBuild;
     private int picture;
     private Integer soldApartment;
+    private Integer number;
 
-    public PlayerState(String cid, String type, String progressBuild, int picture) {
+    public PlayerState(String cid, String type, String progressBuild, int picture, Integer number) {
         this.cid = cid;
         this.type = type;
         this.progressBuild = progressBuild;
         this.picture = picture;
+        this.number = number;
     }
 
     public String getCid() {
@@ -53,5 +55,13 @@ public class PlayerState {
 
     public void setSoldApartment(Integer soldApartment) {
         this.soldApartment = soldApartment;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }
