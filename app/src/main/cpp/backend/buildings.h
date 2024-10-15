@@ -1,4 +1,7 @@
 #include <string>
+
+#pragma once
+
 class Player;
 class Microdistrict;
 
@@ -50,9 +53,9 @@ public:
 	virtual std::string convert_to_json() = 0;
 private:
 	std::string _type;
-	long long _construction_cost; // стоимость постройки измеряется в у.е в месяц.
-	long long _duration; // Срок стройки в месяцах
-	long long _start_period; // Месяц начала стройки
+	long long _construction_cost; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ.пїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ.
+	long long _duration; // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	long long _start_period; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	double _percent_of_construction;
 	Player* _owner;
 	Microdistrict* _district;
@@ -102,10 +105,10 @@ public:
 private:
 	std::string _house_type;
 	long long _house_profit;
-	long long _cnt_apartments;// количество квартир
-	long long _apartment_price; // цена одной квартиры
-	int _sold_apartments; // количество проданных квартир
-	int _sale_apartments; // количество квартир на продаже
+	long long _cnt_apartments;// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	long long _apartment_price; // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	int _sold_apartments; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	int _sale_apartments; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	std::string _hid;
 };
 

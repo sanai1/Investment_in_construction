@@ -4,6 +4,8 @@
 #include "../json-develop/single_include/nlohmann/json.hpp"
 #include <map>
 
+#pragma once
+
 struct Info {
 	int nowPeople;
 	int cntPeople;

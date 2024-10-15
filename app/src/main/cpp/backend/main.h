@@ -1,5 +1,6 @@
 #include "parcer.h"
 
+#pragma once
 
 std::string make_run(std::string s) {
 	Game game(s);

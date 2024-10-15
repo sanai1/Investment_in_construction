@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <set>
 
+#pragma once
+
 std::set<std::string> used_id;
 
 bool compare_with_costs(Building* b1, Building* b2) {
@@ -41,7 +43,7 @@ Player::Player(long long cash, long long ad_shops, long long ad_houses, Microdis
     }
     if (_cash >= _shops_advertisment) {
         _cash -= _shops_advertisment;
-        _shops_advertisment = _shops_advertisment * 3 / 500; // перевод в проценты
+        _shops_advertisment = _shops_advertisment * 3 / 500; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
     else {
         _shops_advertisment = 0;

@@ -3,6 +3,8 @@
 #include <ctime>
 #include <vector>
 
+#pragma once
+
 class Microdistrict;
 class Building;
 
@@ -27,7 +29,7 @@ protected:
 	std::string _name;
 	int _age, _gender;
 	std::string _uid;
-	long long _cash; // измеряется в у.е
+	long long _cash; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ.пїЅ
 	std::vector<Building*> _houses, _shops;
 	Microdistrict* _my_district;
 	long long _shops_advertisment;

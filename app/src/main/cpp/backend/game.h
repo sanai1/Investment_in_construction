@@ -1,12 +1,14 @@
 #include "logic.h"
 
+#pragma once
+
 class Game {
 public:
 	Game(std::string s);
 	void bots_make_step();
-	void players_pay_month_construction(); // Игрок платит за постройку 1 месяца зданий.
-	void players_get_cash_from_shops(); // Игроки получают прибыль за магазины
-	void players_get_cash_from_houses();//Прибыль за продажи квартир
+	void players_pay_month_construction(); // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1 пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+	void players_get_cash_from_shops(); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	void players_get_cash_from_houses();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	std::string convert_to_json();
 
 	~Game();
