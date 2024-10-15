@@ -48,7 +48,7 @@ public class CreateRoomActivity extends AppCompatActivity {
 
         initSpinner();
 
-        roomCode = 10000 + (int) (Math.random() * 90000);
+        roomCode = 100000 + (int) (Math.random() * 900000);
         binding_createRoom.textViewRomeCode.setText(String.valueOf(roomCode));
     }
 
@@ -80,21 +80,21 @@ public class CreateRoomActivity extends AppCompatActivity {
 
         if (binding_createRoom.checkBoxGalina.isChecked()) {
             String botUid = "BOT" + UUID.randomUUID().toString();
-            userMap.put(botUid, new User(botUid, nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "GalinaBOT", 35, -1));
+            userMap.put(botUid, new User(botUid, nameDistrict, new Advertisement(), new HashMap<>(), new HashMap<>(), "GalinaBOT", 35, -1));
             userMap.get(botUid).setNumberStep(1);
         }
         if (binding_createRoom.checkBoxIvan.isChecked()) {
             String botUid = "BOT" + UUID.randomUUID().toString();
-            userMap.put(botUid, new User(botUid, nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "IvanBot", 45, 1));
+            userMap.put(botUid, new User(botUid, nameDistrict, new Advertisement(), new HashMap<>(), new HashMap<>(), "IvanBot", 45, 1));
             userMap.get(botUid).setNumberStep(1);
         }
         if (binding_createRoom.checkBoxEdward.isChecked()) {
             String botUid = "BOT" + UUID.randomUUID().toString();
-            userMap.put(botUid, new User(botUid, nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "EdwardBot", 65, 1));
+            userMap.put(botUid, new User(botUid, nameDistrict, new Advertisement(), new HashMap<>(), new HashMap<>(), "EdwardBot", 65, 1));
             userMap.get(botUid).setNumberStep(1);
         }
 
-        User user = new User(uid, nameDistrict, 0, new Advertisement(), new HashMap<>(), new HashMap<>(), "name", 15, 0);
+        User user = new User(uid, nameDistrict, new Advertisement(), new HashMap<>(), new HashMap<>(), "name", 15, 0);
         userMap.put(uid, user);
 
         Room room = new Room(roomCode, numberPeople, 1, numberModelStep, userMap, numberMonth);

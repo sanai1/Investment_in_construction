@@ -47,11 +47,10 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        byte[] bytes = ((MainBottomNavigation) getActivity()).readByteFile();
-        Bitmap bitmap = ((MainBottomNavigation) getActivity()).getBitmapFromByteArray(bytes);
-        imageView.setImageBitmap(bitmap);
-
-        System.out.println("=================");
+//        byte[] bytes = ((MainBottomNavigation) getActivity()).readByteFile();
+//        Bitmap bitmap = ((MainBottomNavigation) getActivity()).getBitmapFromByteArray(bytes);
+//        imageView.setImageBitmap(bitmap);
+//        System.out.println("=================");
 
         return view;
     }

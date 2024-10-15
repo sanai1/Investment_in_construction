@@ -60,7 +60,7 @@ public class PlayerFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_player, container, false);
 
         TextView textView = view.findViewById(R.id.textViewNamePlayer);
-        textView.setText(user.getUid());
+        textView.setText(user.getName());
 
         Button button = view.findViewById(R.id.buttonBackPlayer);
         button.setOnClickListener(v -> {

@@ -31,17 +31,17 @@ public class House {
 
     private void initHouse() {
         if (typeHouse.equals("Panel")) {
-            this.duration = 7;
-            this.priceMonth = 10000;
-            this.countApartments = 50;
+            this.duration =6;
+            this.priceMonth = 600000;
+            this.countApartments = 30;
         } else if (typeHouse.equals("Brick")) {
-            this.duration = 6;
-            this.priceMonth = 7500;
+            this.duration = 7;
+            this.priceMonth = 700000;
             this.countApartments = 40;
         } else if (typeHouse.equals("Monolithic")) {
-            this.duration = 5;
-            this.priceMonth = 5000;
-            this.countApartments = 60;
+            this.duration = 8;
+            this.priceMonth = 800000;
+            this.countApartments = 50;
         }
     }
 
