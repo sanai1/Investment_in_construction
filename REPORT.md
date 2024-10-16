@@ -30,72 +30,82 @@
 - Shop - класс, хранящий информацию о конкретном магазине. Содержит поля: SID, тип магазина, продолжительность стройки, номер месяца начала стройки, стоимость стройки 1 месяца, общая пробиль с магазина, процент выполнения стройки, номер постройки.
 
 ## 4. Указание использованных при выполнении задания инструментальных средств (языка программирования, интегрированной среды, библиотек)
-
-
+- Языки программирования:
+  - C++ (backend)
+  - Java (frontend)
+  - XML (верстка экранов)
+- Среды разработки:
+  - Android Studio (для написания front`а и создания версток экранов)
+  - Visual Studio (для написания back`а)
+- Библиотеки:
+  - JNI - Java Native Interface (для взаимодействия Java с кодом на C++ в качестве библиотеки)
+  - nlohmann (для работы с json на C++)
+  - gson (для работы с json на Java)
+  - firebase (для работы с Authentication, Realtime Database и Crashlytics)
 
 
 ## 5. Описание файловой структуры программной системы
 
-### app
+### app (главаня папка в Android)
 #### manifests
 Содержит файл xml общей информации
 
-#### cpp
+#### cpp (папка)
 - backend (папка) - папки с кодом C++
 - json-developer (папка) - библиотека для работы с json на C++
 - native-lib.cpp - библиотека на C++ для вызова ее из Java (связка между Back и Front)
 
-#### java
+#### java (папка)
 - ConnectRealtimeDatabase - связь с Realtime Database
 - InteractionJSON - связь между Java и библиотекой на C++
 - LoadingActivity - активность экрана загрузки
 - MainBottomNavigation - активность главного меню (с 3мя фрагментами)
 - MainActivity - активность, где проходит сама игра
 - Room (папка)
-- - CreateRoomActivity - активность для создания новой игровой комнаты
+  - CreateRoomActivity - активность для создания новой игровой комнаты
   - EnterRoomActivity - активность для входа в уже существующую комнату
 - LogicClasses (папка)
-- - Advertisement - класс реклама
+  - Advertisement - класс реклама
   - House - класс домов
   - Shop - класс магазинов
   - User - класс пользователей и ботов
   - Room - класс комнаты (содержит в своих полях все вышеперечисленные классы)
 - Authorization (папка)
-- - WelcomeActivity - первая активность, которая открывается при запуске приложения
+  - WelcomeActivity - первая активность, которая открывается при запуске приложения
   - SignInActivity - активность для входа в аккаунт
   - CreateAccountActivity - активность для создания аккаунта
 - AdapterState (папка)
-- - Construction (папка)
-  - - ConstructionAdapter - адаптер для RecycleView (просмотр построек)
+  - Construction (папка)
+    - ConstructionAdapter - адаптер для RecycleView (просмотр построек)
     - ConstructionState - класс для хранения экземпляров построек (для адапрета)
   - OtherPlayer (папка)
-  - - PlayerAdapter - адаптер для RecyclerView (просмотр списка других игроков)
+    - PlayerAdapter - адаптер для RecyclerView (просмотр списка других игроков)
     - PlayerState - класс для хранения экземпляров игроков (для адаптера)
   - FinalGame (папка)
-  - - FinalGameAdapter - адаптер для RecyclerView (просмотр итогового списка игроков)
+    - FinalGameAdapter - адаптер для RecyclerView (просмотр итогового списка игроков)
     - FinalGameState - класс для хранения экземпляров игроков (для адаптера)
 - DialogFragment (папка)
-- - AddInfoConstruction - окно для установки кол-ва и цена продаваемых квартир на шаге
+  - AddInfoConstruction - окно для установки кол-ва и цена продаваемых квартир на шаге
   - AdvertisementConstruction - окно для устаноки рекламы на шаге
   - NewConstruction - окно для создания новых строений
   - QuestionAgain - окно (подтверждение) отправки данных на конкретный шаг
 - Fragmenta (папка)
-- - EnterRoomFragment - экран при входе к комнате (основной)
+  - EnterRoomFragment - экран при входе к комнате (основной)
   - BottomMenu (папка)
-  - - FriendsFragment - экран (друзья)
+    - FriendsFragment - экран (друзья)
     - HomeFragment - экран (создание/вход комнаты)
     - SettingsFragment экран (настройки аккаунта)
   - MainFragments (папка)
-  - - LoadingFragment - экран загрузки
+    - LoadingFragment - экран загрузки
     - MainFragment - экран игры (основной)
     - OtherPlayersFragment - экран с другими игроками
     - PlayerFragment - экран с другим игроком (подробная информация о нем)
     - FinalGameFragment - экран с рейтинговой таблицей (конец игры)
 
-#### res
+#### res (папка)
 Содержит папки с файлами XML (разметка экранов, диалоговый окон, фрагментов, анимаций и тд)
 
-### Gradle Scripts
+### Gradle Scripts (папка)
 Содержит файлы настройки и зависимостей Android
 
 
