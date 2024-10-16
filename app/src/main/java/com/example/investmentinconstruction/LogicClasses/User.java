@@ -7,7 +7,7 @@ public class User implements Serializable {
 
     private String uid;
     private String district;
-    private Integer profitFull;
+    private Long profitFull;
     private Advertisement advertisement;
     private Map<String, House> houseMap;
     private Map<String, Shop> shopMap;
@@ -21,7 +21,7 @@ public class User implements Serializable {
     public User(String uid, String district, Advertisement advertisement, Map<String, House> houseHashMap, Map<String, Shop> shopHashMap, String name, Integer age, Integer gender) {
         this.uid = uid;
         this.district = district;
-        this.profitFull = 500000;
+        this.profitFull = 250000L;
         this.advertisement = advertisement;
         this.houseMap = houseHashMap;
         this.shopMap = shopHashMap;
@@ -47,11 +47,11 @@ public class User implements Serializable {
         this.district = district;
     }
 
-    public Integer getProfitFull() {
+    public Long getProfitFull() {
         return profitFull;
     }
 
-    public void setProfitFull(Integer profitFull) {
+    public void setProfitFull(Long profitFull) {
         this.profitFull = profitFull;
     }
 

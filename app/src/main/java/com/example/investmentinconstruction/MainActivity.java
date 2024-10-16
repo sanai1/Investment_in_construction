@@ -295,31 +295,31 @@ public class MainActivity extends AppCompatActivity
 
     public void finalGame(Room room) {
         String uid = user.getUid();
-        HashMap<String, Integer> hashMap = new HashMap<>();
-        for (User user1 : room.getUserMap().values()) {
-            hashMap.put(user1.getUid(), user1.getProfitFull());
-        }
+//        HashMap<String, Integer> hashMap = new HashMap<>();
+//        for (User user1 : room.getUserMap().values()) {
+//            hashMap.put(user1.getUid(), user1.getProfitFull());
+//        }
 
         List<Player> values = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
-            values.add(new Player(entry.getKey(), entry.getValue()));
+        for (User user1 : room.getUserMap().values()) {
+            values.add(new Player(user1.getName(), user1.getUid(), user1.getProfitFull()));
         }
         Collections.sort(values);
         Collections.reverse(values);
 
         List<FinalGameState> pairList = new ArrayList<>();
-        Set<String> stringSet = hashMap.keySet();
+//        Set<String> stringSet = hashMap.keySet();
         int indx = 0;
-        for (String string : stringSet) {
+        for (Player player : values) {
             if (indx >= values.size()) break;
-            if (string.equals(uid)) {
+            if (player.getUid().equals(uid)) {
                 pairList.add(new FinalGameState("YOU", values.get(indx++).getFullProfit(), 0));
             } else {
                 int picture = 0;
-                if (room.getUserMap().get(string).getName().equals("GalinaBot")) picture = R.drawable.investor_galina;
-                else if (room.getUserMap().get(string).getName().equals("IvanBot")) picture = R.drawable.investor_ivan;
-                else if (room.getUserMap().get(string).getName().equals("EdwardBot")) picture = R.drawable.investor_edward;
-                pairList.add(new FinalGameState(room.getUserMap().get(string).getName(), values.get(indx++).getFullProfit(), picture));
+                if (values.get(indx).getName().equals("GalinaBot")) picture = R.drawable.investor_galina;
+                else if (values.get(indx).getName().equals("IvanBot")) picture = R.drawable.investor_ivan;
+                else if (values.get(indx).getName().equals("EdwardBot")) picture = R.drawable.investor_edward;
+                pairList.add(new FinalGameState(values.get(indx).getName(), values.get(indx++).getFullProfit(), picture));
             }
         }
 
@@ -330,10 +330,12 @@ public class MainActivity extends AppCompatActivity
 
     class Player implements Comparable<Player>{
         private String name;
+        private String uid;
         private Integer fullProfit;
 
-        public Player(String name, Integer fullProfit) {
+        public Player(String name, String uid, Integer fullProfit) {
             this.name = name;
+            this.uid = uid;
             this.fullProfit = fullProfit;
         }
 
@@ -356,6 +358,14 @@ public class MainActivity extends AppCompatActivity
         @Override
         public int compareTo(Player o) {
             return this.fullProfit.compareTo(o.fullProfit);
+        }
+
+        public String getUid() {
+            return uid;
+        }
+
+        public void setUid(String uid) {
+            this.uid = uid;
         }
     }
 
