@@ -26,6 +26,7 @@ Game::Game(std::string s) {
 	info_for_json.nowPeople = jsonData["nowPeople"];
 	info_for_json.numberStep = jsonData["numberStep"];
     info_for_json.numberStep++;
+	_is_end = (_current_month == info_for_json.currentPeriod);
 	info_for_json.roomCode = jsonData["roomCode"];
 	info_for_json.startPeriod = jsonData["startPeriod"];
 	_start_period = info_for_json.startPeriod;

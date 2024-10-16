@@ -22,6 +22,7 @@ public:
 	virtual void set_data(int current_month) {
 		return;
 	}
+	void get_capital();
 	std::string convert_to_json();
 	void set_buildings(std::vector<Building*>& houses, std::vector<Building*>& shops);
 protected:

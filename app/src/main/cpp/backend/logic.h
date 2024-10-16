@@ -176,7 +176,7 @@ long long generate_price() {
 }
 
 void Bot::set_data(int current_month) {
-    long long spend = std::min(_cash, (long long) 1000000);
+    long long spend = std::min(_cash, (long long) 500000);
 
     if (_strategy == 1) { 
         long long on_houses = spend * 60 / 100;
@@ -396,4 +396,27 @@ void Bot::set_data(int current_month) {
         }
         _shops_advertisment = adverisment;
     }
+}
+
+
+void Player::get_capital() {
+    long long capital = _cash;
+    for (Building* house : _houses) {
+        House* hptr = dynamic_cast<House*>(house);
+        long long not_sold = hptr->get_cnt_apartments() - house->get_info();
+        capital += 1000 * not_sold;
+        if (!house->is_builded(0)) {
+            capital += house->get_percent() * house->get_duration() / 100 * house->get_price();
+        }
+    }
+    for (Building* shop : _shops) {
+        if (!shop->is_builded(0)) {
+            capital += capital += shop->get_percent() * shop->get_duration() / 100 * shop->get_price();
+        }
+        else {
+            capital += shop->get_duration() * shop->get_price() / 100 * 160;
+        }
+    }
+    _cash = capital;
+    return;
 }

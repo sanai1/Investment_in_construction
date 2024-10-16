@@ -20,6 +20,12 @@ public:
 		return _percent_of_construction == 100;
 		//return cur_month - _duration >= _start_period;
 	}
+	long long get_duration() {
+		return _duration;
+	}
+	long long get_price() {
+		return _construction_cost;
+	}
 	virtual bool is_shop() const = 0;
 	virtual std::string get_type() {
 		return _type;
@@ -88,6 +94,9 @@ public:
 	}
 	long long get_apartment_price() {
 		return _apartment_price;
+	}
+	long long get_cnt_apartments() {
+		return _cnt_apartments;
 	}
 	std::string get_id() {
 		return _hid;

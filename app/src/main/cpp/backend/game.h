@@ -6,9 +6,13 @@ class Game {
 public:
 	Game(std::string s);
 	void bots_make_step();
-	void players_pay_month_construction(); // ����� ������ �� ��������� 1 ������ ������.
-	void players_get_cash_from_shops(); // ������ �������� ������� �� ��������
-	void players_get_cash_from_houses();//������� �� ������� �������
+	void players_pay_month_construction();
+	void players_get_cash_from_shops();
+	void players_get_cash_from_houses();
+	void set_capital();
+	bool is_end() {
+		return _is_end;
+	}
 	std::string convert_to_json();
 
 	~Game();
@@ -19,6 +23,7 @@ private:
 	std::vector<Building*> _all_buildings;
 	std::vector<Microdistrict*> _all_microdistricts;
 	std::vector<Player*> _bots;
+	bool _is_end;
 };
 
 void Game::bots_make_step() {
@@ -42,5 +47,11 @@ void Game::players_get_cash_from_shops() {
 void Game::players_get_cash_from_houses() {
 	for (Microdistrict* district : _all_microdistricts) {
 		district->sell_some_apartments();
+	}
+}
+
+void Game::set_capital() {
+	for (Player* player : _players) {
+		player->get_capital();
 	}
 }
