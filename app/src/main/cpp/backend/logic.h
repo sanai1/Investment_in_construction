@@ -403,10 +403,13 @@ void Player::get_capital() {
     long long capital = _cash;
     for (Building* house : _houses) {
         House* hptr = dynamic_cast<House*>(house);
-        long long not_sold = hptr->get_cnt_apartments() - house->get_info();
-        capital += 1000 * not_sold;
         if (!house->is_builded(0)) {
             capital += house->get_percent() * house->get_duration() / 100 * house->get_price();
+        }
+        else {
+            long long not_sold = hptr->get_cnt_apartments() - house->get_info();
+            
+            capital += (house->get_duration() * house->get_price() / hptr->get_cnt_apartments()) * not_sold;
         }
     }
     for (Building* shop : _shops) {
