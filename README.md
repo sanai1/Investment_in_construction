@@ -6,6 +6,9 @@
 
 ## Техническое задание
 
+- [Практикум "Моделированние" общая постановка задачи](https://github.com/sanai1/Investment_in_construction/blob/master/doc/Global%20Task)
+- [Моделирование инвестиций в строительство]()
+
 ## Команда
 
 - [Александр Воронов](https://github.com/sanai1)
