@@ -1,4 +1,4 @@
-# Диаграмма иерархии классов программной системы
+# Отчет о работе
 
 ## 1. [Уточненная постановка задачи для назначенного варианта задания](doc/SpecificTask.md)
 
@@ -36,7 +36,67 @@
 
 ## 5. Описание файловой структуры программной системы
 
+### app
+#### manifests
+Содержит файл xml общей информации
 
+#### cpp
+- backend (папка) - папки с кодом C++
+- json-developer (папка) - библиотека для работы с json на C++
+- native-lib.cpp - библиотека на C++ для вызова ее из Java (связка между Back и Front)
+
+#### java
+- ConnectRealtimeDatabase - связь с Realtime Database
+- InteractionJSON - связь между Java и библиотекой на C++
+- LoadingActivity - активность экрана загрузки
+- MainBottomNavigation - активность главного меню (с 3мя фрагментами)
+- MainActivity - активность, где проходит сама игра
+- Room (папка)
+- - CreateRoomActivity - активность для создания новой игровой комнаты
+  - EnterRoomActivity - активность для входа в уже существующую комнату
+- LogicClasses (папка)
+- - Advertisement - класс реклама
+  - House - класс домов
+  - Shop - класс магазинов
+  - User - класс пользователей и ботов
+  - Room - класс комнаты (содержит в своих полях все вышеперечисленные классы)
+- Authorization (папка)
+- - WelcomeActivity - первая активность, которая открывается при запуске приложения
+  - SignInActivity - активность для входа в аккаунт
+  - CreateAccountActivity - активность для создания аккаунта
+- AdapterState (папка)
+- - Construction (папка)
+  - - ConstructionAdapter - адаптер для RecycleView (просмотр построек)
+    - ConstructionState - класс для хранения экземпляров построек (для адапрета)
+  - OtherPlayer (папка)
+  - - PlayerAdapter - адаптер для RecyclerView (просмотр списка других игроков)
+    - PlayerState - класс для хранения экземпляров игроков (для адаптера)
+  - FinalGame (папка)
+  - - FinalGameAdapter - адаптер для RecyclerView (просмотр итогового списка игроков)
+    - FinalGameState - класс для хранения экземпляров игроков (для адаптера)
+- DialogFragment (папка)
+- - AddInfoConstruction - окно для установки кол-ва и цена продаваемых квартир на шаге
+  - AdvertisementConstruction - окно для устаноки рекламы на шаге
+  - NewConstruction - окно для создания новых строений
+  - QuestionAgain - окно (подтверждение) отправки данных на конкретный шаг
+- Fragmenta (папка)
+- - EnterRoomFragment - экран при входе к комнате (основной)
+  - BottomMenu (папка)
+  - - FriendsFragment - экран (друзья)
+    - HomeFragment - экран (создание/вход комнаты)
+    - SettingsFragment экран (настройки аккаунта)
+  - MainFragments (папка)
+  - - LoadingFragment - экран загрузки
+    - MainFragment - экран игры (основной)
+    - OtherPlayersFragment - экран с другими игроками
+    - PlayerFragment - экран с другим игроком (подробная информация о нем)
+    - FinalGameFragment - экран с рейтинговой таблицей (конец игры)
+
+#### res
+Содержит папки с файлами XML (разметка экранов, диалоговый окон, фрагментов, анимаций и тд)
+
+### Gradle Scripts
+Содержит файлы настройки и зависимостей Android
 
 
 
@@ -51,4 +111,4 @@
 
 
 
-8. [Подготовка полного GIT - репозитория проекта на github](https://github.com/sanai1/Investment_in_construction)
+## 8. [Подготовка полного GIT - репозитория проекта на github](https://github.com/sanai1/Investment_in_construction)
