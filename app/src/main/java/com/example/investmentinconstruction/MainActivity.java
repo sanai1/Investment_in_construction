@@ -331,9 +331,9 @@ public class MainActivity extends AppCompatActivity
     class Player implements Comparable<Player>{
         private String name;
         private String uid;
-        private Integer fullProfit;
+        private Long fullProfit;
 
-        public Player(String name, String uid, Integer fullProfit) {
+        public Player(String name, String uid, Long fullProfit) {
             this.name = name;
             this.uid = uid;
             this.fullProfit = fullProfit;
@@ -347,11 +347,11 @@ public class MainActivity extends AppCompatActivity
             this.name = name;
         }
 
-        public Integer getFullProfit() {
+        public Long getFullProfit() {
             return fullProfit;
         }
 
-        public void setFullProfit(Integer fullProfit) {
+        public void setFullProfit(Long fullProfit) {
             this.fullProfit = fullProfit;
         }
 
